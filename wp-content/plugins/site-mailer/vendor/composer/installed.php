@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'elementor/site-mailer',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '197f3410d26879752677bdc76056c97b294cd454',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => false,
+    ),
+    'versions' => array(
+        'elementor/site-mailer' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '197f3410d26879752677bdc76056c97b294cd454',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'elementor/wp-notifications-package' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'reference' => 'dd25ca9dd79402c3bb51fab112aa079702eb165e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../elementor/wp-notifications-package',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'elementor/wp-one-package' => array(
+            'pretty_version' => '1.0.59',
+            'version' => '1.0.59.0',
+            'reference' => null,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../elementor/wp-one-package',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

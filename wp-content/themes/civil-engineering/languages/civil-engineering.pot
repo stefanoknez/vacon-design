@@ -1,0 +1,305 @@
+# Copyright (C) 2026 pewilliams
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Civil Engineering 5.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/civil-engineering\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-29T07:35:02+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: civil-engineering\n"
+
+#. Theme Name of the theme
+#: style.css
+msgid "Civil Engineering"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://www.ovationthemes.com/products/free-engineering-wordpress-theme"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Civil Engineering is a modern, responsive, and professionally designed theme tailored for architecture firms, builders, construction companies, home renovation services, house maintenance providers, interior designers, painting contractors, structural engineering firms, infrastructure developers, urban planners, geotechnical experts, building project consultants, roadwork specialists, site development teams, surveying services, environmental engineers, project planning agencies, and structural analysis professionals. It is also well suited for businesses involved in construction design, property maintenance, interior and exterior decoration, and related engineering services. The design is clean, unique, and visually strong, helping organizations showcase projects, services, portfolios, and expertise in a structured and impactful way. Fully responsive and tested across all major browsers and devices, it ensures smooth performance on desktops, tablets, and mobile phones. Built with secure, optimized code and a stable framework, it delivers fast loading speed and reliable performance while supporting SEO-friendly structure for better search visibility. It includes customizable layouts, multiple page templates such as project pages, blog layouts, and service sections, along with testimonial displays and content blocks that enhance credibility and engagement. Integrated support for eCommerce functionality enables businesses to sell services or products seamlessly, while flexible customization options allow control over colors, fonts, headers, and sections without technical difficulty. With its professional design and conversion-focused structure, it provides a complete digital solution for engineering and construction-related businesses aiming to build a strong online presence."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "pewilliams"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://www.ovationthemes.com/"
+msgstr ""
+
+#. translators: %s: post title
+#: comments.php:22
+msgid "One thought on &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: 1: number of comments, 2: post title
+#: comments.php:27
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:66
+msgid "Comments are closed."
+msgstr ""
+
+#: functions.php:48
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:115
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:117
+#: functions.php:137
+msgid "Add widgets here to appear in your sidebar on blog posts and archive pages."
+msgstr ""
+
+#: functions.php:125
+msgid "Page Sidebar"
+msgstr ""
+
+#: functions.php:127
+msgid "Add widgets here to appear in your pages and posts"
+msgstr ""
+
+#: functions.php:135
+msgid "Sidebar 3"
+msgstr ""
+
+#: functions.php:145
+msgid "Footer 1"
+msgstr ""
+
+#: functions.php:147
+#: functions.php:157
+#: functions.php:167
+#: functions.php:177
+msgid "Add widgets here to appear in your footer."
+msgstr ""
+
+#: functions.php:155
+msgid "Footer 2"
+msgstr ""
+
+#: functions.php:165
+msgid "Footer 3"
+msgstr ""
+
+#: functions.php:175
+msgid "Footer 4"
+msgstr ""
+
+#: functions.php:224
+msgid "🔒 Unlock Premium Features"
+msgstr ""
+
+#: functions.php:232
+msgid "ENGINEERING PREMIUM"
+msgstr ""
+
+#: functions.php:245
+msgid "Slider Content Alignment"
+msgstr ""
+
+#: functions.php:249
+msgid "LEFT"
+msgstr ""
+
+#: functions.php:250
+msgid "CENTER"
+msgstr ""
+
+#: functions.php:251
+msgid "RIGHT"
+msgstr ""
+
+#: functions.php:264
+msgid "Slider Overlay Color"
+msgstr ""
+
+#: functions.php:274
+msgid "Slider Opacity"
+msgstr ""
+
+#: functions.php:278
+msgid "0"
+msgstr ""
+
+#: functions.php:279
+msgid "0.1"
+msgstr ""
+
+#: functions.php:280
+msgid "0.2"
+msgstr ""
+
+#: functions.php:281
+msgid "0.3"
+msgstr ""
+
+#: functions.php:282
+msgid "0.4"
+msgstr ""
+
+#: functions.php:283
+msgid "0.5"
+msgstr ""
+
+#: functions.php:284
+msgid "0.6"
+msgstr ""
+
+#: functions.php:285
+msgid "0.7"
+msgstr ""
+
+#: functions.php:286
+msgid "0.8"
+msgstr ""
+
+#: functions.php:287
+msgid "0.9"
+msgstr ""
+
+#: functions.php:288
+msgid "1"
+msgstr ""
+
+#: functions.php:294
+msgid "Information Section"
+msgstr ""
+
+#: functions.php:304
+msgid "Information Section Settings"
+msgstr ""
+
+#: functions.php:327
+#: functions.php:413
+msgid "Check To show Section"
+msgstr ""
+
+#: functions.php:329
+#: functions.php:415
+msgid "On"
+msgstr ""
+
+#: functions.php:330
+#: functions.php:416
+msgid "Off"
+msgstr ""
+
+#: functions.php:342
+msgid "Section Heading"
+msgstr ""
+
+#: functions.php:352
+msgid "Section Text"
+msgstr ""
+
+#: functions.php:362
+msgid "Button Text"
+msgstr ""
+
+#: functions.php:372
+msgid "Button URL"
+msgstr ""
+
+#: functions.php:380
+#: functions.php:390
+msgid "About Us Settings"
+msgstr ""
+
+#: functions.php:428
+msgid "Section Title"
+msgstr ""
+
+#: functions.php:438
+msgid "Select Page"
+msgstr ""
+
+#: functions.php:447
+msgid "Copyright Text"
+msgstr ""
+
+#: functions.php:460
+msgid "Theme Color"
+msgstr ""
+
+#: functions.php:472
+msgid "Theme Heading Color"
+msgstr ""
+
+#: functions.php:484
+msgid "Theme Text Color"
+msgstr ""
+
+#: functions.php:496
+msgid "Header/Footer Bg color"
+msgstr ""
+
+#: functions.php:512
+msgid "Civil Engineering WordPress Theme"
+msgstr ""
+
+#: functions.php:515
+msgid " By Ovation Themes"
+msgstr ""
+
+#: inc/dashboard/setup.php:182
+msgid "Home"
+msgstr ""
+
+#: inc/dashboard/setup.php:190
+msgid "Pages"
+msgstr ""
+
+#: inc/dashboard/setup.php:198
+msgid "Page Left Sidebar"
+msgstr ""
+
+#: inc/dashboard/setup.php:207
+msgid "Page Right Sidebar"
+msgstr ""
+
+#: inc/dashboard/setup.php:215
+msgid "Projects"
+msgstr ""
+
+#: inc/dashboard/setup.php:222
+msgid "Portfolio"
+msgstr ""
+
+#: inc/dashboard/setup.php:229
+msgid "Contact"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Custom Home Page"
+msgstr ""
+
+#: page-template/custom-home-page.php:33
+msgid "Get a quote"
+msgstr ""
+
+#: page-template/custom-home-page.php:117
+msgid "Get a Quote"
+msgstr ""
+
+#: page-template/custom-home-page.php:181
+msgid "Read More"
+msgstr ""

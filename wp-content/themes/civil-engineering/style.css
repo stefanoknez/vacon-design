@@ -1,0 +1,194 @@
+/*
+Theme Name: Civil Engineering
+Theme URI: https://www.ovationthemes.com/products/free-engineering-wordpress-theme
+Author: pewilliams
+Author URI: https://www.ovationthemes.com/
+Description: Civil Engineering is a modern, responsive, and professionally designed theme tailored for architecture firms, builders, construction companies, home renovation services, house maintenance providers, interior designers, painting contractors, structural engineering firms, infrastructure developers, urban planners, geotechnical experts, building project consultants, roadwork specialists, site development teams, surveying services, environmental engineers, project planning agencies, and structural analysis professionals. It is also well suited for businesses involved in construction design, property maintenance, interior and exterior decoration, and related engineering services. The design is clean, unique, and visually strong, helping organizations showcase projects, services, portfolios, and expertise in a structured and impactful way. Fully responsive and tested across all major browsers and devices, it ensures smooth performance on desktops, tablets, and mobile phones. Built with secure, optimized code and a stable framework, it delivers fast loading speed and reliable performance while supporting SEO-friendly structure for better search visibility. It includes customizable layouts, multiple page templates such as project pages, blog layouts, and service sections, along with testimonial displays and content blocks that enhance credibility and engagement. Integrated support for eCommerce functionality enables businesses to sell services or products seamlessly, while flexible customization options allow control over colors, fonts, headers, and sections without technical difficulty. With its professional design and conversion-focused structure, it provides a complete digital solution for engineering and construction-related businesses aiming to build a strong online presence.
+Version: 5.5
+Requires PHP: 5.6
+Tested up to: 6.9
+Requires at least: 5.0
+License: GNU General Public License v3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: civil-engineering
+Template: architecture-building
+Tags: education, portfolio, photography, one-column, two-columns, three-columns, four-columns, left-sidebar, right-sidebar, grid-layout, custom-colors, custom-background, custom-header, custom-menu, custom-logo, editor-style, sticky-post, featured-images, flexible-header, featured-image-header, footer-widgets, full-width-template, threaded-comments, theme-options, wide-blocks, block-styles, post-formats, translation-ready, rtl-language-support
+
+Civil Engineering WordPress Theme, Copyright 2022 pewilliams
+Civil Engineering is distributed under the terms of the GNU GPL
+
+Civil Engineering WordPress Theme is child theme of Architecture Building WordPress Theme, Copyright 2022 pewilliams
+Architecture Building WordPress Theme is distributed under the terms of the GNU GPL
+*/
+
+:root {
+    --theme-primary-color:#fab915;
+    --theme-heading-color:#000000;
+    --theme-text-color:#666666;
+    --theme-footer-color:#000000;
+    --slider-overlay:#000000;
+}
+
+body {
+  color: var(--theme-text-color);
+  font-weight: 500;
+}
+
+/* Font Family */
+
+h1, h2, h3, h4, h5, h6,body{
+  font-family: 'Raleway', sans-serif;
+}
+h1, h2, h3, h4, h5, h6,.logo h1, .site-title, .site-title a, .logo h1 a{
+  font-weight: bold;
+}
+#home-services .box{
+  background-color: #000;
+}
+#contact-us{
+  background-color: var(--theme-primary-color);
+}
+/* Color Change */
+.site-footer input[type="search"]{
+  color: #666c6e;
+}
+#contact-us p ,#contact-us h3,.cont-top i:hover {
+  color: #fff;
+}
+.menu_header{
+  border-bottom: 3px solid var(--theme-primary-color);
+}
+
+/*loader*/
+#loader ,#loader:after{
+    border-top-color: var(--theme-primary-color);
+}
+#loader:before{
+   border-top-color: #000000; 
+}
+.spinner > div{
+    background-color: #000000;
+}
+
+/* Header CSS */
+.top_bar span {
+  font-weight: 500;
+}
+.gb_nav_menu li a {
+  font-weight: 600;
+}
+
+/* Slider CSS */
+.slide-inner-box {
+  position: absolute;
+  font-weight: 500;
+}
+h2.slider-title {
+  font-size: 55px;
+  font-weight: 800;
+}
+.home-btn a, .box-button a,#contact-us p,#about-us p {
+  font-size: 15px;
+}
+
+/* Services CSS */
+#home-services h3 {
+  font-weight: bold;
+}
+
+/* Contact CSS */
+#contact-us h3 {
+  font-size: 30px;
+}
+.contact-btn a {
+  background: #fff;
+  padding: 15px 25px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* About CSS */
+.img-box iframe{
+  width: 100%;
+}
+#about-us h3 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+#about-us h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Default CSS */
+.bypostauthor > .comment-body > .comment-meta > .comment-author .avatar,.comment-author .avatar {
+  padding: 2px;
+}
+
+/* Accessibility */
+/* Text meant only for screen readers. */
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+  /* Many screen reader and browser combinations announce broken words as they would appear visually. */
+}
+.screen-reader-text:focus {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+  clip: auto !important;
+  clip-path: none;
+  color: #21759b;
+  display: block;
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000;
+  /* Above WP toolbar. */
+}
+
+/* Do not show the outline on the skip link target. */
+#content[tabindex="-1"]:focus {
+  outline: 0;
+}
+
+@media screen and (max-width: 991px){
+  .toggle-menu button,.side_gb_nav{
+    border-radius: 0;
+  }
+  h2.slider-title {
+    font-size: 30px;
+  }
+  .gb_nav_menu ul ul{
+    background: transparent;
+  }
+  .gb_nav_menu ul li a:active, .gb_nav_menu ul li a:hover{
+    color: var(--theme-primary-color) !important;
+  }
+}
+
+@media screen and (max-width:575px){
+  .slide-inner-box{
+    right: 10% !important;
+    left: 10% !important;
+    text-align: center !important;
+  }
+}

@@ -1,0 +1,22 @@
+# Ignoriši fabričko WordPress jezgro
+wp-admin/
+wp-includes/
+/*.php
+/*.txt
+/*.html
+/.htaccess
+
+# Ignoriši sve medijske fajlove i slike (Uploade)
+wp-content/uploads/
+
+# Ignoriši bekapere i privremene fajlove
+wp-content/backups/
+wp-content/ai1wm-backups/
+wp-content/wpvividbackups/
+*.zip
+*.wpress
+*.log
+
+# Ignoriši sistemske fajlove Mac-a
+.DS_Store
+wp-content/backuply/
