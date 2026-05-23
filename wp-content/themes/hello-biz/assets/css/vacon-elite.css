@@ -273,6 +273,20 @@ p,
   letter-spacing: 0.01em !important;
 }
 
+/* ── PARAGRAPH WIDTH CAP — comfortable reading measure (~70 chars) ── */
+/* Applies to inner pages and single posts; homepage sections are handled
+   separately by their own element-ID rules below.                       */
+body:not(.elementor-page-123) .elementor-widget-text-editor .elementor-widget-container,
+body.single .elementor-widget-text-editor .elementor-widget-container,
+body.single-post .elementor-widget-text-editor .elementor-widget-container {
+  max-width: 720px;
+}
+
+/* Homepage O NAMA text block — same cap to prevent full-width sprawl */
+.elementor-123 .elementor-element.elementor-element-87bdaf9 .elementor-widget-text-editor .elementor-widget-container {
+  max-width: 680px;
+}
+
 .elementor-image-box-title {
   font-family: var(--vd-font-display) !important;
   font-weight: 400 !important;

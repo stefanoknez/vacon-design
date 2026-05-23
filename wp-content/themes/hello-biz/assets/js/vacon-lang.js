@@ -122,14 +122,60 @@
     'PROJEKAT ZA GRAĐEVINSKU DOZVOLU': 'BUILDING PERMIT PROJECT',
   };
 
-  // About-page / O nama body text (truncated match)
-  var ABOUT_TEXT = {
-    'Kompanija Vacon Design': 'Vacon Design',
-  };
+  // ----------------------------------------------------------------
+  // BODY TEXT — full paragraphs across all pages (partial-start match).
+  // Keys = unique opening phrase; values = complete English paragraph.
+  // Processed by translateElPartialHtml so innerHTML is preserved on CG restore.
+  // ----------------------------------------------------------------
+  var BODY_TEXT = {
 
-  // Pillar descriptions ("Zašto odabrati nas" section)
-  var PILLAR_DESC = {
-    'Naši projekti su rezultat pažljivog planiranja': 'Our projects are the result of careful planning',
+    // ── Homepage "O NAMA" section — paragraph 1 (has <strong>VACON</strong>)
+    'Firma VACON osnovana je 2022. godine':
+      'Vacon Design was founded in 2022 with a clear vision — to transform years of experience into quality, reliable, and long-lasting projects in the field of structural engineering. Although the firm is relatively young, behind us stands a team with extensive work experience gained across a diverse range of construction projects.',
+
+    // ── Homepage "O NAMA" section — paragraph 2
+    'Specijalizovani smo za projektovanje':
+      'We specialise in structural engineering design, offering reliable solutions for various types of buildings — from residential structures to infrastructure projects. By applying modern engineering standards and years of experience, we deliver high-quality, cost-effective designs tailored to investor requirements. Our team consists of licensed engineers who ensure a professional approach at every phase of the design process.',
+
+    // ── O NAMA page — paragraph 1 (plain, no bold)
+    'Firma Vacon osnovana je 2022. godine':
+      'Vacon Design was founded in 2022 with a clear vision — to transform years of experience into quality, reliable, and long-lasting projects in the field of structural engineering. Although the firm is relatively young, behind us stands a team with extensive work experience gained across a diverse range of construction projects.',
+
+    // ── O NAMA page — paragraph 2
+    'Od samog početka posvećeni':
+      'From the very beginning, we have been committed to delivering high-standard services, with special attention to precision, safety, and efficiency in every aspect of our work. Our goal is to offer clients solutions that not only meet their needs but exceed expectations.',
+
+    // ── O NAMA page — paragraph 3
+    'Vjerujemo u važnost odgovornog':
+      'We believe in the importance of a responsible approach, professionalism, and open communication — the foundations on which we build long-term partnerships and successful projects.',
+
+    // ── O NAMA page — paragraph 4
+    'Ako tražite partnera':
+      'If you are looking for a partner to turn your ideas into solid, functional structures — we are here to build the future together.',
+
+    // ── USLUGE page — intro paragraph
+    'Naša firma pruža sveobuhvatne':
+      'Our firm provides comprehensive engineering services in the field of civil engineering, combining expertise, precision, and modern technologies. We offer clients a complete process — from concept and design, through construction, to expert supervision. Every task is approached responsibly, with the goal of achieving maximum safety, quality, and functionality.',
+
+    // ── Homepage "Zašto odabrati nas" — PRECIZNOST pillar
+    'Naši projekti nisu samo tehnički ispravni':
+      'Our projects are not only technically sound — they are carefully conceived, functionally optimised, and aesthetically aligned. We believe a quality project begins with precision and ends with client satisfaction, and this philosophy guides every step of our work.',
+
+    // ── Homepage "Zašto odabrati nas" — ISKUSTVO pillar
+    'Naš tim čine stručnjaci sa višegodišnjim':
+      'Our team consists of experts with extensive experience in design and construction. Knowledge gained in the field and through various project phases gives us the ability to identify potential challenges in the planning stage — and to resolve them efficiently.',
+
+    // ── Homepage "Zašto odabrati nas" — DETALJNOST pillar
+    'Redovno pohađamo stručne obuke':
+      'We regularly attend professional training, seminars, and courses to stay current with the latest software solutions and technological innovations in the construction and design industry — enabling us to deliver modern, long-term sustainable solutions.',
+
+    // ── Homepage "Zašto odabrati nas" — POUZDANOST pillar
+    'Birajući nas, birate partnera':
+      'By choosing us, you choose a partner who understands the importance of every millimetre, every plan, and every deadline. Quality, reliability, and expertise are not just our promises — they are the foundations on which we build every project.',
+
+    // ── Homepage / Kontakt — "Detaljnije o našim uslugama" CTA link text
+    'Detaljnije o našim uslugama':           'Learn more about our services',
+    'Detaljnije o projektima':               'View all projects',
   };
 
 
@@ -137,8 +183,11 @@
      ORIGINAL TEXT CACHE
      We store each element's original CG text on first translation
      so we can restore it perfectly when switching back.
+     origCache      — textContent (for plain-text elements)
+     origHtmlCache  — innerHTML  (for elements with inline HTML like <strong>)
      ================================================================ */
-  var origCache = new WeakMap();
+  var origCache    = new WeakMap();
+  var origHtmlCache = new WeakMap();
 
   function cacheOriginal(el) {
     if (!origCache.has(el)) origCache.set(el, el.textContent);
@@ -180,6 +229,29 @@
       }
     } else {
       el.textContent = getOriginal(el);
+    }
+  }
+
+  /**
+   * Like translateElPartial but preserves innerHTML when restoring CG.
+   * Use this for elements that may contain inline HTML (<strong>, <span>…).
+   * EN mode:  replace with plain text (no formatting needed in translation).
+   * CG mode:  restore full innerHTML (bold, coloured spans etc. intact).
+   */
+  function translateElPartialHtml(el, dict, toLang) {
+    if (!origHtmlCache.has(el)) origHtmlCache.set(el, el.innerHTML);
+    if (!origCache.has(el))     origCache.set(el, el.textContent);
+
+    if (toLang === 'en') {
+      var text = el.textContent.trim();
+      for (var key in dict) {
+        if (text.indexOf(key) === 0) {
+          el.textContent = dict[key];   // plain text is fine for EN
+          return;
+        }
+      }
+    } else {
+      el.innerHTML = origHtmlCache.get(el);  // restore with all original markup
     }
   }
 
@@ -288,6 +360,38 @@
         ? (heroCta.getAttribute('data-en') || 'OUR PROJECTS →')
         : (heroCta.getAttribute('data-cg') || 'NAŠI PROJEKTI →');
     }
+
+    // 14 ── Body text paragraphs (O NAMA, USLUGE intro, pillar descriptions).
+    //  Uses translateElPartialHtml so switching back to CG restores original
+    //  innerHTML (preserving <strong>, <span> inline markup).
+    document.querySelectorAll(
+      '.elementor-widget-text-editor p, ' +
+      '.elementor-text-editor p'
+    ).forEach(function (el) {
+      translateElPartialHtml(el, BODY_TEXT, lang);
+    });
+
+    // 15 ── Leaf-node spans inside text-editor widgets (pillar descriptions
+    //  that Elementor wraps in <span style="...">).
+    document.querySelectorAll(
+      '.elementor-widget-text-editor span, ' +
+      '.elementor-text-editor span'
+    ).forEach(function (el) {
+      if (el.children.length === 0) {
+        translateElPartial(el, BODY_TEXT, lang);
+      }
+    });
+
+    // 16 ── CTA / link text inside widgets ("Detaljnije o …")
+    document.querySelectorAll(
+      '.elementor-button-text, ' +
+      '.elementor-widget-button .elementor-button, ' +
+      'a.ehp-button'
+    ).forEach(function (el) {
+      if (el.children.length === 0) {
+        translateElPartial(el, BODY_TEXT, lang);
+      }
+    });
   }
 
 
