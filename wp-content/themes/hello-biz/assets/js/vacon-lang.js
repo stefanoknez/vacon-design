@@ -32,6 +32,7 @@
 
   // All heading-level translations (heading widget titles, labels, etc.)
   var HEADINGS = {
+    'TAMO GDJE IDEJE POSTAJU KONSTRUKCIJE': 'WHERE IDEAS BECOME STRUCTURES',
     'O NAMA':                          'ABOUT US',
     'NAŠE USLUGE':                     'OUR SERVICES',
     'NAŠI PROJEKTI':                   'OUR PROJECTS',
@@ -279,6 +280,14 @@
 
     // 12 ── Update <html lang> attribute for accessibility
     document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'sr-Latn-ME');
+
+    // 13 ── Hero CTA button ("NAŠI PROJEKTI →" / "OUR PROJECTS →")
+    var heroCta = document.getElementById('vd-hero-cta');
+    if (heroCta) {
+      heroCta.textContent = lang === 'en'
+        ? (heroCta.getAttribute('data-en') || 'OUR PROJECTS →')
+        : (heroCta.getAttribute('data-cg') || 'NAŠI PROJEKTI →');
+    }
   }
 
 

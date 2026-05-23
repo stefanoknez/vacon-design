@@ -293,6 +293,54 @@
 
 
   /* -------------------------------------------------------
+     5. HOMEPAGE HERO — "NAŠI PROJEKTI →" CTA BUTTON
+     Injects a "NAŠI PROJEKTI →" link below the hero subheading
+     on the homepage only. Picks up the PROJEKTI URL from the
+     nav menu so it works on both local and production.
+     ------------------------------------------------------- */
+  function initHeroCta() {
+    // Only on homepage
+    var heroEl =
+      document.querySelector('.elementor-element-7c67e6e2 .ehp-flex-hero') ||
+      (document.body.classList.contains('elementor-page-123')
+        ? document.querySelector('.ehp-flex-hero')
+        : null);
+    if (!heroEl) return;
+
+    // Don't double-inject
+    if (document.getElementById('vd-hero-cta')) return;
+
+    // Find the subheading to insert after
+    var subheading = heroEl.querySelector('.ehp-flex-hero__subheading');
+    if (!subheading) return;
+
+    // Grab PROJEKTI URL from the nav menu
+    var projektiUrl = '/projekti/';
+    document.querySelectorAll(
+      '.ehp-header__menu a.ehp-header__item, ' +
+      '.elementor-nav-menu a.elementor-item, ' +
+      '.ehp-header__item'
+    ).forEach(function(a) {
+      var txt = (a.textContent || '').trim().toUpperCase();
+      if (txt === 'PROJEKTI' || txt === 'PROJECTS') {
+        projektiUrl = a.href || projektiUrl;
+      }
+    });
+
+    // Build button
+    var cta = document.createElement('a');
+    cta.id      = 'vd-hero-cta';
+    cta.href    = projektiUrl;
+    cta.setAttribute('data-cg', 'NAŠI PROJEKTI →');
+    cta.setAttribute('data-en', 'OUR PROJECTS →');
+    cta.textContent = 'NAŠI PROJEKTI →';
+
+    // Insert after subheading
+    subheading.parentNode.insertBefore(cta, subheading.nextSibling);
+  }
+
+
+  /* -------------------------------------------------------
      INIT
      ------------------------------------------------------- */
   function init() {
@@ -300,6 +348,7 @@
     initRevealAnimations();
     initProjectScroll();
     initImageFallback();
+    initHeroCta();
   }
 
   if (document.readyState === 'loading') {
