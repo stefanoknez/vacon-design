@@ -1694,8 +1694,8 @@ img {
   color: #ffffff !important;
 }
 
-/* Ensure the CTA container is flex so the button sits inline */
-.ehp-header__ctas-container {
+/* Ensure the DESKTOP CTA container (direct child, not the mobile dropdown copy) is flex */
+.ehp-header__elements-container > .ehp-header__ctas-container {
   display: flex !important;
   align-items: center !important;
   flex-shrink: 0 !important;

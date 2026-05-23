@@ -309,13 +309,17 @@
     // Prevent double-injection
     if (document.getElementById('vd-lang-btn')) return;
 
-    // Real Hello Plus header class names (confirmed from helloplus-header.css):
-    // .ehp-header__ctas-container  — wraps email + phone CTA buttons
-    // .ehp-header__contact-buttons — individual contact buttons list
-    // .ehp-header__navigation      — nav menu area (insert AFTER this as sibling)
+    // IMPORTANT: Hello Plus renders TWO .ehp-header__ctas-container elements:
+    //   1. INSIDE <nav class="ehp-header__navigation"> — mobile dropdown (hidden on desktop)
+    //   2. As direct child of .ehp-header__elements-container — desktop bar (visible)
+    // Using plain querySelector gets the FIRST (mobile) one, so the button is never
+    // visible on desktop. Must use the child combinator > to target only the desktop one.
     var target =
-      document.querySelector('.ehp-header__ctas-container') ||
-      document.querySelector('.ehp-header__contact-buttons') ||
+      // Desktop CTA bar: direct child of elements-container (not nested inside nav)
+      document.querySelector('.ehp-header__elements-container > .ehp-header__ctas-container') ||
+      // Fallback: any ctas-container that is NOT inside the nav element
+      document.querySelector('.ehp-header__ctas-container:not(nav .ehp-header__ctas-container)') ||
+      // Last resort: insert after the nav element itself
       document.querySelector('.ehp-header__navigation');
 
     if (!target) {
@@ -332,7 +336,7 @@
       // Insert as next sibling of the nav (between nav and CTAs)
       target.parentNode.insertBefore(btn, target.nextSibling);
     } else {
-      // Prepend inside the CTAs container (before email icon)
+      // Prepend inside the desktop CTAs container (before mail/phone icons)
       target.insertBefore(btn, target.firstChild);
     }
   }
