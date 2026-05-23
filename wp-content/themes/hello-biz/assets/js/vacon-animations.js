@@ -3,7 +3,7 @@
  *
  * 1. Hero Slideshow — HOMEPAGE ONLY. CSS fade between 8 engineering photos, 5s interval.
  *    STRICT ORDER (hard-coded, index-locked — never re-sorted):
- *      [0] renderzanaslovnu.jpg    → P1 (homepage render)
+ *      [0] P1.jpg                  → P1 (homepage render)
  *      [1] ACCamera_81.jpg         → Hyatt Regency Kotor Bay Resort
  *      [2] 03.jpg                  → Luštica Bay – Upper Village
  *      [3] UKLOPLJENI-KONACNI-2    → Master Kvart
@@ -19,22 +19,36 @@
   'use strict';
 
   /* -------------------------------------------------------
+     0. SCROLL RESTORATION — always start at top on load/refresh.
+     Prevents browser from restoring a non-zero scroll position
+     which would show the dark gradient zone at the hero bottom.
+     ------------------------------------------------------- */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  // Force top-of-page on every navigation (refresh, back-forward)
+  if (window.location.hash === '') {
+    window.scrollTo(0, 0);
+  }
+
+  /* -------------------------------------------------------
      1. HERO SLIDESHOW — HOMEPAGE ONLY
      Targets the homepage-specific hero widget element
      (.elementor-element-7c67e6e2). Exits silently on all
      other page types — no injection, no global hero.
      ------------------------------------------------------- */
 
-  // 8 project hero images:
+  // 9 project hero images — index-locked:
   var SLIDE_IMAGES = [
-    '/wp-content/uploads/2025/07/renderzanaslovnu.jpg',    // P1 / homepage render
-    '/wp-content/uploads/2025/07/ACCamera_81.jpg',          // Hyatt Regency Kotor Bay Resort
-    '/wp-content/uploads/2025/07/03.jpg',                   // Luštica Bay – Upper Village
-    '/wp-content/uploads/2025/07/UKLOPLJENI-KONACNI-2.jpg', // Master Kvart
-    '/wp-content/uploads/2025/06/Emerald-Mountain.jpg',     // Emerald Mountain Residence
-    '/wp-content/uploads/2025/07/Most1.jpg',                // Mostovi sekcije 4 (Smokovac-Mateševo)
-    '/wp-content/uploads/2025/07/MOKA-1.jpg',               // Moka Place
-    '/wp-content/uploads/2025/07/PZ-4-1.jpg'                // Rezidencijalno naselje – Objekat 5
+    '/wp-content/uploads/2025/07/P1.jpg',                   // [0] P1 / homepage render
+    '/wp-content/uploads/2025/07/hyatt-photo.webp',         // [1] Hyatt Regency Kotor Bay Resort
+    '/wp-content/uploads/2025/07/master-quart_01_finished.jpg', // [2] Master Kvart
+    '/wp-content/uploads/2025/07/TIVAT-GG-1.jpg',          // [3] Tivat
+    '/wp-content/uploads/2025/07/MOSTOVI-2-1.jpg',          // [4] Mostovi sekcije 4
+    '/wp-content/uploads/2025/07/03.jpg',                   // [5] Luštica Bay – Upper Village
+    '/wp-content/uploads/2025/06/Emerald-Mountain.jpg',     // [6] Emerald Mountain Residence
+    '/wp-content/uploads/2025/07/MOKA-1.jpg',               // [7] Moka Place
+    '/wp-content/uploads/2025/07/PZ-4-1.jpg'                // [8] Rezidencijalno naselje – Objekat 5
   ];
 
   var SLIDE_DURATION = 5000;   // ms each slide is visible
@@ -189,11 +203,52 @@
 
 
   /* -------------------------------------------------------
+     3. PROJECT PAGE — DOWN ARROW SCROLL
+     Clicking the hero chevron (▼) scrolls smoothly to the
+     first content section below the hero.
+     ------------------------------------------------------- */
+  function initProjectScroll() {
+    // Only on single project/post pages
+    if (!document.body.classList.contains('single') &&
+        !document.body.classList.contains('single-post')) return;
+
+    // Targets: common chevron selectors used by Elementor hero widgets
+    var arrows = document.querySelectorAll(
+      '.ehp-flex-hero__scroll-down, ' +
+      '.elementor-scroll-down, ' +
+      '[class*="scroll-down"], ' +
+      '[class*="chevron-down"], ' +
+      '.ehp-flex-hero__caret, ' +
+      '.ehp-flex-hero__arrow'
+    );
+
+    arrows.forEach(function(arrow) {
+      arrow.style.cursor = 'pointer';
+      arrow.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Find the first section AFTER the hero (first-child)
+        var sections = document.querySelectorAll(
+          '[data-elementor-type="wp-post"] .elementor-section, ' +
+          '[data-elementor-type="wp-post"] .e-con, ' +
+          '[data-elementor-type="single-post"] .elementor-section, ' +
+          '[data-elementor-type="single-post"] .e-con'
+        );
+        // Skip the first (hero) section, scroll to the second
+        var target = sections[1] || sections[0];
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  /* -------------------------------------------------------
      INIT
      ------------------------------------------------------- */
   function init() {
     initSlideshow();
     initRevealAnimations();
+    initProjectScroll();
   }
 
   if (document.readyState === 'loading') {

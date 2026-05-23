@@ -88,17 +88,41 @@ img { display: block; max-width: 100%; height: auto; }
    Lower specificity than section-specific rules below, so it acts
    as the guaranteed baseline — homepage and project overrides win.
    --------------------------------------------------------------- */
-body,
+/* Body gets the deepest base — #0c0c0c only behind everything else */
+body {
+  background-color: #0c0c0c !important;
+}
+/* Sections and columns: graphite #1a1a1a — never pure black.
+   Widget containers intentionally excluded — they are transparent wrappers. */
 .elementor-section,
 .elementor-column,
-.elementor-widget-wrap,
-.elementor-widget-container,
 #content,
 .site-content {
-  background-color: #0c0c0c !important;
+  background-color: #1a1a1a !important;
 }
 .elementor-section-boxed > .elementor-container {
   background-color: #1a1a1a !important;
+}
+
+/* HEADER TRANSPARENCY EXCEPTION — punch through the global purge.
+   Every wrapper inside the fixed nav must be transparent so only
+   the .ehp-header gradient shows. Without this, the global
+   .elementor-section { background-color: #0c0c0c } paints a solid
+   black box behind the navbar. */
+[data-elementor-type="ehp-header"],
+[data-elementor-type="ehp-header"] .elementor-section,
+[data-elementor-type="ehp-header"] .elementor-column,
+[data-elementor-type="ehp-header"] .elementor-widget-wrap,
+[data-elementor-type="ehp-header"] .elementor-widget-container,
+[data-elementor-type="ehp-header"] .elementor-section-boxed > .elementor-container,
+.elementor-111,
+.elementor-111 .elementor-section,
+.elementor-111 .elementor-column,
+.elementor-111 .elementor-widget-wrap,
+.elementor-111 .elementor-widget-container,
+.elementor-111 .elementor-section-boxed > .elementor-container {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 
@@ -108,9 +132,20 @@ body,
    Homepage hero absorbs it via padding-block-start: var(--vd-nav-h).
    All other pages get it on the Elementor content wrapper.
    --------------------------------------------------------------- */
-/* Standard WP pages */
+/* Standard WP pages — top offset + horizontal padding to keep text from edges */
 body:not(.elementor-page-123) [data-elementor-type="wp-page"] {
   padding-top: var(--vd-nav-h) !important;
+}
+
+/* WP page inner sections: constrain content width with horizontal padding.
+   Prevents text from spanning edge-to-edge (e.g. Naše usluge page). */
+[data-elementor-type="wp-page"] .elementor-section > .elementor-container,
+[data-elementor-type="wp-page"] .elementor-section > .elementor-container > .elementor-column > .elementor-widget-wrap,
+[data-elementor-type="wp-page"] .e-con {
+  padding-left:  clamp(48px, 8vw, 140px) !important;
+  padding-right: clamp(48px, 8vw, 140px) !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
 }
 /* Individual project/post pages — wp-post is the content wrapper,
    single-post is the Elementor single-post template wrapper */
@@ -142,20 +177,23 @@ body {
 }
 /* All Elementor sections — charcoal (#1a1a1a) base for all non-homepage pages.
    Specific homepage sections retain their individual overrides below. */
+/* Sections only — widget containers stay transparent */
 body:not(.elementor-page-123) .elementor-section,
 body:not(.elementor-page-123) .e-con,
-body:not(.elementor-page-123) .elementor-widget-container,
 body.single .elementor-section,
 body.single .e-con,
-body.single .elementor-widget-container,
 body.single-post .elementor-section,
 body.single-post .e-con,
-body.single-post .elementor-widget-container,
 [data-elementor-type="single-post"] .elementor-section,
 [data-elementor-type="single-post"] .e-con,
 [data-elementor-type="wp-post"] .elementor-section,
 [data-elementor-type="wp-post"] .e-con {
-  background-color: var(--vd-charcoal) !important;  /* #1a1a1a — never pure black */
+  background-color: var(--vd-charcoal) !important;
+}
+/* Widget containers must always be transparent — never add bg here */
+.elementor-widget-container,
+.elementor-widget-wrap {
+  background-color: transparent !important;
 }
 /* Raw body and page wrappers stay at #0c0c0c — darkest base layer */
 body,
@@ -240,7 +278,7 @@ p,
   font-weight: 400 !important;
   letter-spacing: 0.10em !important;
   text-transform: uppercase !important;
-  font-size: clamp(0.75rem, 1.2vw, 0.95rem) !important;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem) !important;
   color: var(--vd-white) !important;
   margin-bottom: 40px !important;   /* 40px gap between title and text */
 }
@@ -272,24 +310,37 @@ p,
   z-index: 1000 !important;
 }
 
-/* Strip Elementor padding from header container */
+/* Strip Elementor padding from header section */
 .elementor-111 .elementor-element.elementor-element-5d67fadf {
   padding: 0 !important;
   margin: 0 !important;
 }
 
-/* Airy gradient: barely-there top glow, fully invisible by 40% — no crta, no edge. */
+/* Widget container: zero right padding so .ehp-header spans the full viewport
+   width and its gradient is unclipped. */
+.elementor-111 .elementor-element.elementor-element-5194a873 > .elementor-widget-container {
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Inset the email + phone from the right edge INSIDE .ehp-header, so the
+   gradient background still covers the full width but content shifts left. */
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header {
+  padding-inline-end: clamp(24px, 3vw, 44px) !important;
+}
+
+/* Shadow gradient: solid dark at top, fades to transparent at bottom. No blur. */
 .elementor-widget-ehp-header .ehp-header,
 .elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header,
 .ehp-header {
   background: linear-gradient(
     180deg,
-    rgba(12, 12, 12, 0.30) 0%,
-    rgba(12, 12, 12, 0.10) 40%,
+    rgba(12, 12, 12, 0.70) 0%,
+    rgba(12, 12, 12, 0.32) 55%,
     rgba(12, 12, 12, 0.00) 100%
   ) !important;
-  backdrop-filter: blur(2px) !important;
-  -webkit-backdrop-filter: blur(2px) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
@@ -365,10 +416,19 @@ p,
   color: var(--vd-black) !important;
 }
 
-/* Logo: drop-shadow for legibility over hero photos */
-.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header__site-logo {
+/* Logo: drop-shadow for legibility over hero photos + left-margin grid alignment */
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header__site-logo,
+.ehp-header__site-logo {
   filter: drop-shadow(0 1px 8px rgba(0,0,0,0.7)) !important;
   box-shadow: none !important;
+  margin-inline-start: clamp(28px, 4vw, 56px) !important;
+}
+
+/* Email icon + phone button — flex-shrink guard so they don't collapse */
+.ehp-header .ehp-header__actions,
+.ehp-header .ehp-header__secondary-menu,
+.ehp-header .ehp-header__secondary-menu-container {
+  flex-shrink: 0 !important;
 }
 
 /* Mobile hamburger */
@@ -384,9 +444,10 @@ p,
    ╚═══════════════════════════════════════════════════════════════╝
    ================================================================ */
 
-/* Hero outer container — zero padding, flush to top */
+/* Hero outer container — zero padding, flush to top, black background (matches hero widget) */
 .elementor-123 .elementor-element.elementor-element-6fbda878 {
   padding: 0 !important;
+  background-color: var(--vd-black) !important;  /* prevents #1a1a1a strip below hero */
 }
 
 /* Hero widget: full viewport height, text pushed to BOTTOM-LEFT on every breakpoint */
@@ -435,23 +496,25 @@ p,
     padding-inline-start: var(--vd-hero-pad-x) !important;
     padding-inline-end: var(--vd-hero-pad-x) !important;
     padding-block-start: clamp(32px, 4vw, 56px) !important;
-    padding-block-end: clamp(56px, 9vw, 120px) !important;
+    padding-block-end: clamp(40px, 5.5vw, 72px) !important;
     order: 1 !important;
   }
 }
 
-/* BOTTOM-UP GLOW GRADIENT — strong at bottom (text), fades to clear at top.
-   Matches user spec: 0deg = bottom-to-top direction.
-   The navbar gradient handles the top zone independently. */
+/* BOTTOM-UP GLOW GRADIENT — completely transparent at the very bottom edge,
+   peaks subtly in the text zone (~20% from bottom), fades out above.
+   0% bottom edge stays fully transparent so no black strip ever shows there.
+   Text-shadow on the heading handles legibility. */
 .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     0deg,
-    rgba(12, 12, 12, 0.90) 0%,
-    rgba(12, 12, 12, 0.40) 50%,
-    rgba(12, 12, 12, 0.00) 100%
+    rgba(12, 12, 12, 0.00) 0%,    /* transparent at very bottom — no black strip */
+    rgba(12, 12, 12, 0.30) 18%,   /* text zone — subtle darkening for readability */
+    rgba(12, 12, 12, 0.08) 45%,   /* gentle fade */
+    rgba(12, 12, 12, 0.00) 68%    /* fully transparent above */
   );
   z-index: 1;
   pointer-events: none;
@@ -519,13 +582,15 @@ body.single-post .elementor-widget-heading .elementor-heading-title,
   letter-spacing: 0.08em !important;
 }
 
-/* 100px left-margin grid on project page content sections */
+/* 100px left-margin grid on project page content sections. */
 body.single [data-elementor-type="wp-post"] .elementor-section > .elementor-container,
 body.single-post [data-elementor-type="wp-post"] .elementor-section > .elementor-container,
 body.single [data-elementor-type="wp-post"] .e-con,
 body.single-post [data-elementor-type="wp-post"] .e-con {
   padding-left:  var(--vd-hero-pad-x) !important;
   padding-right: var(--vd-hero-pad-x) !important;
+  box-sizing: border-box !important;  /* padding stays inside — no overflow */
+  max-width: 100% !important;
 }
 
 /* Inter body text on project pages — already inherited but reinforce */
@@ -545,14 +610,14 @@ body.single-post [data-elementor-type="wp-post"] {
   background-color: var(--vd-charcoal) !important;
 }
 
-/* IMAGE GEOMETRY — object-fit: contain so no part of the photo is cropped.
-   Charcoal background fills any letterbox area. 80px margin below. */
+/* IMAGE GEOMETRY — object-fit: contain, no background tinting.
+   Images render at full natural color with no overlay. */
 body.single [data-elementor-type="wp-post"] .elementor-widget-image,
 body.single-post [data-elementor-type="wp-post"] .elementor-widget-image,
 body.single [data-elementor-type="wp-post"] .elementor-image-box-wrapper,
 body.single-post [data-elementor-type="wp-post"] .elementor-image-box-wrapper {
   margin-bottom: 80px !important;
-  background-color: var(--vd-charcoal) !important;
+  background-color: transparent !important;
 }
 body.single [data-elementor-type="wp-post"] .elementor-widget-image img,
 body.single-post [data-elementor-type="wp-post"] .elementor-widget-image img,
@@ -562,7 +627,8 @@ body.single-post [data-elementor-type="wp-post"] img {
   height: auto !important;
   width: 100% !important;
   object-position: center center !important;
-  background-color: var(--vd-charcoal) !important;
+  background-color: transparent !important;
+  filter: none !important;
 }
 
 /* PROJECT PAGE TEXT — force ALL labels, titles, descriptions to #ffffff */
@@ -608,12 +674,22 @@ body.single-post [data-elementor-type="wp-post"] .e-con + .e-con {
   margin-top: 120px !important;
 }
 
-/* First section on project pages: pad below the fixed nav + slight top space */
+/* First section on project pages: transparent so the featured image/hero shows
+   fully through. No dark background over the photo. */
 body.single [data-elementor-type="wp-post"] .elementor-section:first-child,
 body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child,
 body.single [data-elementor-type="wp-post"] .e-con:first-child,
-body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
+body.single-post [data-elementor-type="wp-post"] .e-con:first-child,
+[data-elementor-type="single-post"] .elementor-section:first-child,
+[data-elementor-type="single-post"] .e-con:first-child {
+  background-color: transparent !important;
   padding-top: clamp(48px, 6vw, 80px) !important;
+}
+/* All inner columns/containers inside the hero section: transparent too */
+body.single [data-elementor-type="wp-post"] .elementor-section:first-child .elementor-column,
+body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child .elementor-column,
+[data-elementor-type="single-post"] .elementor-section:first-child .elementor-column {
+  background-color: transparent !important;
 }
 
 /* Hero heading — monumental, uppercase, no orphaned letters */
@@ -640,14 +716,15 @@ body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
 .ehp-flex-hero__subheading {
   display: block !important;
   font-family: var(--vd-font-body) !important;
-  font-size: clamp(0.80rem, 1.1vw, 0.95rem) !important;
-  font-weight: 300 !important;
-  letter-spacing: 0.12em !important;
+  font-size: clamp(1.15rem, 1.75vw, 1.5rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.10em !important;
   line-height: 1.85 !important;
   color: rgba(255, 255, 255, 0.85) !important;
   text-transform: none !important;
   margin-top: 20px !important;
   margin-bottom: 0 !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.70) !important;
 }
 
 /* Hero intro text */
@@ -769,11 +846,10 @@ body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
 .elementor-123 .elementor-element.elementor-element-2cd3d4e {
   padding-top: clamp(40px, 5vw, 64px) !important;
   padding-bottom: clamp(40px, 5vw, 64px) !important;
-  padding-left: 15vw !important;   /* inward pull — prevent edge-clutter */
-  padding-right: 15vw !important;
-  gap: 0 !important;
-  row-gap: 80px !important;    /* 80px between service card rows */
-  column-gap: 0 !important;
+  padding-left: 8vw !important;
+  padding-right: 8vw !important;
+  row-gap: 100px !important;
+  column-gap: clamp(40px, 5vw, 80px) !important;
 }
 
 /* Service cells */
@@ -783,7 +859,7 @@ body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
 .elementor-123 .elementor-element.elementor-element-39de533,
 .elementor-123 .elementor-element.elementor-element-22eec78,
 .elementor-123 .elementor-element.elementor-element-3ef7d24 {
-  padding: 0 !important;
+  padding: clamp(24px, 3vw, 40px) clamp(20px, 2.5vw, 36px) !important;
   border: none !important;
   border-top: 1px solid rgba(255,255,255,0.06) !important;
   overflow: hidden;
@@ -826,13 +902,13 @@ body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
   font-weight: 400 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  font-size: clamp(0.7rem, 1.1vw, 0.9rem) !important;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem) !important;
   color: rgba(255,255,255,0.90) !important;
   text-shadow: none !important;
-  margin-bottom: 40px !important;
+  margin-bottom: 20px !important;
 }
 
-/* Service descriptions — +20% size, 30px line-height, max 600px width */
+/* Service descriptions — 30px line-height, full cell width */
 .elementor-123 .elementor-element.elementor-element-0f6c4dc .elementor-image-box-description,
 .elementor-123 .elementor-element.elementor-element-ad1c040 .elementor-image-box-description,
 .elementor-123 .elementor-element.elementor-element-85f7e9f .elementor-image-box-description,
@@ -845,7 +921,7 @@ body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
   line-height: 30px !important;
   color: rgba(255,255,255,0.60) !important;
   letter-spacing: 0.02em !important;
-  max-width: 600px !important;   /* prevent full-width stretch */
+  max-width: 100% !important;
 }
 
 
@@ -1016,10 +1092,10 @@ body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
 
 .elementor-123 .elementor-element.elementor-element-79c8e24:not(.elementor-motion-effects-element-type-background),
 .elementor-123 .elementor-element.elementor-element-79c8e24 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-  background-color: var(--vd-black) !important;
+  background-color: var(--vd-charcoal) !important;
 }
 .elementor-123 .elementor-element.elementor-element-9ac75c3 > .elementor-widget-container {
-  background-color: var(--vd-black) !important;
+  background-color: var(--vd-charcoal) !important;
   padding: var(--vd-section-pad) var(--vd-gutter) clamp(24px, 3vw, 40px) !important;
   margin: 0 !important;
 }
@@ -1297,15 +1373,31 @@ img {
 .navigation.post-navigation {
   display: flex !important;
   justify-content: space-between !important;
-  align-items: center !important;
-  margin: 50px 100px 50px 100px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 24px 0 0 0 !important;
+  padding: 0 !important;
   position: relative !important;
   bottom: auto !important;
-  padding: clamp(24px, 3vw, 40px) 0 !important;
-  background-color: var(--vd-charcoal) !important;
-  border-top: 1px solid var(--vd-rule) !important;
+  background-color: transparent !important;
+  border-top: 1px solid var(--vd-rule-strong) !important;
+  border-bottom: 1px solid var(--vd-rule-strong) !important;
   visibility: visible !important;
   opacity: 1 !important;
+  overflow: hidden !important;
+}
+.post-navigation .nav-previous,
+.post-navigation .nav-next {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  padding: clamp(20px, 3vw, 36px) clamp(20px, 3vw, 40px) !important;
+}
+.post-navigation .nav-next {
+  text-align: right !important;
+  border-left: 1px solid var(--vd-rule) !important;
 }
 .nav-links a,
 .post-navigation .nav-previous a,
@@ -1314,11 +1406,11 @@ img {
 .post-navigation .nav-next span {
   display: inline-block !important;
   font-family: var(--vd-font-ui) !important;
-  font-size: 0.78rem !important;
+  font-size: 0.72rem !important;
   font-weight: 500 !important;
   letter-spacing: 0.20em !important;
   text-transform: uppercase !important;
-  color: #ffffff !important;
+  color: rgba(255,255,255,0.70) !important;
   text-decoration: none !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -1327,7 +1419,7 @@ img {
 .nav-links a:hover,
 .post-navigation .nav-previous a:hover,
 .post-navigation .nav-next a:hover {
-  color: #cccccc !important;
+  color: #ffffff !important;
 }
 
 /* Elementor post navigation widget */
@@ -1335,41 +1427,150 @@ img {
 .elementor-post-navigation {
   display: flex !important;
   justify-content: space-between !important;
-  align-items: center !important;
-  margin: 50px 100px 50px 100px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 24px 0 0 0 !important;
+  padding: 0 !important;
   position: relative !important;
   bottom: auto !important;
-  padding: clamp(24px, 3vw, 40px) 0 !important;
-  background-color: var(--vd-charcoal) !important;
-  border-top: 1px solid var(--vd-rule) !important;
+  background-color: transparent !important;
+  border-top: 1px solid var(--vd-rule-strong) !important;
+  border-bottom: 1px solid var(--vd-rule-strong) !important;
   visibility: visible !important;
   opacity: 1 !important;
+  overflow: visible !important;
 }
 .elementor-post-navigation__prev,
 .elementor-post-navigation__next {
   display: flex !important;
   align-items: center !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  padding: clamp(16px, 2.5vw, 28px) clamp(16px, 2vw, 28px) !important;
   visibility: visible !important;
   opacity: 1 !important;
+}
+.elementor-post-navigation__next {
+  justify-content: flex-end !important;
+  border-left: 1px solid var(--vd-rule) !important;
+}
+/* Labels: PRETHODNI PROJEKAT / SLEDEĆI PROJEKAT */
+.elementor-post-navigation__prev--label,
+.elementor-post-navigation__next--label {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,0.45) !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  display: block !important;
+}
+/* Project titles — full text, no truncation */
+.elementor-post-navigation__prev--title,
+.elementor-post-navigation__next--title {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,0.85) !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  display: block !important;
+  word-break: break-word !important;
 }
 .elementor-post-navigation__prev a,
 .elementor-post-navigation__next a,
 .elementor-post-navigation__prev span,
 .elementor-post-navigation__next span {
   font-family: var(--vd-font-ui) !important;
-  font-size: 0.78rem !important;
+  font-size: 0.72rem !important;
   font-weight: 500 !important;
   letter-spacing: 0.20em !important;
   text-transform: uppercase !important;
-  color: #ffffff !important;
+  color: rgba(255,255,255,0.70) !important;
   text-decoration: none !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
   visibility: visible !important;
   opacity: 1 !important;
   transition: color 0.3s var(--vd-ease) !important;
 }
 .elementor-post-navigation__prev a:hover,
 .elementor-post-navigation__next a:hover {
-  color: #cccccc !important;
+  color: #ffffff !important;
+}
+.elementor-post-navigation__prev a:hover .elementor-post-navigation__prev--title,
+.elementor-post-navigation__next a:hover .elementor-post-navigation__next--title {
+  color: #ffffff !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  MOBILE NAV — Frosted glass overlay                          ║
+   ║  Semi-transparent dark + blur so hero shows through vividly  ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* The mobile navigation panel — frosted glass */
+.ehp-header__navigation,
+.ehp-header .ehp-header__navigation,
+.elementor-widget-ehp-header .ehp-header__navigation,
+.elementor-111 .ehp-header__navigation,
+/* Elementor nav menu dropdown (mobile breakpoint) */
+.elementor-nav-menu--dropdown,
+.elementor-nav-menu--dropdown.elementor-nav-menu__container,
+/* Generic Elementor mobile menu containers */
+.elementor-location-header .elementor-nav-menu--dropdown,
+.e-n-menu-content,
+.ehp-header__menu-container {
+  background: rgba(12, 12, 12, 0.82) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Mobile header bar — same gradient shadow as desktop, no blur */
+@media (max-width: 1024px) {
+  .ehp-header,
+  .elementor-widget-ehp-header .ehp-header {
+    background: linear-gradient(
+      180deg,
+      rgba(12, 12, 12, 0.88) 0%,
+      rgba(12, 12, 12, 0.50) 60%,
+      rgba(12, 12, 12, 0.00) 100%
+    ) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Mobile nav links — bright white, vivid */
+  .ehp-header__navigation .ehp-header__item,
+  .ehp-header .ehp-header__item,
+  .elementor-nav-menu--dropdown .elementor-item,
+  .elementor-nav-menu--dropdown a {
+    color: #ffffff !important;
+    letter-spacing: 0.22em !important;
+    font-family: var(--vd-font-ui) !important;
+    font-weight: 500 !important;
+    font-size: clamp(1rem, 4vw, 1.2rem) !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Logo: remove the left offset on mobile — let the header center it */
+  .ehp-header__site-logo,
+  .elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header__site-logo {
+    margin-inline-start: 0 !important;
+    margin-left: 0 !important;
+  }
 }
 
 
@@ -1395,13 +1596,43 @@ img {
     max-width: 100% !important;
     background: none !important;
     padding-block-start: clamp(24px, 4vw, 40px) !important;
-    padding-block-end: clamp(40px, 7vw, 80px) !important;
+    padding-block-end: clamp(28px, 5vw, 56px) !important;
     padding-inline-start: var(--vd-hero-pad-x) !important;
     padding-inline-end: var(--vd-hero-pad-x) !important;
+  }
+
+  /* ── MOBILE HERO FULL-VIEWPORT FIX ─────────────────────────────
+     Use dvh (dynamic viewport height) so the hero fills the exact
+     visible area on mobile — accounts for browser address bar chrome.
+     100vh on mobile = full page height incl. chrome → leaves black strip.
+     100dvh adapts live as chrome appears/hides.                    */
+  .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero {
+    min-height: 100svh !important;        /* safe static value (small viewport) */
+    min-height: 100dvh !important;        /* dynamic — wins in supporting browsers */
+  }
+  .elementor-123 .elementor-element.elementor-element-6fbda878 {
+    min-height: 100svh !important;
+    min-height: 100dvh !important;
   }
 }
 
 @media (max-width: 768px) {
+  /* ── GLOBAL MOBILE PADDING ─────────────────────────────────────
+     All inner Elementor containers on non-homepage pages get 24px
+     horizontal breathing room so text never touches the screen edge. */
+  body:not(.elementor-page-123) .elementor-section > .elementor-container,
+  body:not(.elementor-page-123) .elementor-section > .elementor-container > .elementor-column > .elementor-widget-wrap,
+  body:not(.elementor-page-123) .e-con,
+  [data-elementor-type="wp-page"] .elementor-section > .elementor-container,
+  [data-elementor-type="wp-page"] .e-con,
+  [data-elementor-type="wp-post"] .elementor-section > .elementor-container,
+  [data-elementor-type="wp-post"] .e-con {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+  }
+
   /* Pillar borders: stack vertically */
   .elementor-123 .elementor-element.elementor-element-269554f,
   .elementor-123 .elementor-element.elementor-element-a574836,
