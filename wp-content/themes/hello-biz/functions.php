@@ -72,3 +72,51 @@ remove_action('wp_head', 'wp_shortlink_wp_head');
 remove_action('wp_head', 'wlwmanifest_link');
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_resource_hints', 2);
+
+// ===== VACON ELITE VISUAL IDENTITY =====
+
+/**
+ * Load Google Fonts (Oswald, Inter, Montserrat) and our elite CSS override.
+ * Priority 100 ensures we load AFTER Elementor's generated stylesheets.
+ */
+add_action('wp_enqueue_scripts', function() {
+    // Google Fonts — preconnect hints first
+    wp_enqueue_style(
+        'vacon-google-fonts-preconnect',
+        'https://fonts.googleapis.com',
+        [],
+        null
+    );
+
+    // Single combined Google Fonts request (display=swap for performance)
+    wp_enqueue_style(
+        'vacon-elite-fonts',
+        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Oswald:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap',
+        [],
+        null
+    );
+
+    // Elite CSS override — loaded last (highest cascade priority)
+    wp_enqueue_style(
+        'vacon-elite',
+        HELLO_BIZ_ASSETS_URL . 'css/vacon-elite.css',
+        [ 'elementor-frontend' ],
+        '3.6.0'
+    );
+
+    // Scroll animation JS — deferred, no jQuery dependency
+    wp_enqueue_script(
+        'vacon-animations',
+        HELLO_BIZ_ASSETS_URL . 'js/vacon-animations.js',
+        [],
+        '3.6.0',
+        true  // load in footer
+    );
+}, 100 );
+
+/**
+ * Add preconnect for Google Fonts (performance).
+ */
+add_action('wp_head', function() {
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+}, 1);

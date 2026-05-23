@@ -1,0 +1,1429 @@
+/* ================================================================
+   VACON DESIGN — Deep Architectural Graphite v3.7.0
+   Philosophy: Mass. Darkness. Precision. No light themes.
+   Palette: #0c0c0c (main) / #1a1a1a (depth) / #FFFFFF (text)
+   Fonts: Oswald (display) · Inter (body) · Montserrat (UI)
+   ================================================================ */
+
+
+/* ---------------------------------------------------------------
+   TOKENS
+   --------------------------------------------------------------- */
+:root {
+  /* Deep graphite backgrounds */
+  --vd-black:       #0c0c0c;   /* primary page background */
+  --vd-charcoal:    #1a1a1a;   /* section depth layer */
+  --vd-dark:        #242424;   /* card / hover surface */
+  --vd-mid-dark:    #141414;   /* between black and charcoal */
+
+  /* Text hierarchy — light on dark */
+  --vd-heading:     #FFFFFF;   /* headings — pure white authority */
+  --vd-mid:         #E0E0E0;   /* body text — comfortable on dark */
+  --vd-light-text:  #A0A0A0;   /* supporting / secondary text */
+
+  /* Pure white — for accents, never backgrounds */
+  --vd-white:       #ffffff;
+
+  /* Hairline rules on dark surfaces */
+  --vd-rule:        rgba(255,255,255,0.08);
+  --vd-rule-strong: rgba(255,255,255,0.16);
+
+  /* Engineering crimson — used once: hero accent */
+  --vd-crimson:     #c92a2a;
+
+  /* Elevated shadows on dark (stronger needed vs light bg) */
+  --vd-shadow-xs:   0 1px 4px rgba(0,0,0,0.6);
+  --vd-shadow-sm:   0 2px 16px rgba(0,0,0,0.55);
+  --vd-shadow-md:   0 6px 32px rgba(0,0,0,0.65);
+  --vd-shadow-card: 0 4px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.35);
+  --vd-shadow-nav:  0 2px 32px rgba(0,0,0,0.70);
+
+  --vd-ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --vd-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+
+  --vd-font-display: 'Oswald', sans-serif;
+  --vd-font-body:    'Inter', sans-serif;
+  --vd-font-ui:      'Montserrat', sans-serif;
+
+  /* Section rhythm & grid */
+  --vd-section-pad:    clamp(80px, 10vw, 140px);
+  --vd-section-pad-sm: clamp(40px, 5vw, 70px);
+  --vd-gutter:         clamp(24px, 6vw, 100px);
+  /* Strict 100px+ left-margin grid — logo / nav / hero text all align here */
+  --vd-hero-pad-x:     clamp(60px, 8vw, 120px);
+  /* Fixed nav height + buffer — used for ALL page top-padding offset */
+  --vd-nav-h:          140px;
+}
+
+
+/* ---------------------------------------------------------------
+   BASE RESET
+   --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--vd-black) !important;
+  font-family: var(--vd-font-body) !important;
+  font-weight: 400 !important;
+  font-size: 1rem !important;
+  color: var(--vd-mid) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
+}
+
+/* Kill Elementor page body overrides */
+body.elementor-page-123,
+body.elementor-page-123:not(.elementor-motion-effects-element-type-background) {
+  background-color: var(--vd-black) !important;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+
+/* ---------------------------------------------------------------
+   GLOBAL BACKGROUND PURGE — v3.7.0
+   Kills all residual #000000 / Elementor defaults everywhere.
+   Lower specificity than section-specific rules below, so it acts
+   as the guaranteed baseline — homepage and project overrides win.
+   --------------------------------------------------------------- */
+body,
+.elementor-section,
+.elementor-column,
+.elementor-widget-wrap,
+.elementor-widget-container,
+#content,
+.site-content {
+  background-color: #0c0c0c !important;
+}
+.elementor-section-boxed > .elementor-container {
+  background-color: #1a1a1a !important;
+}
+
+
+/* ---------------------------------------------------------------
+   COLLISION FIX — UNIVERSAL 140px OFFSET
+   Covers: home inner pages, project post pages, every URL.
+   Homepage hero absorbs it via padding-block-start: var(--vd-nav-h).
+   All other pages get it on the Elementor content wrapper.
+   --------------------------------------------------------------- */
+/* Standard WP pages */
+body:not(.elementor-page-123) [data-elementor-type="wp-page"] {
+  padding-top: var(--vd-nav-h) !important;
+}
+/* Individual project/post pages — wp-post is the content wrapper,
+   single-post is the Elementor single-post template wrapper */
+[data-elementor-type="wp-post"],
+[data-elementor-type="single-post"] {
+  padding-top: var(--vd-nav-h) !important;
+}
+
+/* ---------------------------------------------------------------
+   FOOTER REMOVAL — SITE-WIDE
+   --------------------------------------------------------------- */
+.site-footer,
+footer.site-footer,
+footer.ehp-footer,
+.ehp-footer,
+#colophon,
+[data-elementor-type="ehp-footer"],
+.elementor-location-footer {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------
+   DEEP GRAPHITE — ALL PAGES (pages, posts, project pages)
+   Enforces #0c0c0c / #1a1a1a across every template.
+   --------------------------------------------------------------- */
+/* Page/post backgrounds */
+body {
+  background-color: var(--vd-black) !important;
+}
+/* All Elementor sections — charcoal (#1a1a1a) base for all non-homepage pages.
+   Specific homepage sections retain their individual overrides below. */
+body:not(.elementor-page-123) .elementor-section,
+body:not(.elementor-page-123) .e-con,
+body:not(.elementor-page-123) .elementor-widget-container,
+body.single .elementor-section,
+body.single .e-con,
+body.single .elementor-widget-container,
+body.single-post .elementor-section,
+body.single-post .e-con,
+body.single-post .elementor-widget-container,
+[data-elementor-type="single-post"] .elementor-section,
+[data-elementor-type="single-post"] .e-con,
+[data-elementor-type="wp-post"] .elementor-section,
+[data-elementor-type="wp-post"] .e-con {
+  background-color: var(--vd-charcoal) !important;  /* #1a1a1a — never pure black */
+}
+/* Raw body and page wrappers stay at #0c0c0c — darkest base layer */
+body,
+body.single [data-elementor-type="wp-post"],
+body.single-post [data-elementor-type="wp-post"] {
+  background-color: var(--vd-black) !important;
+}
+/* All headings site-wide */
+body:not(.elementor-page-123) h1,
+body:not(.elementor-page-123) h2,
+body:not(.elementor-page-123) h3,
+body:not(.elementor-page-123) h4,
+body.single h1,
+body.single h2,
+body.single h3,
+body.single-post h1,
+body.single-post h2,
+body.single-post h3 {
+  color: var(--vd-heading) !important;
+}
+body:not(.elementor-page-123) .elementor-widget-heading .elementor-heading-title,
+body.single .elementor-widget-heading .elementor-heading-title,
+body.single-post .elementor-widget-heading .elementor-heading-title {
+  color: var(--vd-heading) !important;
+}
+/* All body text site-wide */
+body:not(.elementor-page-123) p,
+body:not(.elementor-page-123) .elementor-widget-text-editor,
+body:not(.elementor-page-123) .elementor-widget-text-editor p,
+body.single p,
+body.single .elementor-widget-text-editor,
+body.single-post p,
+body.single-post .elementor-widget-text-editor {
+  color: var(--vd-mid) !important;
+}
+/* Kill any white/light inline backgrounds on project pages */
+body.single span[style*="background"],
+body.single-post span[style*="background"] {
+  background-color: transparent !important;
+  background: none !important;
+}
+
+
+/* ---------------------------------------------------------------
+   GLOBAL TYPOGRAPHY SYSTEM
+   --------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1.08 !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  margin-block-start: 0 !important;
+}
+
+.elementor-widget-heading .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  line-height: 1.08 !important;
+  color: var(--vd-heading) !important;
+}
+
+p,
+.elementor-widget-text-editor,
+.elementor-widget-text-editor p,
+.ehp-contact__description,
+.ehp-contact__contact-link,
+.ehp-contact__contact-text {
+  font-family: var(--vd-font-body) !important;
+  font-weight: 400 !important;
+  line-height: 1.9 !important;
+  color: var(--vd-mid) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.elementor-image-box-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem) !important;
+  color: var(--vd-white) !important;
+  margin-bottom: 40px !important;   /* 40px gap between title and text */
+}
+
+.elementor-image-box-description {
+  font-family: var(--vd-font-body) !important;
+  font-weight: 300 !important;
+  font-size: 0.96rem !important;
+  line-height: 30px !important;
+  color: rgba(255,255,255,0.60) !important;
+  letter-spacing: 0.02em !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  NAVBAR — FIXED, INVISIBLE GRADIENT FADE                     ║
+   ║  Soft gradient top → transparent. No border, no shadow.      ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Fixed to viewport top — always, every page */
+[data-elementor-type="ehp-header"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+}
+
+/* Strip Elementor padding from header container */
+.elementor-111 .elementor-element.elementor-element-5d67fadf {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Airy gradient: barely-there top glow, fully invisible by 40% — no crta, no edge. */
+.elementor-widget-ehp-header .ehp-header,
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header,
+.ehp-header {
+  background: linear-gradient(
+    180deg,
+    rgba(12, 12, 12, 0.30) 0%,
+    rgba(12, 12, 12, 0.10) 40%,
+    rgba(12, 12, 12, 0.00) 100%
+  ) !important;
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* CSS tokens for the header widget */
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header {
+  --header-menu-item-color:          rgba(255, 255, 255, 0.82);
+  --header-menu-item-color-hover:    #ffffff;
+  --header-menu-item-color-active:   #ffffff;
+  --header-toggle-icon-color:        rgba(255, 255, 255, 0.82);
+  --header-toggle-icon-color-active: #ffffff;
+  --header-button-primary-text-color:           #ffffff;
+  --header-button-primary-text-color-hover:     #0c0c0c;
+  --header-button-primary-border-color:         rgba(255,255,255,0.40);
+  --header-button-primary-padding-block-start:  8px;
+  --header-button-primary-padding-block-end:    8px;
+  --header-button-primary-padding-inline-start: 20px;
+  --header-button-primary-padding-inline-end:   20px;
+  --header-menu-item-spacing: 48px;
+}
+
+/* Nav item typography — 18px, premium tracking */
+.elementor-widget-ehp-header .ehp-header__item,
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header__item {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  color: rgba(255,255,255,0.88) !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+
+.elementor-widget-ehp-header .ehp-header__item:hover,
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header__item:hover {
+  color: #ffffff !important;
+}
+
+/* Active page indicator */
+.elementor-widget-ehp-header .ehp-header__menu .current-menu-item .ehp-header__item {
+  color: #ffffff !important;
+  border-bottom: 1.5px solid rgba(255,255,255,0.50) !important;
+  padding-bottom: 2px !important;
+}
+
+/* Ghost CTA button: 1px white border, transparent fill */
+.elementor-widget-ehp-header .is-type-button.ehp-header__button--primary,
+.elementor-111 .elementor-element.elementor-element-5194a873 .is-type-button.ehp-header__button--primary {
+  background-color: transparent !important;
+  border: 1px solid rgba(255,255,255,0.40) !important;
+  color: rgba(255,255,255,0.88) !important;
+  border-radius: 0 !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  padding: 9px 22px !important;
+  transition: background-color 0.3s var(--vd-ease),
+              border-color 0.3s var(--vd-ease),
+              color 0.3s var(--vd-ease) !important;
+}
+/* Hover: solid white → dark text inversion */
+.elementor-widget-ehp-header .is-type-button.ehp-header__button--primary:hover,
+.elementor-widget-ehp-header .is-type-button.ehp-header__button--primary:focus,
+.elementor-111 .elementor-element.elementor-element-5194a873 .is-type-button.ehp-header__button--primary:hover,
+.elementor-111 .elementor-element.elementor-element-5194a873 .is-type-button.ehp-header__button--primary:focus {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--vd-black) !important;
+}
+
+/* Logo: drop-shadow for legibility over hero photos */
+.elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header__site-logo {
+  filter: drop-shadow(0 1px 8px rgba(0,0,0,0.7)) !important;
+  box-shadow: none !important;
+}
+
+/* Mobile hamburger */
+.site-navigation-toggle-holder .site-navigation-toggle {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  HERO — Full-bleed, 100vh, Slideshow + Text Overlay          ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Hero outer container — zero padding, flush to top */
+.elementor-123 .elementor-element.elementor-element-6fbda878 {
+  padding: 0 !important;
+}
+
+/* Hero widget: full viewport height, text pushed to BOTTOM-LEFT on every breakpoint */
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero {
+  background-color: var(--vd-black) !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  overflow: hidden !important;
+  /* BOTTOM-LEFT alignment — applies globally, overriding Elementor's preset layout */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;   /* text pushed to bottom */
+  align-items: flex-start !important;     /* text anchored to left */
+  padding-block-start: 0 !important;
+  /* Side padding: strict 100px grid alignment */
+  --flex-hero-box-padding-inline-start: var(--vd-hero-pad-x);
+  --flex-hero-box-padding-inline-end:   var(--vd-hero-pad-x);
+  padding-inline-start: var(--vd-hero-pad-x) !important;
+  padding-inline-end:   var(--vd-hero-pad-x) !important;
+}
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 > .elementor-widget-container {
+  padding: 0 !important;
+}
+
+/* ------ FULL-BLEED IMAGE LAYOUT (override 33-66 grid) ------
+   Desktop: image wrapper goes absolutely full-bleed.
+   Content sits at the bottom via the global flex rule above. */
+@media (min-width: 1025px) {
+  /* Image wrapper: full-bleed behind content */
+  .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__image-wrapper {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    order: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Content container — NO solid background. Gradient ::before handles the glow.
+     Left-aligned at 100px grid; text anchored to hero bottom. */
+  .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__content-container {
+    position: relative !important;
+    z-index: 3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: none !important;
+    padding-inline-start: var(--vd-hero-pad-x) !important;
+    padding-inline-end: var(--vd-hero-pad-x) !important;
+    padding-block-start: clamp(32px, 4vw, 56px) !important;
+    padding-block-end: clamp(56px, 9vw, 120px) !important;
+    order: 1 !important;
+  }
+}
+
+/* BOTTOM-UP GLOW GRADIENT — strong at bottom (text), fades to clear at top.
+   Matches user spec: 0deg = bottom-to-top direction.
+   The navbar gradient handles the top zone independently. */
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(12, 12, 12, 0.90) 0%,
+    rgba(12, 12, 12, 0.40) 50%,
+    rgba(12, 12, 12, 0.00) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Slideshow image layers (injected by JS)
+   z-index: 2 ensures slides sit ABOVE the static .ehp-flex-hero__image-container
+   regardless of how Elementor positions its own image wrapper children. */
+.vd-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  opacity: 0;
+  transition: opacity 1.5s ease !important;
+  pointer-events: none;
+}
+.vd-slide.vd-slide-active {
+  opacity: 1;
+}
+.vd-slide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+/* Static Elementor hero image — pushed behind slideshow layers on all breakpoints.
+   JS will also set opacity:0 on this container after slide injection. */
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__image-container {
+  position: relative !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  opacity: 0 !important;   /* hidden — slideshow takes over completely */
+}
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  PROJECT PAGES — Montserrat headers / Inter body / 100px grid ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Montserrat for all headings on single project/post pages */
+body.single h1,
+body.single h2,
+body.single h3,
+body.single h4,
+body.single h5,
+body.single h6,
+body.single-post h1,
+body.single-post h2,
+body.single-post h3,
+body.single-post h4,
+body.single-post .elementor-widget-heading .elementor-heading-title,
+[data-elementor-type="single-post"] .elementor-widget-heading .elementor-heading-title,
+[data-elementor-type="wp-post"] .elementor-widget-heading .elementor-heading-title {
+  font-family: var(--vd-font-ui) !important;  /* Montserrat */
+  letter-spacing: 0.08em !important;
+}
+
+/* 100px left-margin grid on project page content sections */
+body.single [data-elementor-type="wp-post"] .elementor-section > .elementor-container,
+body.single-post [data-elementor-type="wp-post"] .elementor-section > .elementor-container,
+body.single [data-elementor-type="wp-post"] .e-con,
+body.single-post [data-elementor-type="wp-post"] .e-con {
+  padding-left:  var(--vd-hero-pad-x) !important;
+  padding-right: var(--vd-hero-pad-x) !important;
+}
+
+/* Inter body text on project pages — already inherited but reinforce */
+body.single [data-elementor-type="wp-post"] p,
+body.single [data-elementor-type="wp-post"] .elementor-widget-text-editor,
+body.single-post [data-elementor-type="wp-post"] p,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-text-editor {
+  font-family: var(--vd-font-body) !important;  /* Inter */
+  font-size: clamp(0.92rem, 1.1vw, 1.0rem) !important;
+  line-height: 1.95 !important;
+  color: var(--vd-mid) !important;
+}
+
+/* Ensure no white/light backgrounds survive on project pages */
+body.single [data-elementor-type="wp-post"],
+body.single-post [data-elementor-type="wp-post"] {
+  background-color: var(--vd-charcoal) !important;
+}
+
+/* IMAGE GEOMETRY — object-fit: contain so no part of the photo is cropped.
+   Charcoal background fills any letterbox area. 80px margin below. */
+body.single [data-elementor-type="wp-post"] .elementor-widget-image,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-image,
+body.single [data-elementor-type="wp-post"] .elementor-image-box-wrapper,
+body.single-post [data-elementor-type="wp-post"] .elementor-image-box-wrapper {
+  margin-bottom: 80px !important;
+  background-color: var(--vd-charcoal) !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-widget-image img,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-image img,
+body.single [data-elementor-type="wp-post"] img,
+body.single-post [data-elementor-type="wp-post"] img {
+  object-fit: contain !important;
+  height: auto !important;
+  width: 100% !important;
+  object-position: center center !important;
+  background-color: var(--vd-charcoal) !important;
+}
+
+/* PROJECT PAGE TEXT — force ALL labels, titles, descriptions to #ffffff */
+body.single [data-elementor-type="wp-post"] .elementor-heading-title,
+body.single-post [data-elementor-type="wp-post"] .elementor-heading-title,
+body.single [data-elementor-type="wp-post"] .elementor-widget-heading .elementor-heading-title,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-heading .elementor-heading-title,
+[data-elementor-type="single-post"] .elementor-widget-heading .elementor-heading-title,
+[data-elementor-type="wp-post"] .elementor-heading-title {
+  color: #ffffff !important;
+}
+body.single [data-elementor-type="wp-post"] p,
+body.single [data-elementor-type="wp-post"] span,
+body.single [data-elementor-type="wp-post"] li,
+body.single [data-elementor-type="wp-post"] a,
+body.single [data-elementor-type="wp-post"] .elementor-widget-text-editor,
+body.single [data-elementor-type="wp-post"] .elementor-widget-text-editor *,
+body.single-post [data-elementor-type="wp-post"] p,
+body.single-post [data-elementor-type="wp-post"] span,
+body.single-post [data-elementor-type="wp-post"] li,
+body.single-post [data-elementor-type="wp-post"] a,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-text-editor,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-text-editor * {
+  color: #ffffff !important;
+}
+/* Labels — Lokacija, Površina, etc. */
+body.single [data-elementor-type="wp-post"] .elementor-widget-heading,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-heading,
+body.single [data-elementor-type="wp-post"] label,
+body.single-post [data-elementor-type="wp-post"] label {
+  color: #ffffff !important;
+}
+body.single [data-elementor-type="wp-post"] a:hover,
+body.single-post [data-elementor-type="wp-post"] a:hover {
+  color: #cccccc !important;
+}
+
+/* SECTION GAPS — 120px breathing room between consecutive sections */
+body.single [data-elementor-type="wp-post"] .elementor-section + .elementor-section,
+body.single-post [data-elementor-type="wp-post"] .elementor-section + .elementor-section,
+body.single [data-elementor-type="wp-post"] .e-con + .e-con,
+body.single-post [data-elementor-type="wp-post"] .e-con + .e-con {
+  margin-top: 120px !important;
+}
+
+/* First section on project pages: pad below the fixed nav + slight top space */
+body.single [data-elementor-type="wp-post"] .elementor-section:first-child,
+body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child,
+body.single [data-elementor-type="wp-post"] .e-con:first-child,
+body.single-post [data-elementor-type="wp-post"] .e-con:first-child {
+  padding-top: clamp(48px, 6vw, 80px) !important;
+}
+
+/* Hero heading — monumental, uppercase, no orphaned letters */
+.elementor-widget-flex-hero .ehp-flex-hero__heading,
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__heading {
+  font-family: var(--vd-font-display) !important;
+  font-size: clamp(2.2rem, 5.5vw, 5.2rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.06 !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  word-break: keep-all !important;
+  hyphens: none !important;
+  overflow-wrap: normal !important;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.60) !important;
+}
+
+/* Hero subheading — visible, positioned immediately below the main heading.
+   "POUZDANOST U SVAKOM PRORAČUNU. STRUČNOST U SVAKOM DETALJU."
+   Left-aligned at 100px grid (inherited from content-container padding). */
+.elementor-widget-flex-hero .ehp-flex-hero__subheading,
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__subheading,
+.ehp-flex-hero__subheading {
+  display: block !important;
+  font-family: var(--vd-font-body) !important;
+  font-size: clamp(0.80rem, 1.1vw, 0.95rem) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1.85 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-transform: none !important;
+  margin-top: 20px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Hero intro text */
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__intro {
+  color: rgba(255,255,255,0.42) !important;
+}
+
+/* Hero CTA buttons */
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .is-type-button.ehp-flex-hero__button--primary {
+  background-color: transparent !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  color: rgba(255,255,255,0.85) !important;
+  border-radius: 0 !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  transition: all 0.3s var(--vd-ease) !important;
+}
+.elementor-123 .elementor-element.elementor-element-7c67e6e2 .is-type-button.ehp-flex-hero__button--primary:hover {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--vd-black) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  "O NAMA" — Deep graphite, white editorial text              ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-95a992e:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-95a992e > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-mid-dark) !important;
+}
+
+.elementor-123 .elementor-element.elementor-element-87bdaf9 > .elementor-widget-container {
+  background-color: var(--vd-mid-dark) !important;
+  padding: var(--vd-section-pad) var(--vd-gutter) clamp(24px, 3vw, 40px) !important;
+  margin: 0 !important;
+}
+.elementor-123 .elementor-element.elementor-element-87bdaf9 .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.04 !important;
+}
+
+.elementor-123 .elementor-element.elementor-element-547f367:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-547f367 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-mid-dark) !important;
+}
+.elementor-123 .elementor-element.elementor-element-8d1e31b > .elementor-widget-container {
+  background-color: var(--vd-mid-dark) !important;
+  padding: clamp(24px, 3vw, 40px) var(--vd-gutter) var(--vd-section-pad) !important;
+}
+.elementor-123 .elementor-element.elementor-element-8d1e31b,
+.elementor-123 .elementor-element.elementor-element-8d1e31b p,
+.elementor-123 .elementor-element.elementor-element-8d1e31b * {
+  font-family: var(--vd-font-body) !important;
+  font-size: clamp(1rem, 1.3vw, 1.1rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.95 !important;
+  color: var(--vd-mid) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.elementor-123 .elementor-element.elementor-element-95a992e {
+  border-bottom: 1px solid var(--vd-rule) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  "NAŠE USLUGE" HEADING — Graphite section header             ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-e08d992:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-e08d992 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;  /* #1a1a1a — confirmed */
+  box-shadow: none !important;
+}
+.elementor-123 .elementor-element.elementor-element-e08d992 {
+  padding-left: 15vw !important;
+  padding-right: 15vw !important;
+}
+.elementor-123 .elementor-element.elementor-element-5977a49 > .elementor-widget-container {
+  background-color: var(--vd-charcoal) !important;
+  padding: var(--vd-section-pad) var(--vd-gutter) clamp(24px, 3vw, 40px) !important;
+  margin: 0 !important;
+}
+.elementor-123 .elementor-element.elementor-element-5977a49 .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.04 !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  SERVICES GRID — Full color, dark overlay, precise spacing   ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-2cd3d4e:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-2cd3d4e > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;
+}
+.elementor-123 .elementor-element.elementor-element-2cd3d4e {
+  padding-top: clamp(40px, 5vw, 64px) !important;
+  padding-bottom: clamp(40px, 5vw, 64px) !important;
+  padding-left: 15vw !important;   /* inward pull — prevent edge-clutter */
+  padding-right: 15vw !important;
+  gap: 0 !important;
+  row-gap: 80px !important;    /* 80px between service card rows */
+  column-gap: 0 !important;
+}
+
+/* Service cells */
+.elementor-123 .elementor-element.elementor-element-94acffd,
+.elementor-123 .elementor-element.elementor-element-7a64fd8,
+.elementor-123 .elementor-element.elementor-element-da815a6,
+.elementor-123 .elementor-element.elementor-element-39de533,
+.elementor-123 .elementor-element.elementor-element-22eec78,
+.elementor-123 .elementor-element.elementor-element-3ef7d24 {
+  padding: 0 !important;
+  border: none !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+  overflow: hidden;
+  position: relative;
+  transition: background-color 0.4s var(--vd-ease) !important;
+}
+.elementor-123 .elementor-element.elementor-element-94acffd:hover,
+.elementor-123 .elementor-element.elementor-element-7a64fd8:hover,
+.elementor-123 .elementor-element.elementor-element-da815a6:hover,
+.elementor-123 .elementor-element.elementor-element-39de533:hover,
+.elementor-123 .elementor-element.elementor-element-22eec78:hover,
+.elementor-123 .elementor-element.elementor-element-3ef7d24:hover {
+  background-color: rgba(255,255,255,0.04) !important;
+}
+
+/* FULL COLOR images with 0.3 dark overlay (brightness 0.7)
+   Smooth reveal to full brightness on hover */
+.elementor-123 .elementor-element.elementor-element-2cd3d4e .elementor-image-box-img img {
+  filter: brightness(0.70) !important;
+  transform: scale(1.0);
+  transition:
+    filter 0.65s var(--vd-ease-out),
+    transform 0.65s var(--vd-ease-out) !important;
+  will-change: filter, transform;
+}
+.elementor-123 .elementor-element.elementor-element-2cd3d4e .elementor-widget-image-box:hover .elementor-image-box-img img,
+.elementor-123 .elementor-element.elementor-element-2cd3d4e .elementor-image-box-wrapper:hover .elementor-image-box-img img {
+  filter: brightness(1.0) !important;
+  transform: scale(1.03) !important;
+}
+
+/* Service titles — 40px margin from image baked into global .elementor-image-box-title above */
+.elementor-123 .elementor-element.elementor-element-0f6c4dc .elementor-image-box-title,
+.elementor-123 .elementor-element.elementor-element-ad1c040 .elementor-image-box-title,
+.elementor-123 .elementor-element.elementor-element-85f7e9f .elementor-image-box-title,
+.elementor-123 .elementor-element.elementor-element-19d7917 .elementor-image-box-title,
+.elementor-123 .elementor-element.elementor-element-92227a5 .elementor-image-box-title,
+.elementor-123 .elementor-element.elementor-element-432d037 .elementor-image-box-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-size: clamp(0.7rem, 1.1vw, 0.9rem) !important;
+  color: rgba(255,255,255,0.90) !important;
+  text-shadow: none !important;
+  margin-bottom: 40px !important;
+}
+
+/* Service descriptions — +20% size, 30px line-height, max 600px width */
+.elementor-123 .elementor-element.elementor-element-0f6c4dc .elementor-image-box-description,
+.elementor-123 .elementor-element.elementor-element-ad1c040 .elementor-image-box-description,
+.elementor-123 .elementor-element.elementor-element-85f7e9f .elementor-image-box-description,
+.elementor-123 .elementor-element.elementor-element-19d7917 .elementor-image-box-description,
+.elementor-123 .elementor-element.elementor-element-92227a5 .elementor-image-box-description,
+.elementor-123 .elementor-element.elementor-element-432d037 .elementor-image-box-description {
+  font-family: var(--vd-font-body) !important;
+  font-weight: 300 !important;
+  font-size: 0.96rem !important;
+  line-height: 30px !important;
+  color: rgba(255,255,255,0.60) !important;
+  letter-spacing: 0.02em !important;
+  max-width: 600px !important;   /* prevent full-width stretch */
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  "DETALJNIJE O USLUGAMA" CTA strip                           ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-bfbc00b:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-bfbc00b > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;
+}
+.elementor-123 .elementor-element.elementor-element-d11cb2b > .elementor-widget-container {
+  background-color: var(--vd-charcoal) !important;
+  padding: clamp(28px, 4vw, 48px) var(--vd-gutter) !important;
+  border-top: 1px solid var(--vd-rule) !important;
+  border-bottom: 1px solid var(--vd-rule) !important;
+}
+.elementor-123 .elementor-element.elementor-element-d11cb2b .elementor-heading-title {
+  font-family: var(--vd-font-ui) !important;
+  font-weight: 500 !important;
+  font-size: clamp(0.72rem, 0.92vw, 0.84rem) !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-mid) !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+.elementor-123 .elementor-element.elementor-element-d11cb2b .elementor-heading-title a {
+  color: var(--vd-mid) !important;
+  text-decoration: none !important;
+}
+.elementor-123 .elementor-element.elementor-element-d11cb2b .elementor-heading-title a:hover,
+.elementor-123 .elementor-element.elementor-element-d11cb2b .elementor-heading-title:hover {
+  color: var(--vd-heading) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  "ZAŠTO ODABRATI NAS" — Charcoal, white text, white borders  ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-450733e:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-450733e > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;
+}
+.elementor-123 .elementor-element.elementor-element-3346f1b > .elementor-widget-container {
+  background-color: var(--vd-charcoal) !important;
+  padding: var(--vd-section-pad) var(--vd-gutter) clamp(24px, 3vw, 40px) !important;
+  margin: 0 !important;
+}
+.elementor-123 .elementor-element.elementor-element-3346f1b .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.04 !important;
+}
+
+/* Grid background — charcoal (#1a1a1a) */
+.elementor-123 .elementor-element.elementor-element-391161a:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-391161a > .elementor-motion-effects-container > .elementor-motion-effects-layer,
+.elementor-123 .elementor-element.elementor-element-d6b798c:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-d6b798c > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;
+}
+.elementor-123 .elementor-element.elementor-element-d6b798c {
+  padding-top: clamp(24px, 3vw, 40px) !important;
+  padding-bottom: var(--vd-section-pad) !important;
+  padding-left: var(--vd-gutter) !important;
+  padding-right: var(--vd-gutter) !important;
+}
+
+/* 4 pillar columns — 1px white borders for contrast on dark bg */
+.elementor-123 .elementor-element.elementor-element-269554f,
+.elementor-123 .elementor-element.elementor-element-a574836,
+.elementor-123 .elementor-element.elementor-element-06cf8f6,
+.elementor-123 .elementor-element.elementor-element-025c527 {
+  border-left: 1px solid rgba(255,255,255,0.18) !important;
+  padding: clamp(16px,2vw,28px) clamp(20px, 3vw, 40px) !important;
+  transition: border-color 0.35s var(--vd-ease),
+              background-color 0.35s var(--vd-ease) !important;
+}
+.elementor-123 .elementor-element.elementor-element-269554f:hover,
+.elementor-123 .elementor-element.elementor-element-a574836:hover,
+.elementor-123 .elementor-element.elementor-element-06cf8f6:hover,
+.elementor-123 .elementor-element.elementor-element-025c527:hover {
+  border-left-color: rgba(255,255,255,0.50) !important;
+  background-color: rgba(255,255,255,0.04) !important;
+}
+
+/* Pillar headings — white */
+.elementor-123 .elementor-element.elementor-element-1da9d5d .elementor-heading-title,
+.elementor-123 .elementor-element.elementor-element-e9cc464 .elementor-heading-title,
+.elementor-123 .elementor-element.elementor-element-6f688a6 .elementor-heading-title,
+.elementor-123 .elementor-element.elementor-element-842147a .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 500 !important;
+  font-size: clamp(1.3rem, 2.2vw, 2rem) !important;
+  letter-spacing: 0.09em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.1 !important;
+}
+
+/* Pillar heading containers */
+.elementor-123 .elementor-element.elementor-element-1da9d5d,
+.elementor-123 .elementor-element.elementor-element-e9cc464,
+.elementor-123 .elementor-element.elementor-element-6f688a6,
+.elementor-123 .elementor-element.elementor-element-842147a {
+  text-align: left !important;
+}
+.elementor-123 .elementor-element.elementor-element-1da9d5d > .elementor-widget-container,
+.elementor-123 .elementor-element.elementor-element-e9cc464 > .elementor-widget-container,
+.elementor-123 .elementor-element.elementor-element-6f688a6 > .elementor-widget-container,
+.elementor-123 .elementor-element.elementor-element-842147a > .elementor-widget-container {
+  padding: 0 0 clamp(12px,2vw,20px) 0 !important;
+}
+
+/* Pillar body text — E0E0E0 on dark charcoal */
+.elementor-123 .elementor-element.elementor-element-a4b4b33,
+.elementor-123 .elementor-element.elementor-element-5f3b862,
+.elementor-123 .elementor-element.elementor-element-531aaa7,
+.elementor-123 .elementor-element.elementor-element-1ab9f73 {
+  font-family: var(--vd-font-body) !important;
+  font-size: clamp(0.88rem, 1.05vw, 0.95rem) !important;
+  font-weight: 400 !important;
+  color: var(--vd-mid) !important;
+  line-height: 1.85 !important;
+  text-align: left !important;
+}
+.elementor-123 .elementor-element.elementor-element-a4b4b33 > .elementor-widget-container,
+.elementor-123 .elementor-element.elementor-element-5f3b862 > .elementor-widget-container,
+.elementor-123 .elementor-element.elementor-element-531aaa7 > .elementor-widget-container,
+.elementor-123 .elementor-element.elementor-element-1ab9f73 > .elementor-widget-container {
+  padding: 0 !important;
+}
+.elementor-123 .elementor-element.elementor-element-a4b4b33 p,
+.elementor-123 .elementor-element.elementor-element-5f3b862 p,
+.elementor-123 .elementor-element.elementor-element-531aaa7 p,
+.elementor-123 .elementor-element.elementor-element-1ab9f73 p {
+  color: var(--vd-mid) !important;
+}
+
+/* DETALJNOST HIGHLIGHT FIX — strip the inline #2d3745 background-color from
+   the <span> inside the Detaljnost paragraph. Makes all 4 pillars look identical. */
+.elementor-123 .elementor-element.elementor-element-a4b4b33 span,
+.elementor-123 .elementor-element.elementor-element-5f3b862 span,
+.elementor-123 .elementor-element.elementor-element-531aaa7 span,
+.elementor-123 .elementor-element.elementor-element-1ab9f73 span {
+  background-color: transparent !important;
+  background: none !important;
+  color: var(--vd-mid) !important;
+  font-size: inherit !important;
+  text-align: inherit !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  "NAŠI PROJEKTI" — Graphite gallery header                   ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-79c8e24:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-79c8e24 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-black) !important;
+}
+.elementor-123 .elementor-element.elementor-element-9ac75c3 > .elementor-widget-container {
+  background-color: var(--vd-black) !important;
+  padding: var(--vd-section-pad) var(--vd-gutter) clamp(24px, 3vw, 40px) !important;
+  margin: 0 !important;
+}
+.elementor-123 .elementor-element.elementor-element-9ac75c3 .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.04 !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  PORTFOLIO — Dark gallery                                     ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.elementor-123 .elementor-element.elementor-element-8572efc:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-8572efc > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-mid-dark) !important;
+}
+.elementor-123 .elementor-element.elementor-element-3c0a02b > .elementor-widget-container {
+  padding: clamp(24px, 3vw, 40px) var(--vd-gutter) var(--vd-section-pad) !important;
+}
+
+/* Portfolio hover overlay */
+.elementor-123 .elementor-element.elementor-element-3c0a02b a .elementor-portfolio-item__overlay {
+  background-color: rgba(12, 12, 12, 0.82) !important;
+}
+
+/* Portfolio title font */
+.elementor-123 .elementor-element.elementor-element-3c0a02b .elementor-portfolio-item__title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+}
+
+/* "Detaljnije o projektima" CTA */
+.elementor-123 .elementor-element.elementor-element-08a32fd:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-08a32fd > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-mid-dark) !important;
+}
+.elementor-123 .elementor-element.elementor-element-fe0c674 > .elementor-widget-container {
+  background-color: var(--vd-mid-dark) !important;
+  padding: clamp(16px, 2vw, 28px) var(--vd-gutter) clamp(28px, 4vw, 48px) !important;
+  border-top: 1px solid var(--vd-rule) !important;
+}
+.elementor-123 .elementor-element.elementor-element-fe0c674 .elementor-heading-title {
+  font-family: var(--vd-font-ui) !important;
+  font-weight: 500 !important;
+  font-size: clamp(0.72rem, 0.92vw, 0.84rem) !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-mid) !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+.elementor-123 .elementor-element.elementor-element-fe0c674 .elementor-heading-title a {
+  color: var(--vd-mid) !important;
+  text-decoration: none !important;
+}
+.elementor-123 .elementor-element.elementor-element-fe0c674 .elementor-heading-title a:hover,
+.elementor-123 .elementor-element.elementor-element-fe0c674 .elementor-heading-title:hover {
+  color: var(--vd-heading) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  SPACER + CONTACT — Dark closing                             ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Spacer between NAŠI PROJEKTI and KONTAKT — must be #1a1a1a, not #0c0c0c */
+.elementor-123 .elementor-element.elementor-element-08d53ca:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-08d53ca > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;
+}
+.elementor-123 .elementor-element.elementor-element-0db57cd {
+  --spacer-size: 64px !important;
+}
+
+.elementor-123 .elementor-element.elementor-element-e3ba264:not(.elementor-motion-effects-element-type-background),
+.elementor-123 .elementor-element.elementor-element-e3ba264 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  background-color: var(--vd-charcoal) !important;
+}
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact {
+  --contact-text-description-color:    rgba(255,255,255,0.52);
+  --contact-link-icon-color:           rgba(255,255,255,0.48);
+  --contact-link-label-color:          rgba(255,255,255,0.70);
+  --contact-link-icon-hover-color:     #ffffff;
+  --contact-link-label-hover-color:    #ffffff;
+  --contact-contact-text-color:        rgba(255,255,255,0.52);
+  --contact-social-icon-color:         rgba(255,255,255,0.32);
+  --contact-social-icon-hover-color:   rgba(255,255,255,0.75);
+  --contact-box-border-color:          rgba(255,255,255,0.06);
+}
+
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact__heading,
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact .ehp-contact__heading {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem) !important;
+}
+
+/* Contact section labels (Lokacija, Pratite nas, Kontakt) — pure white, visible */
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact__subheading,
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact .ehp-contact__groups .ehp-contact__subheading,
+.ehp-contact__subheading,
+body.single .ehp-contact__subheading,
+body.single-post .ehp-contact__subheading {
+  font-family: var(--vd-font-ui) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  color: #ffffff !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+.ehp-contact__subheading:hover {
+  color: #cccccc !important;
+}
+
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact__contact-link,
+.elementor-123 .elementor-element.elementor-element-487ef04 .ehp-contact__contact-text {
+  font-family: var(--vd-font-body) !important;
+  font-weight: 300 !important;
+  color: rgba(255,255,255,0.62) !important;
+  letter-spacing: 0.02em !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  FOOTER — Seamless dark                                       ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+.site-footer {
+  background-color: var(--vd-charcoal) !important;
+  border-top: none !important;
+}
+.elementor-114 .elementor-element,
+.elementor-114 .elementor-element:not(.elementor-motion-effects-element-type-background) {
+  background-color: var(--vd-charcoal) !important;
+}
+.site-footer,
+.elementor-114 * {
+  color: var(--vd-light-text) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  SCROLL ANIMATIONS — vd-reveal / vd-reveal-group             ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+@keyframes vd-rise {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.vd-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  will-change: opacity, transform;
+}
+.vd-reveal.vd-visible {
+  animation: vd-rise 0.8s var(--vd-ease-out) both;
+}
+
+.vd-reveal-group > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--vd-ease-out),
+              transform 0.7s var(--vd-ease-out);
+}
+.vd-reveal-group.vd-visible > *:nth-child(1) { transition-delay: 0.04s; }
+.vd-reveal-group.vd-visible > *:nth-child(2) { transition-delay: 0.12s; }
+.vd-reveal-group.vd-visible > *:nth-child(3) { transition-delay: 0.20s; }
+.vd-reveal-group.vd-visible > *:nth-child(4) { transition-delay: 0.28s; }
+.vd-reveal-group.vd-visible > *:nth-child(5) { transition-delay: 0.36s; }
+.vd-reveal-group.vd-visible > *:nth-child(6) { transition-delay: 0.44s; }
+.vd-reveal-group.vd-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  GLOBAL BLACK INTERCEPT                                       ║
+   ║  Destroys any #000000 or #080808 that Elementor injects as   ║
+   ║  inline styles or via its own generated CSS.                 ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Inline background-color: #000000 overrides */
+[style*="background-color:#000000"],
+[style*="background-color: #000000"],
+[style*="background-color:#080808"],
+[style*="background-color: #080808"] {
+  background-color: var(--vd-charcoal) !important;
+}
+/* Inline background shorthand overrides */
+[style*="background:#000000"],
+[style*="background: #000000"],
+[style*="background:#080808"],
+[style*="background: #080808"] {
+  background: var(--vd-charcoal) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  GLOBAL POLISH                                                ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Remove Elementor structural shadows — we apply targeted ones */
+.elementor-section.elementor-section-boxed > .elementor-container { box-shadow: none; }
+.elementor-top-section { box-shadow: none; }
+
+/* Section hairline dividers */
+.elementor-123 .elementor-element.elementor-element-450733e {
+  border-top: 1px solid var(--vd-rule) !important;
+}
+.elementor-123 .elementor-element.elementor-element-79c8e24 {
+  border-top: 1px solid var(--vd-rule) !important;
+}
+
+/* Elementor default button — dark theme */
+.elementor-button {
+  font-family: var(--vd-font-ui) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  font-size: 0.72rem !important;
+  border-radius: 0 !important;
+  transition: all 0.3s var(--vd-ease) !important;
+}
+
+/* Focus — accessible, minimal */
+:focus-visible {
+  outline: 1px solid rgba(255,255,255,0.40) !important;
+  outline-offset: 3px !important;
+}
+
+/* Smooth img transitions */
+img {
+  transition: filter 0.65s var(--vd-ease-out),
+              transform 0.65s var(--vd-ease-out);
+}
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  PROJECT PAGE NAVIGATION (Prethodni / Sljedeći)              ║
+   ║  Lifted 120px from page bottom. Dark themed.                 ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* PROJECT NAVIGATION — Prethodni / Sljedeći
+   Forcibly visible (display:flex), lifted above page bottom, white text. */
+
+/* WordPress core post navigation */
+.post-navigation,
+.nav-links,
+.navigation.post-navigation {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin: 50px 100px 50px 100px !important;
+  position: relative !important;
+  bottom: auto !important;
+  padding: clamp(24px, 3vw, 40px) 0 !important;
+  background-color: var(--vd-charcoal) !important;
+  border-top: 1px solid var(--vd-rule) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.nav-links a,
+.post-navigation .nav-previous a,
+.post-navigation .nav-next a,
+.post-navigation .nav-previous span,
+.post-navigation .nav-next span {
+  display: inline-block !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+.nav-links a:hover,
+.post-navigation .nav-previous a:hover,
+.post-navigation .nav-next a:hover {
+  color: #cccccc !important;
+}
+
+/* Elementor post navigation widget */
+.elementor-widget-post-navigation,
+.elementor-post-navigation {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin: 50px 100px 50px 100px !important;
+  position: relative !important;
+  bottom: auto !important;
+  padding: clamp(24px, 3vw, 40px) 0 !important;
+  background-color: var(--vd-charcoal) !important;
+  border-top: 1px solid var(--vd-rule) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.elementor-post-navigation__prev,
+.elementor-post-navigation__next {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.elementor-post-navigation__prev a,
+.elementor-post-navigation__next a,
+.elementor-post-navigation__prev span,
+.elementor-post-navigation__next span {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+.elementor-post-navigation__prev a:hover,
+.elementor-post-navigation__next a:hover {
+  color: #cccccc !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  RESPONSIVE                                                   ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  /* Mobile/tablet: image wrapper still covers full hero on smaller screens */
+  .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__image-wrapper {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+  }
+  /* Text is at the bottom (global flex rule) — minimal top padding, generous bottom */
+  .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__content-container {
+    position: relative !important;
+    z-index: 3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: none !important;
+    padding-block-start: clamp(24px, 4vw, 40px) !important;
+    padding-block-end: clamp(40px, 7vw, 80px) !important;
+    padding-inline-start: var(--vd-hero-pad-x) !important;
+    padding-inline-end: var(--vd-hero-pad-x) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Pillar borders: stack vertically */
+  .elementor-123 .elementor-element.elementor-element-269554f,
+  .elementor-123 .elementor-element.elementor-element-a574836,
+  .elementor-123 .elementor-element.elementor-element-06cf8f6,
+  .elementor-123 .elementor-element.elementor-element-025c527 {
+    border-left: none !important;
+    border-top: 1px solid rgba(255,255,255,0.16) !important;
+    padding: clamp(20px, 4vw, 32px) 0 !important;
+  }
+
+  /* Section heading padding on mobile */
+  .elementor-123 .elementor-element.elementor-element-87bdaf9 > .elementor-widget-container,
+  .elementor-123 .elementor-element.elementor-element-5977a49 > .elementor-widget-container,
+  .elementor-123 .elementor-element.elementor-element-3346f1b > .elementor-widget-container,
+  .elementor-123 .elementor-element.elementor-element-9ac75c3 > .elementor-widget-container {
+    padding: 48px 24px 20px !important;
+  }
+
+  .elementor-123 .elementor-element.elementor-element-87bdaf9 .elementor-heading-title,
+  .elementor-123 .elementor-element.elementor-element-5977a49 .elementor-heading-title,
+  .elementor-123 .elementor-element.elementor-element-3346f1b .elementor-heading-title,
+  .elementor-123 .elementor-element.elementor-element-9ac75c3 .elementor-heading-title {
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+  }
+}
