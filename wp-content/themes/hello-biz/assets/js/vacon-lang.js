@@ -309,17 +309,32 @@
     // Prevent double-injection
     if (document.getElementById('vd-lang-btn')) return;
 
-    // Target: the header actions area (email + phone live here)
-    var actions =
-      document.querySelector('.ehp-header__actions') ||
-      document.querySelector('.ehp-header__secondary-menu') ||
-      document.querySelector('.ehp-header__buttons');
+    // Real Hello Plus header class names (confirmed from helloplus-header.css):
+    // .ehp-header__ctas-container  — wraps email + phone CTA buttons
+    // .ehp-header__contact-buttons — individual contact buttons list
+    // .ehp-header__navigation      — nav menu area (insert AFTER this as sibling)
+    var target =
+      document.querySelector('.ehp-header__ctas-container') ||
+      document.querySelector('.ehp-header__contact-buttons') ||
+      document.querySelector('.ehp-header__navigation');
 
-    if (!actions) return;
+    if (!target) {
+      // Elementor may still be rendering — retry up to 10× with 200ms gaps
+      if ((injectButton._tries = (injectButton._tries || 0) + 1) < 10) {
+        setTimeout(injectButton, 200);
+      }
+      return;
+    }
 
     var btn = createToggleBtn();
-    // Prepend before the first icon/button in the actions area
-    actions.insertBefore(btn, actions.firstChild);
+
+    if (target.classList.contains('ehp-header__navigation')) {
+      // Insert as next sibling of the nav (between nav and CTAs)
+      target.parentNode.insertBefore(btn, target.nextSibling);
+    } else {
+      // Prepend inside the CTAs container (before email icon)
+      target.insertBefore(btn, target.firstChild);
+    }
   }
 
 

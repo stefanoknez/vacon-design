@@ -1663,6 +1663,7 @@ img {
 /* ================================================================
    ╔═══════════════════════════════════════════════════════════════╗
    ║  LANGUAGE TOGGLE — EN / CG button in navbar                  ║
+   ║  Injected before .ehp-header__ctas-container                 ║
    ╚═══════════════════════════════════════════════════════════════╝
    ================================================================ */
 
@@ -1678,9 +1679,11 @@ img {
   padding: 8px 14px !important;
   cursor: pointer !important;
   border-radius: 0 !important;
-  margin-right: 12px !important;
+  margin-right: 14px !important;
   line-height: 1 !important;
   flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
   transition: background-color 0.3s var(--vd-ease),
               color 0.3s var(--vd-ease),
               border-color 0.3s var(--vd-ease) !important;
@@ -1691,7 +1694,14 @@ img {
   color: #ffffff !important;
 }
 
-/* Hide on mobile — keeps hamburger menu clean */
+/* Ensure the CTA container is flex so the button sits inline */
+.ehp-header__ctas-container {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+/* Hide on mobile (≤1024px) — hamburger takes over */
 @media (max-width: 1024px) {
   #vd-lang-btn {
     display: none !important;
