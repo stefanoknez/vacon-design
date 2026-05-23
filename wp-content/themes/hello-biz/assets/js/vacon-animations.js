@@ -243,12 +243,63 @@
   }
 
   /* -------------------------------------------------------
+     4. PROJECT PAGE — BROKEN IMAGE FALLBACK
+     When an Elementor image widget references a WordPress
+     attachment URL that doesn't exist on the server (common
+     after migrating to cPanel without syncing uploads), this
+     tries alternative upload folder paths before giving up.
+     Priority order: 2026/07 → 2025/06 → 2025/07 → 2025/05.
+     ------------------------------------------------------- */
+  function initImageFallback() {
+    if (!document.body.classList.contains('single') &&
+        !document.body.classList.contains('single-post')) return;
+
+    // Alternative base paths to try when an image 404s
+    var altBases = [
+      '/wp-content/uploads/2026/07/',
+      '/wp-content/uploads/2025/06/',
+      '/wp-content/uploads/2025/07/',
+      '/wp-content/uploads/2025/05/',
+    ];
+
+    function tryNextPath(img, bases, idx) {
+      if (idx >= bases.length) return;   // all options exhausted
+      var filename = (img.getAttribute('data-original-src') || img.src).split('/').pop();
+      var candidate = bases[idx] + filename;
+      if (candidate === img.src) {
+        tryNextPath(img, bases, idx + 1);
+        return;
+      }
+      img.onerror = function () { tryNextPath(img, bases, idx + 1); };
+      img.src = candidate;
+    }
+
+    document.querySelectorAll(
+      '[data-elementor-type="wp-post"] img, ' +
+      '[data-elementor-type="single-post"] img'
+    ).forEach(function (img) {
+      if (!img.getAttribute('data-fallback-init')) {
+        img.setAttribute('data-fallback-init', '1');
+        img.setAttribute('data-original-src', img.src);
+        img.addEventListener('error', function () {
+          if (!img.getAttribute('data-fallback-started')) {
+            img.setAttribute('data-fallback-started', '1');
+            tryNextPath(img, altBases, 0);
+          }
+        }, { once: true });
+      }
+    });
+  }
+
+
+  /* -------------------------------------------------------
      INIT
      ------------------------------------------------------- */
   function init() {
     initSlideshow();
     initRevealAnimations();
     initProjectScroll();
+    initImageFallback();
   }
 
   if (document.readyState === 'loading') {

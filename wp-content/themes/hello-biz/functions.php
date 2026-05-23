@@ -101,7 +101,7 @@ add_action('wp_enqueue_scripts', function() {
         'vacon-elite',
         HELLO_BIZ_ASSETS_URL . 'css/vacon-elite.css',
         [ 'elementor-frontend' ],
-        '4.0.1'
+        '4.0.4'
     );
 
     // Scroll animation JS — deferred, no jQuery dependency
@@ -109,7 +109,16 @@ add_action('wp_enqueue_scripts', function() {
         'vacon-animations',
         HELLO_BIZ_ASSETS_URL . 'js/vacon-animations.js',
         [],
-        '3.9.1',
+        '4.0.4',
+        true  // load in footer
+    );
+
+    // Language switcher EN ↔ CG — injected after animations script
+    wp_enqueue_script(
+        'vacon-lang',
+        HELLO_BIZ_ASSETS_URL . 'js/vacon-lang.js',
+        [],
+        '4.0.4',
         true  // load in footer
     );
 }, 100 );
