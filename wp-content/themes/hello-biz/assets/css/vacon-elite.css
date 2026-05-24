@@ -2087,3 +2087,113 @@ body:not(.elementor-page-123) .elementor-cta .elementor-button:hover {
   border-color: #ffffff !important;
   color: var(--vd-black) !important;
 }
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  GALLERY WIDGET — Dark theme on project pages                ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Elementor gallery widget — strip white backgrounds, ensure dark container */
+body.single .elementor-widget-gallery,
+body.single-post .elementor-widget-gallery,
+[data-elementor-type="wp-post"] .elementor-widget-gallery,
+[data-elementor-type="wp-post"] .elementor-gallery-container {
+  background-color: transparent !important;
+}
+
+/* Gallery grid items — no white background behind images */
+body.single .elementor-gallery-item,
+body.single-post .elementor-gallery-item,
+[data-elementor-type="wp-post"] .elementor-gallery-item {
+  background-color: transparent !important;
+}
+
+/* Gallery overlay on hover — consistent with portfolio treatment */
+body.single .elementor-gallery-item__overlay,
+body.single-post .elementor-gallery-item__overlay,
+[data-elementor-type="wp-post"] .elementor-gallery-item__overlay {
+  background-color: rgba(12, 12, 12, 0.70) !important;
+}
+
+/* Gallery image — full natural colour, no desaturation */
+body.single .elementor-gallery-item__image,
+body.single-post .elementor-gallery-item__image,
+[data-elementor-type="wp-post"] .elementor-gallery-item__image {
+  filter: none !important;
+  transition: transform 0.5s var(--vd-ease-out) !important;
+}
+body.single .elementor-gallery-item:hover .elementor-gallery-item__image,
+body.single-post .elementor-gallery-item:hover .elementor-gallery-item__image,
+[data-elementor-type="wp-post"] .elementor-gallery-item:hover .elementor-gallery-item__image {
+  transform: scale(1.04) !important;
+}
+
+/* Divider between content sections on project pages */
+body.single [data-elementor-type="wp-post"] .elementor-widget-divider .elementor-divider-separator,
+body.single-post [data-elementor-type="wp-post"] .elementor-widget-divider .elementor-divider-separator {
+  border-color: var(--vd-rule-strong) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  SELECTION & SCROLLBAR — Brand polish                        ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Text selection — crimson accent for brand character */
+::selection {
+  background-color: rgba(201, 42, 42, 0.35);
+  color: #ffffff;
+}
+::-moz-selection {
+  background-color: rgba(201, 42, 42, 0.35);
+  color: #ffffff;
+}
+
+/* Custom scrollbar — webkit browsers only */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0c0c;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  REDUCED MOTION — Accessibility                              ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable slideshow transitions */
+  .vd-slide { transition: none !important; }
+
+  /* Disable scroll reveal animations */
+  .vd-reveal,
+  .vd-reveal-group > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Disable all transforms/transitions on images */
+  img { transition: none !important; }
+
+  /* Disable hover scale effects */
+  .elementor-gallery-item:hover .elementor-gallery-item__image {
+    transform: none !important;
+  }
+}
