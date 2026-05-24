@@ -1,5 +1,5 @@
 /**
- * VACON DESIGN — Deep Architectural Graphite v4.0.8
+ * VACON DESIGN — Deep Architectural Graphite v4.0.9
  *
  * 1. Hero Slideshow — HOMEPAGE ONLY. CSS fade between 8 engineering photos, 5s interval.
  *    STRICT ORDER (hard-coded, index-locked — never re-sorted):

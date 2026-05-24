@@ -1,5 +1,5 @@
 /**
- * VACON DESIGN — Language Switcher v4.0.8
+ * VACON DESIGN — Language Switcher v4.0.9
  * EN ↔ CG (Crnogorski / Montenegrin) toggle.
  *
  * • Injects EN/CG button between KONTAKT and the mailbox icon in the navbar.
@@ -57,9 +57,12 @@
     'NAŠA PRIČA':                      'OUR STORY',
     'NAŠ TIM':                         'OUR TEAM',
 
-    // PROJEKTI page category headings
+    // PROJEKTI page category headings and portfolio filter labels
     'STAMBENO - POSLOVNI OBJEKTI':     'RESIDENTIAL - COMMERCIAL BUILDINGS',
+    'STAMBENO-POSLOVNI OBJEKTI':       'RESIDENTIAL-COMMERCIAL BUILDINGS',
     'INFRASTRUKTURNI OBJEKTI':         'INFRASTRUCTURE PROJECTS',
+    'INFRASTRUKTURA':                  'INFRASTRUCTURE',
+    'ZAŠTITA ISKOPA':                  'EXCAVATION PROTECTION',
 
     // Page 648 — Construction sector contact
     'POŠALJITE PORUKU NAŠEM SEKTORU ZA IZVOĐENJE RADOVA': 'SEND A MESSAGE TO OUR CONSTRUCTION SECTOR',
@@ -335,8 +338,71 @@
     'Detaljnije o projektima':         'View all projects',
     'Projekti':                        'Projects',
     'Kontakt':                         'Contact',
+
+    // ── Form submit buttons
+    'Pošalji poruku':                  'Send Message',
+    'Pošaljite poruku':                'Send Message',
+    'Pošalji':                         'Send',
+    'Pošaljite':                       'Send',
+    'Pošalji upit':                    'Send Enquiry',
+
+    // ── CTA widget buttons (O NAMA team bio cards)
+    'Portfolio':                       'Portfolio',
+    'Kontakt':                         'Contact',
+    'Pogledaj više':                   'View More',
+    'Saznaj više':                     'Learn More',
+    'Saznajte više':                   'Learn More',
+    'Pogledajte više':                 'View More',
   };
 
+
+  // ----------------------------------------------------------------
+  // FORM LABELS — Elementor Pro form field <label> elements.
+  // Exact match only (labels are short, explicit strings).
+  // ----------------------------------------------------------------
+  var FORM_LABELS = {
+    'Ime':              'Name',
+    'Ime i prezime':    'Full Name',
+    'Tema':             'Subject',
+    'Email':            'Email',
+    'Poruka':           'Message',
+    'Prilog':           'Attachment',
+    'Telefon':          'Phone',
+    'Naziv firme':      'Company Name',
+    'Kompanija':        'Company',
+    'Adresa':           'Address',
+    'Grad':             'City',
+    'Komentar':         'Comment',
+    'Pitanje':          'Question',
+    'Vaše ime':         'Your Name',
+    'Vaš email':        'Your Email',
+    'Vaša poruka':      'Your Message',
+  };
+
+  // ----------------------------------------------------------------
+  // FORM PLACEHOLDERS — placeholder attribute values on <input> and
+  // <textarea> elements inside Elementor Pro forms.
+  // ----------------------------------------------------------------
+  var FORM_PLACEHOLDERS = {
+    'Ime i prezime / Naziv firme':
+      'Full Name / Company Name',
+    'Opišite vrstu radova za koji želite upit':
+      'Describe the type of works you are enquiring about',
+    'Opišite vrstu radova za koje želite upit':
+      'Describe the type of works you are enquiring about',
+    'Vaš email preko koga ćemo Vas kontaktirati':
+      'Your email address — we will reply here',
+    'Vaš email':
+      'Your email address',
+    'Poruka':
+      'Message',
+    'Vaša poruka':
+      'Your message',
+    'Ime i prezime':
+      'Full Name',
+    'Naziv firme':
+      'Company Name',
+  };
 
   /* ================================================================
      ORIGINAL TEXT CACHE
@@ -345,8 +411,9 @@
      origCache      — textContent (for plain-text elements)
      origHtmlCache  — innerHTML  (for elements with inline HTML like <strong>)
      ================================================================ */
-  var origCache    = new WeakMap();
-  var origHtmlCache = new WeakMap();
+  var origCache           = new WeakMap();
+  var origHtmlCache       = new WeakMap();
+  var origPlaceholderCache = new WeakMap(); // for input/textarea placeholder attributes
 
   function cacheOriginal(el) {
     if (!origCache.has(el)) origCache.set(el, el.textContent);
@@ -494,9 +561,15 @@
       translateEl(el, CONTACT_LABELS, lang);
     });
 
-    // 5 ── Contact description paragraph + any body-text in contact widgets
-    //  Uses innerHTML cache so <br> / markup is fully restored when switching CG.
-    document.querySelectorAll('.ehp-contact__description, .ehp-contact__description p').forEach(function (el) {
+    // 5 ── Contact/CTA description paragraphs.
+    //  Covers:
+    //    • ehp-contact__description   — Hello Plus contact widget (KONTAKT section)
+    //    • elementor-cta__description — Elementor CTA widget (team bios on O NAMA)
+    //  Uses innerHTML cache so <br> markup is fully restored on CG switch.
+    document.querySelectorAll(
+      '.ehp-contact__description, .ehp-contact__description p, ' +
+      '.elementor-cta__description, .elementor-cta__description p'
+    ).forEach(function (el) {
       // Cache both text and markup on first pass
       if (!origHtmlCache.has(el)) origHtmlCache.set(el, el.innerHTML);
       if (!origCache.has(el))     origCache.set(el, el.textContent);
@@ -616,9 +689,13 @@
     });
 
     // 16 ── CTA / link text inside widgets ("Detaljnije o …", "Projekti", etc.)
+    //  Covers: Elementor button widget, Hello Biz button, CTA widget buttons,
+    //  and standalone .elementor-button-text spans.
     document.querySelectorAll(
       '.elementor-button-text, ' +
       '.elementor-widget-button .elementor-button, ' +
+      '.elementor-cta__button, ' +                // CTA widget buttons (O NAMA team bios)
+      '.elementor-cta .elementor-button, ' +      // alternate CTA button selector
       'a.ehp-button'
     ).forEach(function (el) {
       if (el.children.length === 0) {
@@ -633,6 +710,72 @@
         translateElPartial(el, BODY_TEXT, lang);
       }
     });
+
+    // 18 ── Elementor Pro form: field <label> elements.
+    //  Exact match against FORM_LABELS (labels are always short, unambiguous).
+    document.querySelectorAll(
+      '.elementor-field-label, ' +
+      '.elementor-field-group > label'
+    ).forEach(function (el) {
+      if (el.children.length === 0) {
+        translateEl(el, FORM_LABELS, lang);
+      }
+    });
+
+    // 19 ── Elementor Pro form: placeholder attributes + submit button text.
+    //  placeholder is an attribute, not textContent, so we cache with a
+    //  separate WeakMap and swap the attribute value directly.
+    document.querySelectorAll(
+      '.elementor-form input[placeholder], ' +
+      '.elementor-form textarea[placeholder]'
+    ).forEach(function (el) {
+      // Cache original CG placeholder on first encounter
+      if (!origPlaceholderCache.has(el)) {
+        origPlaceholderCache.set(el, el.getAttribute('placeholder') || '');
+      }
+      if (lang === 'en') {
+        var origPh = origPlaceholderCache.get(el);
+        var translated = FORM_PLACEHOLDERS[origPh];
+        if (translated !== undefined) el.setAttribute('placeholder', translated);
+      } else {
+        el.setAttribute('placeholder', origPlaceholderCache.get(el));
+      }
+    });
+
+    // Submit button — handled by step 16 (.elementor-button-text) when
+    // "Pošalji poruku" appears in BODY_TEXT; this step is an explicit safety net
+    // for the top-level button element that Elementor sometimes renders without
+    // an inner .elementor-button-text span.
+    document.querySelectorAll(
+      '.elementor-form .elementor-button[type="submit"]'
+    ).forEach(function (el) {
+      // Only process if the button renders its text directly (no .elementor-button-text child)
+      var textSpan = el.querySelector('.elementor-button-text');
+      if (!textSpan && el.children.length === 0) {
+        translateElPartial(el, BODY_TEXT, lang);
+      }
+    });
+
+    // 20 ── PowerFolio portfolio filter buttons (PROJEKTI page category tabs).
+    //  These render as <button class="portfolio-filter-item"> with the WordPress
+    //  category/tag name as their text content.
+    document.querySelectorAll('.portfolio-filter-item').forEach(function (el) {
+      if (el.children.length === 0) {
+        translateEl(el, HEADINGS, lang);
+      }
+    });
+
+    // 21 ── Post/archive category badges & labels rendered by Elementor or
+    //  WordPress theme (e.g. category tag chips on the PROJEKTI portfolio grid).
+    document.querySelectorAll(
+      '.elementor-post__badge, ' +
+      '.elementor-post-info__item--type-category a, ' +
+      '.elemenfoliocategory-label'
+    ).forEach(function (el) {
+      if (el.children.length === 0) {
+        translateEl(el, HEADINGS, lang);
+      }
+    });
   }
 
 
@@ -640,9 +783,21 @@
      BUTTON INJECTION
      ================================================================ */
 
-  function createToggleBtn() {
+  /**
+   * Update all injected lang buttons to reflect the current language.
+   * Call after every language switch so desktop and mobile stay in sync.
+   */
+  function syncButtons() {
+    document.querySelectorAll('.vd-lang-toggle').forEach(function (b) {
+      b.textContent = currentLang === 'cg' ? 'EN' : 'CG';
+      b.title = currentLang === 'cg' ? 'Switch to English' : 'Prebaci na crnogorski';
+    });
+  }
+
+  function createToggleBtn(btnId) {
     var btn = document.createElement('button');
-    btn.id = 'vd-lang-btn';
+    btn.id = btnId || 'vd-lang-btn';
+    btn.className = 'vd-lang-toggle';
     btn.setAttribute('type', 'button');
     btn.setAttribute('aria-label', 'Switch language');
     btn.setAttribute('title', currentLang === 'cg' ? 'Switch to English' : 'Prebaci na crnogorski');
@@ -651,8 +806,7 @@
     btn.addEventListener('click', function () {
       currentLang = currentLang === 'cg' ? 'en' : 'cg';
       localStorage.setItem(STORAGE_KEY, currentLang);
-      btn.textContent    = currentLang === 'cg' ? 'EN' : 'CG';
-      btn.title          = currentLang === 'cg' ? 'Switch to English' : 'Prebaci na crnogorski';
+      syncButtons();             // keep desktop ↔ mobile in sync
       applyLanguage(currentLang);
     });
 
@@ -660,38 +814,48 @@
   }
 
   function injectButton() {
-    // Prevent double-injection
-    if (document.getElementById('vd-lang-btn')) return;
+    // ── DESKTOP button ────────────────────────────────────────────────
+    // Hello Plus renders TWO .ehp-header__ctas-container elements:
+    //   1. INSIDE <nav class="ehp-header__navigation"> — mobile dropdown
+    //   2. As direct child of .ehp-header__elements-container — desktop bar
+    // We MUST target only the desktop one (child combinator >).
+    if (!document.getElementById('vd-lang-btn')) {
+      var desktopTarget =
+        document.querySelector('.ehp-header__elements-container > .ehp-header__ctas-container') ||
+        document.querySelector('.ehp-header__ctas-container:not(nav .ehp-header__ctas-container)') ||
+        document.querySelector('.ehp-header__navigation');
 
-    // IMPORTANT: Hello Plus renders TWO .ehp-header__ctas-container elements:
-    //   1. INSIDE <nav class="ehp-header__navigation"> — mobile dropdown (hidden on desktop)
-    //   2. As direct child of .ehp-header__elements-container — desktop bar (visible)
-    // Using plain querySelector gets the FIRST (mobile) one, so the button is never
-    // visible on desktop. Must use the child combinator > to target only the desktop one.
-    var target =
-      // Desktop CTA bar: direct child of elements-container (not nested inside nav)
-      document.querySelector('.ehp-header__elements-container > .ehp-header__ctas-container') ||
-      // Fallback: any ctas-container that is NOT inside the nav element
-      document.querySelector('.ehp-header__ctas-container:not(nav .ehp-header__ctas-container)') ||
-      // Last resort: insert after the nav element itself
-      document.querySelector('.ehp-header__navigation');
-
-    if (!target) {
-      // Elementor may still be rendering — retry up to 10× with 200ms gaps
-      if ((injectButton._tries = (injectButton._tries || 0) + 1) < 10) {
-        setTimeout(injectButton, 200);
+      if (desktopTarget) {
+        var desktopBtn = createToggleBtn('vd-lang-btn');
+        if (desktopTarget.classList.contains('ehp-header__navigation')) {
+          desktopTarget.parentNode.insertBefore(desktopBtn, desktopTarget.nextSibling);
+        } else {
+          desktopTarget.insertBefore(desktopBtn, desktopTarget.firstChild);
+        }
       }
-      return;
     }
 
-    var btn = createToggleBtn();
+    // ── MOBILE button (inside hamburger dropdown) ─────────────────────
+    // Injected into the CTA container INSIDE the nav dropdown so it
+    // appears when the hamburger menu is open on ≤1024px screens.
+    if (!document.getElementById('vd-lang-btn-mobile')) {
+      var mobileTarget =
+        document.querySelector('nav.ehp-header__navigation .ehp-header__ctas-container') ||
+        document.querySelector('.ehp-header__navigation .ehp-header__ctas-container');
 
-    if (target.classList.contains('ehp-header__navigation')) {
-      // Insert as next sibling of the nav (between nav and CTAs)
-      target.parentNode.insertBefore(btn, target.nextSibling);
-    } else {
-      // Prepend inside the desktop CTAs container (before mail/phone icons)
-      target.insertBefore(btn, target.firstChild);
+      if (mobileTarget) {
+        var mobileBtn = createToggleBtn('vd-lang-btn-mobile');
+        mobileBtn.classList.add('vd-lang-btn-mobile');
+        mobileTarget.insertBefore(mobileBtn, mobileTarget.firstChild);
+      }
+    }
+
+    // Retry up to 10× at 200ms if either target wasn't ready yet
+    var desktopMissing = !document.getElementById('vd-lang-btn');
+    var mobileMissing  = !document.getElementById('vd-lang-btn-mobile');
+    if ((desktopMissing || mobileMissing) &&
+        (injectButton._tries = (injectButton._tries || 0) + 1) < 10) {
+      setTimeout(injectButton, 200);
     }
   }
 

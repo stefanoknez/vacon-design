@@ -1,5 +1,5 @@
 /* ================================================================
-   VACON DESIGN — Deep Architectural Graphite v4.0.8
+   VACON DESIGN — Deep Architectural Graphite v4.0.9
    Philosophy: Mass. Darkness. Precision. No light themes.
    Palette: #0c0c0c (main) / #1a1a1a (depth) / #FFFFFF (text)
    Fonts: Oswald (display) · Inter (body) · Montserrat (UI)
@@ -751,6 +751,52 @@ body.single-post [data-elementor-type="wp-post"] label {
 body.single [data-elementor-type="wp-post"] a:hover,
 body.single-post [data-elementor-type="wp-post"] a:hover {
   color: #cccccc !important;
+}
+
+/* PROJECT DATA — Icon-list items (INVESTITOR, GODINA, BGRP, NIVO RAZRADE…).
+   Use Montserrat UI font for the data labels, generous letter-spacing,
+   and a subdued separator line between rows. */
+body.single [data-elementor-type="wp-post"] .elementor-icon-list-items,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-items,
+body.single [data-elementor-type="wp-post"] .ehp-icon-list__items,
+body.single-post [data-elementor-type="wp-post"] .ehp-icon-list__items {
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-icon-list-item,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-item {
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-icon-list-item:last-child,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-item:last-child {
+  border-bottom: none !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-icon-list__text,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list__text,
+body.single [data-elementor-type="wp-post"] .ehp-icon-list__text,
+body.single-post [data-elementor-type="wp-post"] .ehp-icon-list__text {
+  font-family: var(--vd-font-ui) !important;   /* Montserrat */
+  font-size: 0.78rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,0.80) !important;
+  line-height: 1.6 !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-icon-list-icon,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-icon,
+body.single [data-elementor-type="wp-post"] .ehp-icon-list__icon,
+body.single-post [data-elementor-type="wp-post"] .ehp-icon-list__icon {
+  color: rgba(255,255,255,0.30) !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-icon-list-icon i,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-icon i,
+body.single [data-elementor-type="wp-post"] .elementor-icon-list-icon svg,
+body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-icon svg {
+  color: rgba(255,255,255,0.30) !important;
+  fill: rgba(255,255,255,0.30) !important;
 }
 
 /* SECTION GAPS — 120px breathing room between consecutive sections */
@@ -1874,10 +1920,99 @@ img {
   flex-shrink: 0 !important;
 }
 
-/* Hide on mobile (≤1024px) — hamburger takes over */
+/* Hide DESKTOP button on mobile — hamburger takes over */
 @media (max-width: 1024px) {
   #vd-lang-btn {
     display: none !important;
+  }
+}
+
+/* MOBILE lang button — shown only on ≤1024px inside the hamburger dropdown */
+#vd-lang-btn-mobile {
+  display: none !important;    /* hidden by default (desktop) */
+}
+@media (max-width: 1024px) {
+  #vd-lang-btn-mobile {
+    display: inline-flex !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: 1px solid rgba(255,255,255,0.40) !important;
+    border-radius: 0 !important;
+    color: rgba(255,255,255,0.88) !important;
+    cursor: pointer !important;
+    font-family: var(--vd-font-ui) !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.22em !important;
+    line-height: 1 !important;
+    padding: 8px 14px !important;
+    text-transform: uppercase !important;
+    transition: background-color 0.3s var(--vd-ease),
+                color 0.3s var(--vd-ease),
+                border-color 0.3s var(--vd-ease) !important;
+    margin: 8px 0 !important;
+  }
+  #vd-lang-btn-mobile:hover {
+    background-color: rgba(255,255,255,0.10) !important;
+    border-color: rgba(255,255,255,0.65) !important;
+    color: #ffffff !important;
+  }
+}
+
+/* ── RESPONSIVE: O NAMA team bio cards ───────────────────────── */
+@media (max-width: 768px) {
+  /* Stack the 33-66 bio card layout vertically on mobile */
+  .elementor-102 .elementor-cta,
+  .elementor-page-102 .elementor-cta {
+    flex-direction: column !important;
+  }
+  .elementor-102 .elementor-cta__image,
+  .elementor-page-102 .elementor-cta__image {
+    width: 100% !important;
+    min-height: 280px !important;
+    max-height: 380px !important;
+  }
+  .elementor-102 .elementor-cta__content,
+  .elementor-page-102 .elementor-cta__content {
+    width: 100% !important;
+    padding: 28px 20px !important;
+  }
+}
+
+/* ── RESPONSIVE: post navigation ────────────────────────────── */
+@media (max-width: 640px) {
+  .elementor-post-navigation__prev,
+  .elementor-post-navigation__next {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: clamp(14px, 4vw, 20px) 16px !important;
+  }
+  .elementor-post-navigation__next {
+    align-items: flex-end !important;
+  }
+  .elementor-post-navigation__prev--title,
+  .elementor-post-navigation__next--title {
+    font-size: 0.68rem !important;
+  }
+  /* Stack post navigation sections on very small screens */
+  .elementor-post-navigation {
+    flex-direction: column !important;
+  }
+  .elementor-post-navigation__next {
+    border-left: none !important;
+    border-top: 1px solid var(--vd-rule) !important;
+  }
+}
+
+/* ── RESPONSIVE: project icon-list spacing ───────────────────── */
+@media (max-width: 768px) {
+  body.single [data-elementor-type="wp-post"] .elementor-icon-list-item,
+  body.single-post [data-elementor-type="wp-post"] .elementor-icon-list-item {
+    padding: 8px 0 !important;
+  }
+  body.single [data-elementor-type="wp-post"] .elementor-icon-list__text,
+  body.single-post [data-elementor-type="wp-post"] .elementor-icon-list__text {
+    font-size: 0.72rem !important;
   }
 }
 
@@ -1975,9 +2110,13 @@ body:not(.elementor-page-123) .ehp-contact__group {
    ╚═══════════════════════════════════════════════════════════════╝
    ================================================================ */
 
-/* Heading rows on the PROJEKTI page */
-.elementor-677 .elementor-element.elementor-element-dabe199 .elementor-heading-title,
-.elementor-677 .elementor-element.elementor-element-7dd2e52 .elementor-heading-title {
+/* Heading rows on the PROJEKTI page.
+   Widget IDs from DB:
+     6201bcd → "STAMBENO - POSLOVNI OBJEKTI" heading
+     e597d80 → "INFRASTRUKTURNI OBJEKTI" heading
+   (Previous IDs dabe199/7dd2e52 were container IDs — corrected.) */
+.elementor-677 .elementor-element.elementor-element-6201bcd .elementor-heading-title,
+.elementor-677 .elementor-element.elementor-element-e597d80 .elementor-heading-title {
   font-family: var(--vd-font-display) !important;
   font-weight: 300 !important;
   font-size: clamp(1.6rem, 3.5vw, 2.8rem) !important;
@@ -2001,7 +2140,7 @@ body:not(.elementor-page-123) .ehp-contact__group {
   color: #ffffff !important;
 }
 
-/* Portfolio filter tabs (if used) */
+/* Portfolio filter tabs — Elementor built-in widget */
 .elementor-677 .elementor-portfolio-filter {
   font-family: var(--vd-font-ui) !important;
   font-size: 10px !important;
@@ -2012,6 +2151,43 @@ body:not(.elementor-page-123) .ehp-contact__group {
 .elementor-677 .elementor-portfolio-filter.elementor-active,
 .elementor-677 .elementor-portfolio-filter:hover {
   color: #ffffff !important;
+}
+
+/* PowerFolio plugin filter bar (renders different markup) */
+.elementor-677 .elpt-portfolio-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  justify-content: flex-start;
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  padding-bottom: 0;
+}
+.elementor-677 .portfolio-filter-item {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  color: rgba(255,255,255,0.50) !important;
+  cursor: pointer;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  padding: 12px 20px 10px !important;
+  transition: color 0.25s var(--vd-ease),
+              border-color 0.25s var(--vd-ease) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.elementor-677 .portfolio-filter-item:hover {
+  color: rgba(255,255,255,0.85) !important;
+  border-bottom-color: rgba(255,255,255,0.30) !important;
+}
+.elementor-677 .portfolio-filter-item.item-active {
+  color: #ffffff !important;
+  border-bottom-color: #ffffff !important;
 }
 
 
@@ -2040,6 +2216,88 @@ body:not(.elementor-page-123) .ehp-contact__group {
   line-height: 1.95 !important;
   color: rgba(255,255,255,0.70) !important;
   max-width: 720px;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  O NAMA PAGE — Team bio CTA cards (ID 102)                   ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Team bio CTA widget — override Roboto with our design system fonts */
+.elementor-102 .elementor-cta__title,
+.elementor-page-102 .elementor-cta__title {
+  font-family: var(--vd-font-ui) !important;      /* Montserrat */
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  color: #ffffff !important;
+  line-height: 1.5 !important;
+}
+
+.elementor-102 .elementor-cta__description,
+.elementor-page-102 .elementor-cta__description {
+  font-family: var(--vd-font-body) !important;    /* Inter */
+  font-size: clamp(0.88rem, 1.05vw, 0.95rem) !important;
+  font-weight: 300 !important;
+  line-height: 1.90 !important;
+  color: rgba(255,255,255,0.68) !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Team bio card border/container */
+.elementor-102 .elementor-cta,
+.elementor-page-102 .elementor-cta {
+  background-color: transparent !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 0 !important;
+}
+.elementor-102 .elementor-cta__content,
+.elementor-page-102 .elementor-cta__content {
+  background-color: transparent !important;
+  padding: clamp(24px, 3vw, 40px) !important;
+}
+
+/* Bio card buttons — ghost style matching site theme */
+.elementor-102 .elementor-cta__button,
+.elementor-page-102 .elementor-cta__button,
+.elementor-102 .elementor-cta .elementor-button,
+.elementor-page-102 .elementor-cta .elementor-button {
+  background-color: transparent !important;
+  border: 1px solid rgba(255,255,255,0.30) !important;
+  border-radius: 0 !important;
+  color: rgba(255,255,255,0.75) !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.24em !important;
+  text-transform: uppercase !important;
+  padding: 10px 22px !important;
+  transition: background-color 0.3s var(--vd-ease),
+              border-color 0.3s var(--vd-ease),
+              color 0.3s var(--vd-ease) !important;
+}
+.elementor-102 .elementor-cta__button:hover,
+.elementor-page-102 .elementor-cta__button:hover,
+.elementor-102 .elementor-cta .elementor-button:hover,
+.elementor-page-102 .elementor-cta .elementor-button:hover {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--vd-black) !important;
+}
+
+/* Bio card image column — no height clamp (let image breathe) */
+.elementor-102 .elementor-cta__image,
+.elementor-page-102 .elementor-cta__image {
+  filter: none !important;
+}
+.elementor-102 .elementor-cta__image img,
+.elementor-page-102 .elementor-cta__image img {
+  object-fit: cover !important;
+  height: 100% !important;
+  width: 100% !important;
+  filter: none !important;
 }
 
 
