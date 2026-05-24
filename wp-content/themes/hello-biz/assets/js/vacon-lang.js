@@ -67,6 +67,7 @@
     // Project page navigation labels
     'OPIS PROJEKTA':                   'PROJECT DESCRIPTION',
     'PODACI PROJEKTA':                 'PROJECT DATA',
+    'PODACI PROJEKTA:':                'PROJECT DATA:',
     'PRETHODNI PROJEKAT':              'PREVIOUS PROJECT',
     'SLEDEĆI PROJEKAT':                'NEXT PROJECT',
     'SLJEDEĆI PROJEKAT':               'NEXT PROJECT',
@@ -221,12 +222,50 @@
     'MOST':                            'BRIDGE',
     'POTPORNI ZID':                    'RETAINING WALL',
     'INFRASTRUKTURNI OBJEKAT':         'INFRASTRUCTURE STRUCTURE',
+    'TURISTIČKI OBJEKAT':              'TOURISM FACILITY',
+    'MONTAŽNI OBJEKAT':                'PREFABRICATED BUILDING',
+    'JAVNI OBJEKAT':                   'PUBLIC BUILDING',
+
+    // ── Additional project label keys ─────────────────────────────
+    'VRIJEDNOST PROJEKTA:':            'PROJECT VALUE:',
+    'VRIJEDNOST PROJEKTA':             'PROJECT VALUE',
+    'BROJ OBJEKATA:':                  'NUMBER OF BUILDINGS:',
+    'BROJ OBJEKATA':                   'NUMBER OF BUILDINGS',
+    'SPRATNOST:':                      'STOREYS:',
+    'SPRATNOST':                       'STOREYS',
+    'DUŽINA:':                         'LENGTH:',
+    'DUŽINA':                          'LENGTH',
+    'VISINA:':                         'HEIGHT:',
+    'VISINA':                          'HEIGHT',
+
     // Design phase values (for translateProjectLabel to translate the value part)
     'IDEJNI PROJEKAT':                 'CONCEPT DESIGN',
     'GLAVNI PROJEKAT':                 'MAIN PROJECT',
     'IZVEDBENI PROJEKAT':              'EXECUTIVE DESIGN',
     'PROJEKAT ZA GRAĐEVINSKU DOZVOLU': 'BUILDING PERMIT PROJECT',
     'ARHITEKTONSKA SAGLASNOST':        'ARCHITECTURAL CONSENT',
+    'PROJEKAT IZVEDENOG STANJA':       'AS-BUILT PROJECT',
+    'IZRADA GLAVNOG PROJEKTA':         'MAIN PROJECT PREPARATION',
+    'IZMJENA GLAVNOG PROJEKTA':        'MAIN PROJECT REVISION',
+    'USAGLAŠAVANJE SA EVROKODOVIMA':   'EUROCODE COMPLIANCE',
+
+    // Common investors / client names (government bodies)
+    'VLADA CRNE GORE':                 'GOVERNMENT OF MONTENEGRO',
+    'UPRAVA ZA SAOBRAĆAJ':             'DIRECTORATE FOR TRANSPORT',
+    'UNIVERZITET CRNE GORE':           'UNIVERSITY OF MONTENEGRO',
+
+    // Extended building types
+    'OBJEKAT VIŠEPORODIČNOG STANOVANJA':          'MULTI-FAMILY RESIDENTIAL BUILDING',
+    'OBJEKAT MJEŠOVITE NAMJENE':                  'MIXED-USE BUILDING',
+    'TURISTIČKO-APARTMANSKI BLOK':                'TOURIST-APARTMENT COMPLEX',
+    'OBJEKAT OBRAZOVANJA':                        'EDUCATIONAL BUILDING',
+
+    // Section separators used as icon-list items inside project data lists
+    'OPIS PROJEKTA':                   'PROJECT DESCRIPTION',
+    'PODACI PROJEKTA':                 'PROJECT DATA',
+    'PODACI PROJEKTA:':                'PROJECT DATA:',
+    'SLIKE PROJEKTA':                  'PROJECT IMAGES',
+    'GALERIJA':                        'GALLERY',
   };
 
   // ----------------------------------------------------------------
@@ -355,9 +394,15 @@
    * also attempts to translate the value part if it is a known term.
    * Example: "INVESTITOR: MOKA DN d.o.o." → "CLIENT: MOKA DN d.o.o."
    * Example: "NIVO RAZRADE: GLAVNI PROJEKAT" → "DESIGN PHASE: MAIN PROJECT"
+   *
+   * Caches both textContent and innerHTML so elements with inline <b>/<strong>
+   * tags (e.g. FILOLOŠKI FAKULTET project) are fully restored on CG switch.
    */
   function translateProjectLabel(el, dict, toLang) {
-    cacheOriginal(el);
+    // Cache both plain text and markup on first call
+    if (!origHtmlCache.has(el)) origHtmlCache.set(el, el.innerHTML);
+    if (!origCache.has(el))     origCache.set(el, el.textContent);
+
     if (toLang === 'en') {
       var text = el.textContent.trim();
       var textUpper = text.toUpperCase();
@@ -376,7 +421,8 @@
         return;
       }
     } else {
-      el.textContent = getOriginal(el);
+      // Restore full original markup (preserves <b> tags in bold-label items)
+      el.innerHTML = origHtmlCache.get(el);
     }
   }
 
@@ -507,11 +553,14 @@
     // 10 ── Project page inline labels (icon-text: INVESTITOR, GODINA, etc.)
     //  Icon-list items combine label + value: "INVESTITOR: MOKA DN d.o.o."
     //  translateProjectLabel splits on the label prefix, translates both halves.
+    //  Allow single inline child (e.g. <b>INVESTITOR</b>: value) — these use
+    //  innerHTML caching inside translateProjectLabel so <b> tags are restored.
     document.querySelectorAll(
       '.ehp-icon-list__text, ' +       // Hello Biz icon list
       '.elementor-icon-list__text'     // Elementor icon list
     ).forEach(function (el) {
-      if (el.children.length === 0) {
+      // el.children.length <= 1 covers both plain text and <b>label</b>: value format
+      if (el.children.length <= 1) {
         translateProjectLabel(el, PROJECT_LABELS, lang);
       }
     });
