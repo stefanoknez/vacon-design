@@ -71,6 +71,10 @@
     'SLEDEĆI PROJEKAT':                'NEXT PROJECT',
     'SLJEDEĆI PROJEKAT':               'NEXT PROJECT',
 
+    // Project page section headings
+    'SLIKE PROJEKTA':                  'PROJECT IMAGES',
+    'GALERIJA':                        'GALLERY',
+
     // CTA links / section labels
     'DETALJNIJE O USLUGAMA →':         'LEARN MORE ABOUT OUR SERVICES →',
     'DETALJNIJE O PROJEKTIMA →':       'VIEW ALL PROJECTS →',
@@ -124,9 +128,13 @@
     '6. ELABORAT ENERGETSKE EFIKASNOSTI':     '6. ENERGY EFFICIENCY REPORT',
     'ELABORAT ENERGETSKE EFIKASNOSTI':        'ENERGY EFFICIENCY REPORT',
 
+    // Homepage short-form titles (no number prefix, shorter names)
+    'IZVOĐENJE':                              'CONSTRUCTION',
+    'TENDERI':                                'TENDERS',
+
     // ── Descriptions (matched via opening phrase) ─────────────────
 
-    // 1. Projektovanje objekata
+    // 1. Projektovanje objekata (USLUGE page — concrete/steel focus)
     'Specijalizovani smo za projektovanje betonskih':
       'We specialise in the design of concrete and steel structures, applying modern software solutions for structural analysis, reinforcement detailing, and workshop drawings. Our projects comply with Eurocode standards, ensuring the safety, durability, and reliability of every structure. We pay special attention to aesthetic and functional aspects, ensuring each building is fully tailored to the investor\'s requirements.',
 
@@ -149,6 +157,28 @@
     // 6. Elaborat energetske efikasnosti
     'Naš tim izrađuje elaborate energetske':
       'Our team prepares energy efficiency reports in accordance with applicable regulations and standards. These documents form the basis for obtaining building and occupancy permits, and are also an important tool for assessing and optimising energy consumption in buildings.',
+
+    // ── Homepage image-box descriptions (different wording from USLUGE page) ──
+
+    // Homepage: Projektovanje objekata (commercial/residential focus)
+    'Izrađujemo kompletne projekte za sve vrste':
+      'We develop complete design documentation for all types of commercial and residential buildings, in compliance with applicable regulations, technical standards, and investor-specific requirements. Our team of engineers delivers reliable, functional, and aesthetically consistent solutions — whether for smaller residential buildings, mixed-use complexes, or commercial centres.',
+
+    // Homepage: Zaštita iskopa (slightly different phrasing)
+    'Projektujemo sve vrste sistema za zaštitu iskopa':
+      'We design all types of foundation pit protection systems, including piles, diaphragm walls, anchored walls, steel shoring, and temporary structures. We approach each case individually, taking into account soil conditions, excavation depth, and site requirements. Our goal is maximum stability, safety, and cost optimisation.',
+
+    // Homepage: Izvođenje (short form — construction execution)
+    'Pored projektovanja, bavimo se i izvođenjem':
+      'In addition to design, we carry out structural works in full compliance with all technical and legal requirements. We realise projects from foundations to the roof, with controlled construction phases and full compliance with project documentation. We guarantee quality and efficient construction, delivered within set deadlines.',
+
+    // Homepage: Tenderi (tender preparation — homepage only service)
+    'Pripremamo kompletnu tehničku dokumentaciju za učešće':
+      'We prepare complete technical documentation for participation in tenders in the fields of building construction and infrastructure. Our team produces accurate cost estimates, technical descriptions, and graphic annexes in accordance with client and procurement procedure requirements. With our support, you maximise your chances of success in every public call.',
+
+    // Homepage: Stručni nadzor (different wording from USLUGE page)
+    'Pružamo usluge stručnog nadzora nad izvođenjem':
+      'We provide professional supervision services for construction works, ensuring quality, compliance with design and legal requirements, and control of timelines and budget. Our engineers oversee all technical details and respond promptly to on-site challenges. Your construction is under expert supervision.',
   };
 
   // Hero subheading (homepage)
@@ -184,6 +214,19 @@
     'KONSTRUKCIJA':                    'STRUCTURE',
     'ARMIRANOBETONSKA KONSTRUKCIJA':   'REINFORCED CONCRETE STRUCTURE',
     'ČELIČNA KONSTRUKCIJA':            'STEEL STRUCTURE',
+    // Common building types
+    'STAMBENI OBJEKAT':                'RESIDENTIAL BUILDING',
+    'STAMBENO-POSLOVNI OBJEKAT':       'MIXED-USE BUILDING',
+    'POSLOVNI OBJEKAT':                'COMMERCIAL BUILDING',
+    'MOST':                            'BRIDGE',
+    'POTPORNI ZID':                    'RETAINING WALL',
+    'INFRASTRUKTURNI OBJEKAT':         'INFRASTRUCTURE STRUCTURE',
+    // Design phase values (for translateProjectLabel to translate the value part)
+    'IDEJNI PROJEKAT':                 'CONCEPT DESIGN',
+    'GLAVNI PROJEKAT':                 'MAIN PROJECT',
+    'IZVEDBENI PROJEKAT':              'EXECUTIVE DESIGN',
+    'PROJEKAT ZA GRAĐEVINSKU DOZVOLU': 'BUILDING PERMIT PROJECT',
+    'ARHITEKTONSKA SAGLASNOST':        'ARCHITECTURAL CONSENT',
   };
 
   // ----------------------------------------------------------------
@@ -292,6 +335,37 @@
           el.textContent = dict[key];
           return;
         }
+      }
+    } else {
+      el.textContent = getOriginal(el);
+    }
+  }
+
+  /**
+   * Translate a "LABEL: value" combined string.
+   * Translates the LABEL prefix using dict (uppercase key matching), then
+   * also attempts to translate the value part if it is a known term.
+   * Example: "INVESTITOR: MOKA DN d.o.o." → "CLIENT: MOKA DN d.o.o."
+   * Example: "NIVO RAZRADE: GLAVNI PROJEKAT" → "DESIGN PHASE: MAIN PROJECT"
+   */
+  function translateProjectLabel(el, dict, toLang) {
+    cacheOriginal(el);
+    if (toLang === 'en') {
+      var text = el.textContent.trim();
+      var textUpper = text.toUpperCase();
+      // Find the longest matching label prefix (prefer "INVESTITOR:" over "INVESTITOR")
+      var bestKey = '';
+      for (var key in dict) {
+        if (textUpper.indexOf(key) === 0 && key.length > bestKey.length) {
+          bestKey = key;
+        }
+      }
+      if (bestKey) {
+        var labelEn  = dict[bestKey];
+        var valueRaw = text.slice(bestKey.length).replace(/^\s+/, ''); // trim leading spaces
+        var valueEn  = dict[valueRaw.toUpperCase()] || valueRaw;       // translate value if known
+        el.textContent = labelEn + (valueRaw ? ' ' + valueEn : '');
+        return;
       }
     } else {
       el.textContent = getOriginal(el);
@@ -418,13 +492,19 @@
     });
 
     // 10 ── Project page inline labels (icon-text: INVESTITOR, GODINA, etc.)
-    //  These are often plain <span> or <p> elements with icon prefix
+    //  Icon-list items combine label + value: "INVESTITOR: MOKA DN d.o.o."
+    //  translateProjectLabel splits on the label prefix, translates both halves.
     document.querySelectorAll(
       '.ehp-icon-list__text, ' +       // Hello Biz icon list
-      '.elementor-icon-list__text, ' + // Elementor icon list
-      'p, span'
+      '.elementor-icon-list__text'     // Elementor icon list
     ).forEach(function (el) {
-      // Only translate leaf nodes (no child elements) to avoid corrupting HTML structure
+      if (el.children.length === 0) {
+        translateProjectLabel(el, PROJECT_LABELS, lang);
+      }
+    });
+    // Generic leaf <p> and <span> — plain exact match only (avoids false positives
+    // on elements whose text combines label+value in unknown format)
+    document.querySelectorAll('p, span').forEach(function (el) {
       if (el.children.length === 0) {
         translateEl(el, PROJECT_LABELS, lang);
       }
