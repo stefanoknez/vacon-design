@@ -1,5 +1,5 @@
 /**
- * VACON DESIGN — Language Switcher v4.0.9
+ * VACON DESIGN — Language Switcher v4.0.9d
  * EN ↔ CG (Crnogorski / Montenegrin) toggle.
  *
  * • Injects EN/CG button between KONTAKT and the mailbox icon in the navbar.
@@ -621,8 +621,14 @@
       translateEl(el, HEADINGS, lang);
     });
 
-    // 9 ── Project page: section labels (PODACI PROJEKTA, OPIS PROJEKTA, etc.)
+    // 9 ── Project page: section labels (PODACI PROJEKTA, etc.) via heading widgets
     document.querySelectorAll('.elementor-heading-title').forEach(function (el) {
+      translateEl(el, PROJECT_LABELS, lang);
+    });
+
+    // 9b ── Divider text labels (OPIS PROJEKTA, SLIKE PROJEKTA) on project pages
+    document.querySelectorAll('.elementor-divider__text').forEach(function (el) {
+      translateEl(el, HEADINGS, lang);
       translateEl(el, PROJECT_LABELS, lang);
     });
 
