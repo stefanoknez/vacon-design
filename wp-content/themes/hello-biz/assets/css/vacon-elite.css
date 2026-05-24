@@ -779,6 +779,66 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   background-color: transparent !important;
 }
 
+/* SINGLE-POST TEMPLATE hero overlay — replace blue-grey global colour
+   with a pure dark vignette so the featured image shows naturally. */
+[data-elementor-type="single-post"] .elementor-element-ad6b6f1 .elementor-background-overlay,
+[data-elementor-type="single-post"] .elementor-element-ad6b6f1::before {
+  background-color: rgba(12, 12, 12, 0.42) !important;
+}
+
+/* Post title in single-post template — Montserrat, white */
+[data-elementor-type="single-post"] .elementor-element-143ce1b .elementor-heading-title {
+  font-family: var(--vd-font-ui) !important;    /* Montserrat */
+  font-weight: 600 !important;
+  font-size: clamp(1.8rem, 4vw, 3.6rem) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.60) !important;
+  line-height: 1.1 !important;
+}
+
+/* Post excerpt in single-post template — readable on photo */
+[data-elementor-type="single-post"] .elementor-element-882b788 {
+  color: rgba(255,255,255,0.82) !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.70) !important;
+}
+
+/* Chevron-down icon in single-post template — white, animated */
+[data-elementor-type="single-post"] .elementor-element-a8422ba .elementor-icon {
+  color: rgba(255,255,255,0.75) !important;
+  transition: color 0.3s var(--vd-ease), transform 0.3s var(--vd-ease) !important;
+}
+[data-elementor-type="single-post"] .elementor-element-a8422ba .elementor-icon:hover {
+  color: #ffffff !important;
+  transform: translateY(4px) !important;
+}
+[data-elementor-type="single-post"] .elementor-element-a8422ba .elementor-icon i,
+[data-elementor-type="single-post"] .elementor-element-a8422ba .elementor-icon svg {
+  color: rgba(255,255,255,0.75) !important;
+  fill: rgba(255,255,255,0.75) !important;
+}
+
+/* Share buttons in single-post template — white icons on transparent bg */
+[data-elementor-type="single-post"] .elementor-share-btn {
+  color: rgba(255,255,255,0.60) !important;
+  background-color: transparent !important;
+  transition: color 0.3s var(--vd-ease) !important;
+}
+[data-elementor-type="single-post"] .elementor-share-btn:hover {
+  color: #ffffff !important;
+}
+[data-elementor-type="single-post"] .elementor-share-btn__icon i,
+[data-elementor-type="single-post"] .elementor-share-btn__icon svg {
+  color: rgba(255,255,255,0.60) !important;
+  fill: rgba(255,255,255,0.60) !important;
+}
+[data-elementor-type="single-post"] .elementor-share-btn:hover .elementor-share-btn__icon i,
+[data-elementor-type="single-post"] .elementor-share-btn:hover .elementor-share-btn__icon svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
 /* Hero heading — monumental, uppercase, no orphaned letters */
 .elementor-widget-flex-hero .ehp-flex-hero__heading,
 .elementor-123 .elementor-element.elementor-element-7c67e6e2 .ehp-flex-hero__heading {

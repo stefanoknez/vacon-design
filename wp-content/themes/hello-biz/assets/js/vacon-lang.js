@@ -64,13 +64,16 @@
     // Page 648 — Construction sector contact
     'POŠALJITE PORUKU NAŠEM SEKTORU ZA IZVOĐENJE RADOVA': 'SEND A MESSAGE TO OUR CONSTRUCTION SECTOR',
 
-    // Project page navigation labels
+    // Project page navigation labels (both -AT and -T endings used across templates)
     'OPIS PROJEKTA':                   'PROJECT DESCRIPTION',
     'PODACI PROJEKTA':                 'PROJECT DATA',
     'PODACI PROJEKTA:':                'PROJECT DATA:',
     'PRETHODNI PROJEKAT':              'PREVIOUS PROJECT',
+    'PRETHODNI PROJEKT':               'PREVIOUS PROJECT',
     'SLEDEĆI PROJEKAT':                'NEXT PROJECT',
+    'SLEDEĆI PROJEKT':                 'NEXT PROJECT',
     'SLJEDEĆI PROJEKAT':               'NEXT PROJECT',
+    'SLJEDEĆI PROJEKT':                'NEXT PROJECT',
 
     // Project page section headings
     'SLIKE PROJEKTA':                  'PROJECT IMAGES',
