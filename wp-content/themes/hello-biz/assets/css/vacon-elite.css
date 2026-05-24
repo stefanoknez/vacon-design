@@ -320,13 +320,22 @@ body.single-post .elementor-widget-text-editor .elementor-widget-container {
   --zigzag-description-color: rgba(255, 255, 255, 0.72);
 }
 
-/* Safety: if Elementor inline CSS doesn't fire, these win */
+/* Safety: if Elementor inline CSS doesn't fire, these win.
+   Also override Roboto (the Elementor kit default) with our design system fonts. */
 .ehp-zigzag__title {
+  font-family: var(--vd-font-display) !important;    /* Oswald */
+  font-weight: 400 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
   color: var(--vd-heading) !important;
 }
 .ehp-zigzag__description {
+  font-family: var(--vd-font-body) !important;       /* Inter */
+  font-weight: 300 !important;
+  font-size: clamp(0.92rem, 1.05vw, 1.0rem) !important;
   color: rgba(255, 255, 255, 0.72) !important;
-  line-height: 1.85 !important;
+  line-height: 1.92 !important;
+  letter-spacing: 0.01em !important;
 }
 
 /* Zigzag "Projekti" CTA button — ghost style matching the design system */
@@ -350,6 +359,21 @@ a.ehp-zigzag__button:hover {
   background-color: rgba(255, 255, 255, 0.10) !important;
   border-color: rgba(255, 255, 255, 0.65) !important;
   color: #ffffff !important;
+}
+
+/* Zigzag service images — no white borders, correct fit */
+.ehp-zigzag__image-wrapper {
+  background-color: transparent !important;
+  overflow: hidden;
+}
+.ehp-zigzag__image-wrapper img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  transition: transform 0.5s var(--vd-ease-out) !important;
+}
+.ehp-zigzag__item-wrapper:hover .ehp-zigzag__image-wrapper img {
+  transform: scale(1.03) !important;
 }
 
 /* Divider between zigzag items — subtle rule */
