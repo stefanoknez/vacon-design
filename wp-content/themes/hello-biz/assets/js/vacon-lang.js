@@ -1,5 +1,5 @@
 /**
- * VACON DESIGN — Language Switcher v4.0.7
+ * VACON DESIGN — Language Switcher v4.0.8
  * EN ↔ CG (Crnogorski / Montenegrin) toggle.
  *
  * • Injects EN/CG button between KONTAKT and the mailbox icon in the navbar.
@@ -280,6 +280,14 @@
     'Birajući nas, birate partnera':
       'By choosing us, you choose a partner who understands the importance of every millimetre, every plan, and every deadline. Quality, reliability, and expertise are not just our promises — they are the foundations on which we build every project.',
 
+    // ── O NAMA page — Vladimir Jovanović biography
+    'Rođen 17-og Jula 1989 godine u Baru':
+      'Born on 17 July 1989 in Bar, he completed his primary and secondary education in his hometown of Ulcinj, graduating with distinction. He earned a Specialist degree from the Faculty of Civil Engineering in Podgorica in 2012, specialising in structural engineering. At the same institution, he obtained a Master\'s degree in Civil Engineering in 2023, with a focus on concrete structures and seismic engineering. Since 2024, he has been a doctoral student at the Faculty of Civil Engineering in Podgorica. He began his professional career in 2013 at "Arhitektonski Atelje" in Podgorica as a structural design engineer, contributing to numerous building and construction projects. In 2018, his ambition to work on major infrastructure led him to "CRBC Montenegro branch," where he served as a bridge design engineer, contributing to the documentation of bridges and retaining structures on the Smokovac–Mateševo motorway section. Following the completion of the motorway project in 2022, he founded "VACON" d.o.o. Podgorica — bringing together expertise and experience to serve partners who demand reliability and professionalism in every aspect of structural design.',
+
+    // ── O NAMA page — Marija Knežević Jovanović biography
+    'Rođena 8-og marta 1990. godine u Bijelom Polju':
+      'Born on 8 March 1990 in Bijelo Polje, she completed her primary and secondary education there, graduating with distinction. She earned a Specialist degree from the Faculty of Civil Engineering in Podgorica on 06.02.2013, specialising in structural engineering with a focus on structural statics. She began her professional career in 2013 at "Bemax" in Podgorica in the technical preparation department, contributing to the realisation of some of Montenegro\'s largest construction projects. She also participated in the preparation and revision of project documentation, with particular emphasis on the design of retaining structures in infrastructure works. She joined our team in 2024, where she leads the construction execution department, working on retaining structure design and the preparation of tender documentation.',
+
     // ── Short CTA / button texts
     'Detaljnije o našim uslugama':     'Learn more about our services',
     'Detaljnije o projektima':         'View all projects',
@@ -438,16 +446,20 @@
     });
 
     // 5 ── Contact description paragraph + any body-text in contact widgets
+    //  Uses innerHTML cache so <br> / markup is fully restored when switching CG.
     document.querySelectorAll('.ehp-contact__description, .ehp-contact__description p').forEach(function (el) {
-      // First: main contact description (hard-coded full translation)
-      cacheOriginal(el);
+      // Cache both text and markup on first pass
+      if (!origHtmlCache.has(el)) origHtmlCache.set(el, el.innerHTML);
+      if (!origCache.has(el))     origCache.set(el, el.textContent);
+
       if (lang === 'en') {
-        if (el.textContent.trim().indexOf(CONTACT_DESC_CG) === 0) {
+        var text = el.textContent.trim();
+        // First: main contact description (hard-coded full translation)
+        if (text.indexOf(CONTACT_DESC_CG) === 0) {
           el.textContent = CONTACT_DESC_EN;
           return;
         }
-        // Fallback: check BODY_TEXT for partial matches (O NAMA bios etc.)
-        var text = el.textContent.trim();
+        // Fallback: BODY_TEXT partial-start match (biographies, other paras)
         for (var key in BODY_TEXT) {
           if (text.indexOf(key) === 0) {
             el.textContent = BODY_TEXT[key];
@@ -455,7 +467,8 @@
           }
         }
       } else {
-        el.textContent = getOriginal(el);
+        // Restore full original markup (preserves <br> line breaks in bios)
+        el.innerHTML = origHtmlCache.get(el);
       }
     });
 

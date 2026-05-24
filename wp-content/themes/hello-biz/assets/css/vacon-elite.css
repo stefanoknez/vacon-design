@@ -1,5 +1,5 @@
 /* ================================================================
-   VACON DESIGN — Deep Architectural Graphite v4.0.7
+   VACON DESIGN — Deep Architectural Graphite v4.0.8
    Philosophy: Mass. Darkness. Precision. No light themes.
    Palette: #0c0c0c (main) / #1a1a1a (depth) / #FFFFFF (text)
    Fonts: Oswald (display) · Inter (body) · Montserrat (UI)
@@ -1819,4 +1819,271 @@ img {
   #vd-lang-btn {
     display: none !important;
   }
+}
+
+
+/* ================================================================
+   ╔═══════════════���═══════════════════════════════════════════════╗
+   ║  CONTACT WIDGET — Global dark theme override                  ║
+   ║  Applies to ALL ehp-contact widgets on every non-homepage    ║
+   ║  page (O NAMA team bios, KONTAKT, USLUGE, PROJEKTI).        ║
+   ╚══════════════════════════════════════════════���════════════════╝
+   ================================================================ */
+
+/* Force dark CSS variables so the widget doesn't fall back to
+   Elementor's global colour kit (#2D3745 / #F6F6FF). */
+body:not(.elementor-page-123) .ehp-contact,
+body.single .ehp-contact,
+body.single-post .ehp-contact {
+  --contact-heading-color:             #ffffff;
+  --contact-subheading-color:          rgba(255,255,255,0.52);
+  --contact-text-description-color:    rgba(255,255,255,0.72);
+  --contact-link-icon-color:           rgba(255,255,255,0.48);
+  --contact-link-label-color:          rgba(255,255,255,0.70);
+  --contact-link-icon-hover-color:     #ffffff;
+  --contact-link-label-hover-color:    #ffffff;
+  --contact-contact-text-color:        rgba(255,255,255,0.52);
+  --contact-social-icon-color:         rgba(255,255,255,0.32);
+  --contact-social-icon-hover-color:   rgba(255,255,255,0.75);
+  --contact-box-border-color:          rgba(255,255,255,0.08);
+}
+
+/* Team member name / role heading (showcase layout on O NAMA) */
+body:not(.elementor-page-123) .ehp-contact__heading {
+  font-family: var(--vd-font-body) !important;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.02em !important;
+  color: var(--vd-heading) !important;
+  text-transform: none !important;
+}
+
+/* Biography / description block */
+body:not(.elementor-page-123) .ehp-contact__description {
+  color: rgba(255,255,255,0.72) !important;
+  font-family: var(--vd-font-body) !important;
+  font-weight: 400 !important;
+  line-height: 1.9 !important;
+  font-size: clamp(0.88rem, 1.05vw, 0.96rem) !important;
+}
+
+/* CTA buttons inside contact widgets — ghost / minimal style */
+body:not(.elementor-page-123) .ehp-contact .ehp-button,
+body:not(.elementor-page-123) .ehp-contact a.ehp-button {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  color: rgba(255,255,255,0.88) !important;
+  border-radius: 0 !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  transition: background-color 0.3s var(--vd-ease),
+              border-color 0.3s var(--vd-ease),
+              color 0.3s var(--vd-ease) !important;
+}
+body:not(.elementor-page-123) .ehp-contact .ehp-button:hover,
+body:not(.elementor-page-123) .ehp-contact a.ehp-button:hover {
+  background-color: rgba(255,255,255,0.10) !important;
+  border-color: rgba(255,255,255,0.65) !important;
+  color: #ffffff !important;
+}
+
+/* Social icons inside contact widget */
+body:not(.elementor-page-123) .ehp-contact .ehp-contact__social-icon,
+body:not(.elementor-page-123) .ehp-contact .ehp-contact__social-icon svg {
+  color: rgba(255,255,255,0.35) !important;
+  fill: rgba(255,255,255,0.35) !important;
+}
+body:not(.elementor-page-123) .ehp-contact .ehp-contact__social-icon:hover,
+body:not(.elementor-page-123) .ehp-contact .ehp-contact__social-icon:hover svg {
+  color: rgba(255,255,255,0.75) !important;
+  fill: rgba(255,255,255,0.75) !important;
+}
+
+/* Divider between contact info groups */
+body:not(.elementor-page-123) .ehp-contact__group {
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════���════════════════════════════════════��══════════════╗
+   ║  PROJEKTI PAGE — Portfolio grid dark theme                   ║
+   ╚════════════��═══════════════════════════════���══════════════════╝
+   ================================================================ */
+
+/* Heading rows on the PROJEKTI page */
+.elementor-677 .elementor-element.elementor-element-dabe199 .elementor-heading-title,
+.elementor-677 .elementor-element.elementor-element-7dd2e52 .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem) !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.1 !important;
+}
+
+/* Portfolio widget items — dark overlay at rest, reveal on hover */
+.elementor-677 .elementor-portfolio-item__overlay {
+  background-color: rgba(12, 12, 12, 0.82) !important;
+}
+
+/* Portfolio item title */
+.elementor-677 .elementor-portfolio-item__title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+}
+
+/* Portfolio filter tabs (if used) */
+.elementor-677 .elementor-portfolio-filter {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,0.60) !important;
+}
+.elementor-677 .elementor-portfolio-filter.elementor-active,
+.elementor-677 .elementor-portfolio-filter:hover {
+  color: #ffffff !important;
+}
+
+
+/* ================================================================
+   ╔════════════════════════════════════════════════��══════════════╗
+   ║  USLUGE PAGE — Section spacing & intro text                  ║
+   ╚════════════════════���════════════════════════════��═════════════╝
+   ================================================================ */
+
+/* NAŠE USLUGE heading — white authority on dark background */
+.elementor-137 .elementor-element.elementor-element-fdbc0f4 .elementor-heading-title {
+  font-family: var(--vd-font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(2.4rem, 5.5vw, 4.8rem) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vd-heading) !important;
+  line-height: 1.04 !important;
+}
+
+/* Intro paragraph on USLUGE page */
+.elementor-137 .elementor-element.elementor-element-06bbf2f .elementor-widget-container p,
+.elementor-137 .elementor-element.elementor-element-06bbf2f .elementor-text-editor p {
+  font-family: var(--vd-font-body) !important;
+  font-size: clamp(0.94rem, 1.15vw, 1.02rem) !important;
+  line-height: 1.95 !important;
+  color: rgba(255,255,255,0.70) !important;
+  max-width: 720px;
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  CONTACT FORM — Dark styling (Kontakt za izvođenje, ID 648)   ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+/* Elementor Pro form widget — dark inputs */
+.elementor-648 .elementor-field-group input,
+.elementor-648 .elementor-field-group textarea,
+.elementor-648 .elementor-field-group select,
+body:not(.elementor-page-123) .elementor-form .elementor-field-group input,
+body:not(.elementor-page-123) .elementor-form .elementor-field-group textarea,
+body:not(.elementor-page-123) .elementor-form .elementor-field-group select {
+  background-color: #1e1e1e !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.85) !important;
+  border-radius: 0 !important;
+  font-family: var(--vd-font-body) !important;
+  font-size: 0.9rem !important;
+  padding: 12px 16px !important;
+  transition: border-color 0.3s var(--vd-ease) !important;
+}
+body:not(.elementor-page-123) .elementor-form .elementor-field-group input:focus,
+body:not(.elementor-page-123) .elementor-form .elementor-field-group textarea:focus {
+  border-color: rgba(255,255,255,0.40) !important;
+  outline: none !important;
+}
+body:not(.elementor-page-123) .elementor-form .elementor-field-group input::placeholder,
+body:not(.elementor-page-123) .elementor-form .elementor-field-group textarea::placeholder {
+  color: rgba(255,255,255,0.35) !important;
+}
+
+/* Form field labels */
+body:not(.elementor-page-123) .elementor-form .elementor-field-group label {
+  color: rgba(255,255,255,0.60) !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+}
+
+/* Form submit button */
+body:not(.elementor-page-123) .elementor-form .elementor-button[type="submit"] {
+  background-color: transparent !important;
+  border: 1px solid rgba(255,255,255,0.40) !important;
+  color: rgba(255,255,255,0.88) !important;
+  border-radius: 0 !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  padding: 14px 32px !important;
+  transition: background-color 0.3s var(--vd-ease),
+              border-color 0.3s var(--vd-ease),
+              color 0.3s var(--vd-ease) !important;
+}
+body:not(.elementor-page-123) .elementor-form .elementor-button[type="submit"]:hover {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--vd-black) !important;
+}
+
+/* Form success/error messages */
+body:not(.elementor-page-123) .elementor-message.elementor-message-success {
+  background-color: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.20) !important;
+  color: rgba(255,255,255,0.80) !important;
+}
+
+
+/* ================================================================
+   ╔═══════════════��═══════════════════════════════════════════════╗
+   ║  CTA WIDGET — Global dark style (used on O NAMA & other pages)║
+   ╚═══════════════════════════════════════════════════════════��═══╝
+   ================================================================ */
+
+/* CTA text */
+body:not(.elementor-page-123) .elementor-cta__title,
+body:not(.elementor-page-123) .elementor-cta__description {
+  color: var(--vd-heading) !important;
+}
+
+/* CTA button(s) */
+body:not(.elementor-page-123) .elementor-cta .elementor-button {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.40) !important;
+  color: rgba(255,255,255,0.88) !important;
+  border-radius: 0 !important;
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  transition: background-color 0.3s var(--vd-ease),
+              border-color 0.3s var(--vd-ease),
+              color 0.3s var(--vd-ease) !important;
+}
+body:not(.elementor-page-123) .elementor-cta .elementor-button:hover {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--vd-black) !important;
 }
