@@ -1356,6 +1356,38 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   text-transform: uppercase !important;
 }
 
+/* Homepage portfolio filter tabs — dark theme override (Elementor uses #2D3745 from kit) */
+.elementor-123 .elementor-element.elementor-element-3c0a02b .elementor-portfolio__filter {
+  margin-bottom: 28px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+  padding-bottom: 0 !important;
+}
+.elementor-123 .elementor-element.elementor-element-3c0a02b .elementor-portfolio-filter {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,0.50) !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  padding: 12px 18px 10px !important;
+  transition: color 0.25s var(--vd-ease),
+              border-color 0.25s var(--vd-ease) !important;
+}
+.elementor-123 .elementor-element.elementor-element-3c0a02b .elementor-portfolio-filter:hover {
+  color: rgba(255,255,255,0.85) !important;
+  border-bottom-color: rgba(255,255,255,0.30) !important;
+  background-color: transparent !important;
+}
+.elementor-123 .elementor-element.elementor-element-3c0a02b .elementor-portfolio-filter.elementor-active {
+  color: #ffffff !important;
+  border-bottom-color: #ffffff !important;
+  background-color: transparent !important;
+}
+
 /* "Detaljnije o projektima" CTA */
 .elementor-123 .elementor-element.elementor-element-08a32fd:not(.elementor-motion-effects-element-type-background),
 .elementor-123 .elementor-element.elementor-element-08a32fd > .elementor-motion-effects-container > .elementor-motion-effects-layer {
@@ -2140,17 +2172,36 @@ body:not(.elementor-page-123) .ehp-contact__group {
   color: #ffffff !important;
 }
 
-/* Portfolio filter tabs — Elementor built-in widget */
+/* Portfolio filter tabs — Elementor built-in widget (PROJEKTI page 677) */
+.elementor-677 .elementor-portfolio__filter {
+  border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+  margin-bottom: 32px !important;
+  padding-bottom: 0 !important;
+}
 .elementor-677 .elementor-portfolio-filter {
   font-family: var(--vd-font-ui) !important;
   font-size: 10px !important;
-  letter-spacing: 0.20em !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
-  color: rgba(255,255,255,0.60) !important;
+  color: rgba(255,255,255,0.50) !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  padding: 12px 18px 10px !important;
+  transition: color 0.25s var(--vd-ease),
+              border-color 0.25s var(--vd-ease) !important;
 }
-.elementor-677 .elementor-portfolio-filter.elementor-active,
 .elementor-677 .elementor-portfolio-filter:hover {
+  color: rgba(255,255,255,0.85) !important;
+  border-bottom-color: rgba(255,255,255,0.30) !important;
+  background-color: transparent !important;
+}
+.elementor-677 .elementor-portfolio-filter.elementor-active {
   color: #ffffff !important;
+  border-bottom-color: #ffffff !important;
+  background-color: transparent !important;
 }
 
 /* PowerFolio plugin filter bar (renders different markup) */
@@ -2513,5 +2564,68 @@ body.single-post [data-elementor-type="wp-post"] .elementor-widget-divider .elem
   /* Disable hover scale effects */
   .elementor-gallery-item:hover .elementor-gallery-item__image {
     transform: none !important;
+  }
+}
+
+
+/* ================================================================
+   ╔═══════════════════════════════════════════════════════════════╗
+   ║  PRINT — Clean output for project pages                      ║
+   ╚═══════════════════════════════════════════════════════════════╝
+   ================================================================ */
+
+@media print {
+  /* Hide non-content elements */
+  .ehp-header,
+  .site-header,
+  #vd-lang-btn,
+  #vd-lang-btn-mobile,
+  .vd-slide,
+  .ehp-flex-hero__image-wrapper,
+  .ehp-flex-hero__scroll-down,
+  .elementor-share-btn,
+  .elementor-share-buttons,
+  [class*="scroll-down"],
+  .elementor-widget-ehp-header,
+  nav,
+  .elementor-post-navigation {
+    display: none !important;
+  }
+
+  /* Force light background, dark text for readability */
+  body, .elementor-page, [data-elementor-type="wp-post"] {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  /* Remove dark page backgrounds on print */
+  body.single [data-elementor-type="wp-post"],
+  body.single-post [data-elementor-type="wp-post"] {
+    background-color: #ffffff !important;
+  }
+
+  /* Make all text dark for print */
+  [data-elementor-type="wp-post"] *,
+  body.single * {
+    color: #111111 !important;
+    text-shadow: none !important;
+    background-color: transparent !important;
+  }
+
+  /* Keep project title readable */
+  [data-elementor-type="wp-post"] .elementor-heading-title {
+    color: #000000 !important;
+    font-size: 16pt !important;
+  }
+
+  /* Ensure images display (don't clip) */
+  [data-elementor-type="wp-post"] img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Remove box shadows and borders */
+  * {
+    box-shadow: none !important;
   }
 }
