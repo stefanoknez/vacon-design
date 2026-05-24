@@ -1,5 +1,5 @@
 /**
- * VACON DESIGN — Language Switcher v4.0.4
+ * VACON DESIGN — Language Switcher v4.0.7
  * EN ↔ CG (Crnogorski / Montenegrin) toggle.
  *
  * • Injects EN/CG button between KONTAKT and the mailbox icon in the navbar.
@@ -39,15 +39,39 @@
     'KONTAKT:':                        'CONTACT:',
     'KONTAKT':                         'CONTACT',
     'ZAŠTO ODABRATI NAS':              'WHY CHOOSE US',
-    'POUZDANOST':                      'RELIABILITY',
+
+    // Pillar headings (homepage — stored as uppercase with number prefix)
+    '1. DETALJNOST':                   '1. ATTENTION TO DETAIL',
+    '2. ISKUSTVO':                     '2. EXPERIENCE',
+    '3. ZNANJE':                       '3. KNOWLEDGE',
+    '4. PRECIZNOST':                   '4. PRECISION',
+
+    // Without number prefix (fallback)
+    'DETALJNOST':                      'ATTENTION TO DETAIL',
     'PRECIZNOST':                      'PRECISION',
     'ISKUSTVO':                        'EXPERIENCE',
-    'DETALJNOST':                      'ATTENTION TO DETAIL',
+    'ZNANJE':                          'KNOWLEDGE',
+    'POUZDANOST':                      'RELIABILITY',
+
+    // O NAMA page section headings
+    'NAŠA PRIČA':                      'OUR STORY',
+    'NAŠ TIM':                         'OUR TEAM',
+
+    // PROJEKTI page category headings
+    'STAMBENO - POSLOVNI OBJEKTI':     'RESIDENTIAL - COMMERCIAL BUILDINGS',
+    'INFRASTRUKTURNI OBJEKTI':         'INFRASTRUCTURE PROJECTS',
+
+    // Page 648 — Construction sector contact
+    'POŠALJITE PORUKU NAŠEM SEKTORU ZA IZVOĐENJE RADOVA': 'SEND A MESSAGE TO OUR CONSTRUCTION SECTOR',
+
+    // Project page navigation labels
     'OPIS PROJEKTA':                   'PROJECT DESCRIPTION',
     'PODACI PROJEKTA':                 'PROJECT DATA',
     'PRETHODNI PROJEKAT':              'PREVIOUS PROJECT',
     'SLEDEĆI PROJEKAT':                'NEXT PROJECT',
     'SLJEDEĆI PROJEKAT':               'NEXT PROJECT',
+
+    // CTA links / section labels
     'DETALJNIJE O USLUGAMA →':         'LEARN MORE ABOUT OUR SERVICES →',
     'DETALJNIJE O PROJEKTIMA →':       'VIEW ALL PROJECTS →',
     'NAŠE USLUGE →':                   'OUR SERVICES →',
@@ -66,37 +90,72 @@
     'Ponedjeljak – Petak':             'Monday – Friday',
     '08:00 - 16:00':                   '08:00 – 16:00',
     'Đoka Miraševića 108/8':           'Đoka Miraševića 108/8', // address stays
+
+    // Contact link labels (phone/email with sector info)
+    'Telefon - 067/321-295 - sektor za projektovanje': 'Phone - 067/321-295 - design dept.',
+    'Telefon - 067/011-166 - sektor za izvođenje':     'Phone - 067/011-166 - construction dept.',
+    'Email - sektor za projektovanje':                 'Email - design dept.',
+    'Email - sektor za izvođenje':                     'Email - construction dept.',
   };
 
-  // Service image-box titles
+  // ----------------------------------------------------------------
+  // SERVICE titles and descriptions
+  // Keys are matched case-insensitively via translateEl (title, exact)
+  // and translateElPartial (description, opening-phrase match).
+  // ----------------------------------------------------------------
   var SERVICES = {
-    'ARHITEKTONSKO PROJEKTOVANJE':     'ARCHITECTURAL DESIGN',
-    'GRAĐEVINSKO PROJEKTOVANJE':       'STRUCTURAL ENGINEERING',
-    'SAOBRAĆAJNO PROJEKTOVANJE':       'TRAFFIC ENGINEERING',
-    'ELEKTRO PROJEKTOVANJE':           'ELECTRICAL ENGINEERING',
-    'MAŠINSKO PROJEKTOVANJE':          'MECHANICAL ENGINEERING',
-    'NADZOR I IZVOĐENJE':              'SUPERVISION & CONSTRUCTION',
-    // Descriptions (image-box)
-    'Izrada arhitektonskih projekata svih vrsta, od idejnih do izvedbenih, u skladu sa važećim propisima i zahtjevima investitora.':
-      'Development of architectural projects of all types, from concept to detailed design, in compliance with applicable regulations and investor requirements.',
-    'Izrada građevinskih projekata koji osiguravaju statičku stabilnost i sigurnost objekata u svim fazama izgradnje.':
-      'Development of structural engineering projects ensuring the static stability and safety of buildings throughout all phases of construction.',
-    'Izrada saobraćajnih projekata i projekata parkiranja, u skladu sa standardima i propisima u oblasti saobraćajne infrastrukture.':
-      'Development of traffic engineering and parking design projects, compliant with standards and regulations in the field of traffic infrastructure.',
-    'Izrada elektro projekata za sve vrste objekata, uključujući jake i slabe struje, osvetljenje i sistem zaštite.':
-      'Development of electrical engineering projects for all types of buildings, including power, low-voltage systems, lighting, and protection systems.',
-    'Izrada projekata mašinskih instalacija, grijanja, hlađenja, ventilacije i vodovoda za sve vrste objekata.':
-      'Development of mechanical installation projects, including heating, cooling, ventilation, and plumbing for all types of buildings.',
-    'Pružamo usluge stručnog nadzora i izvođenja radova, osiguravajući usklađenost sa projektnom dokumentacijom i propisima.':
-      'We provide expert supervision and construction services, ensuring compliance with project documentation and applicable regulations.',
+
+    // ── Titles (matched via dict[origUpper]) ──────────────────────
+    '1. PROJEKTOVANJE OBJEKATA':              '1. STRUCTURAL DESIGN',
+    'PROJEKTOVANJE OBJEKATA':                 'STRUCTURAL DESIGN',
+
+    '2. SAOBRAĆAJNA INFRASTRUKTURA':          '2. TRAFFIC INFRASTRUCTURE',
+    'SAOBRAĆAJNA INFRASTRUKTURA':             'TRAFFIC INFRASTRUCTURE',
+
+    '3. ZAŠTITA ISKOPA':                      '3. EXCAVATION PROTECTION',
+    'ZAŠTITA ISKOPA':                         'EXCAVATION PROTECTION',
+
+    '4. IZVOĐENJE RADOVA':                    '4. CONSTRUCTION SERVICES',
+    'IZVOĐENJE RADOVA':                       'CONSTRUCTION SERVICES',
+
+    '5. STRUČNI NADZOR':                      '5. PROFESSIONAL SUPERVISION',
+    'STRUČNI NADZOR':                         'PROFESSIONAL SUPERVISION',
+
+    '6. ELABORAT ENERGETSKE EFIKASNOSTI':     '6. ENERGY EFFICIENCY REPORT',
+    'ELABORAT ENERGETSKE EFIKASNOSTI':        'ENERGY EFFICIENCY REPORT',
+
+    // ── Descriptions (matched via opening phrase) ─────────────────
+
+    // 1. Projektovanje objekata
+    'Specijalizovani smo za projektovanje betonskih':
+      'We specialise in the design of concrete and steel structures, applying modern software solutions for structural analysis, reinforcement detailing, and workshop drawings. Our projects comply with Eurocode standards, ensuring the safety, durability, and reliability of every structure. We pay special attention to aesthetic and functional aspects, ensuring each building is fully tailored to the investor\'s requirements.',
+
+    // 2. Saobraćajna infrastruktura
+    'Izrađujemo projekte konstrukcija za sve vrste':
+      'We design structural systems for all types of road infrastructure, including bridges, retaining walls, culverts, overpasses, underpasses, and other ancillary structures in line with guidelines for motorways and main roads. Our engineering team uses modern software tools and designs in accordance with domestic and international standards. Regardless of terrain complexity or object function, we deliver safe, durable, and optimised solutions adapted to every location.',
+
+    // 3. Zaštita iskopa
+    'Projektujemo sve vrste sistema zaštite':
+      'We design all types of foundation pit protection systems, including piles, diaphragm walls, anchored walls, steel shoring, and temporary structures. We approach each project individually, analysing soil conditions, excavation depth, and site-specific requirements. Our goal is to ensure maximum stability, safety, and cost optimisation — without compromising on quality.',
+
+    // 4. Izvođenje radova
+    'Pored projektovanja, pružamo usluge izvođenja':
+      'In addition to design, we provide construction services in full compliance with all technical regulations and legal requirements. We focus on finishing works, but also have the capacity for a broader range of civil engineering activities. We guarantee quality, efficiency, and delivery within set deadlines, with full compliance with project documentation.',
+
+    // 5. Stručni nadzor
+    'Naš tim pruža stručni nadzor nad':
+      'Our team provides professional supervision of construction works, ensuring compliance with design, legislation, and industry standards. Our engineers monitor all phases of work, control quality, timelines, and budget, and respond promptly to any challenges on site. Your construction is under expert supervision, with full commitment to maintaining the highest level of quality.',
+
+    // 6. Elaborat energetske efikasnosti
+    'Naš tim izrađuje elaborate energetske':
+      'Our team prepares energy efficiency reports in accordance with applicable regulations and standards. These documents form the basis for obtaining building and occupancy permits, and are also an important tool for assessing and optimising energy consumption in buildings.',
   };
 
   // Hero subheading (homepage)
-  var HERO_SUBHEADING_CG = 'POUZDANOST U SVAKOM PRORAČUNU. STRUČNOST U SVAKOM DETALJU.';
   var HERO_SUBHEADING_EN = 'RELIABILITY IN EVERY CALCULATION. EXPERTISE IN EVERY DETAIL.';
 
   // Contact description paragraph
-  var CONTACT_DESC_CG = 'Naše zadovoljstvo je da sarađujemo sa klijentima na svakom koraku realizacije projekta. Stojimo vam na raspolaganju za sve vrste usluga koje pružamo. Obratite nam se sa povjerenjem, a naš tim će vam obezbijediti stručnu podršku, kvalitetna rješenja i sigurnost u svakoj fazi gradnje.';
+  var CONTACT_DESC_CG = 'Naše zadovoljstvo je da sarađujemo sa klijentima na svakom koraku realizacije projekta.';
   var CONTACT_DESC_EN = 'Our pleasure is to collaborate with clients at every stage of project realization. We are at your disposal for all types of services we provide. Contact us with confidence — our team will provide expert support, quality solutions, and security at every phase of construction.';
 
   // Project page meta labels
@@ -120,6 +179,11 @@
     'ARHITEKTONSKA SAGLASNOST':        'ARCHITECTURAL CONSENT',
     'IZVEDBENI PROJEKAT':              'EXECUTIVE DESIGN',
     'PROJEKAT ZA GRAĐEVINSKU DOZVOLU': 'BUILDING PERMIT PROJECT',
+    'PROJEKAT ZA IZVOĐENJE':           'EXECUTION DESIGN',
+    'PROJEKAT ZAŠTITE ISKOPA':         'EXCAVATION PROTECTION DESIGN',
+    'KONSTRUKCIJA':                    'STRUCTURE',
+    'ARMIRANOBETONSKA KONSTRUKCIJA':   'REINFORCED CONCRETE STRUCTURE',
+    'ČELIČNA KONSTRUKCIJA':            'STEEL STRUCTURE',
   };
 
   // ----------------------------------------------------------------
@@ -157,25 +221,27 @@
     'Naša firma pruža sveobuhvatne':
       'Our firm provides comprehensive engineering services in the field of civil engineering, combining expertise, precision, and modern technologies. We offer clients a complete process — from concept and design, through construction, to expert supervision. Every task is approached responsibly, with the goal of achieving maximum safety, quality, and functionality.',
 
-    // ── Homepage "Zašto odabrati nas" — PRECIZNOST pillar
+    // ── Homepage "Zašto odabrati nas" — PRECIZNOST / 4th pillar
     'Naši projekti nisu samo tehnički ispravni':
       'Our projects are not only technically sound — they are carefully conceived, functionally optimised, and aesthetically aligned. We believe a quality project begins with precision and ends with client satisfaction, and this philosophy guides every step of our work.',
 
-    // ── Homepage "Zašto odabrati nas" — ISKUSTVO pillar
+    // ── Homepage "Zašto odabrati nas" — ISKUSTVO / 2nd pillar
     'Naš tim čine stručnjaci sa višegodišnjim':
       'Our team consists of experts with extensive experience in design and construction. Knowledge gained in the field and through various project phases gives us the ability to identify potential challenges in the planning stage — and to resolve them efficiently.',
 
-    // ── Homepage "Zašto odabrati nas" — DETALJNOST pillar
+    // ── Homepage "Zašto odabrati nas" — ZNANJE / 3rd pillar
     'Redovno pohađamo stručne obuke':
       'We regularly attend professional training, seminars, and courses to stay current with the latest software solutions and technological innovations in the construction and design industry — enabling us to deliver modern, long-term sustainable solutions.',
 
-    // ── Homepage "Zašto odabrati nas" — POUZDANOST pillar
+    // ── Homepage "Zašto odabrati nas" — DETALJNOST / 1st pillar
     'Birajući nas, birate partnera':
       'By choosing us, you choose a partner who understands the importance of every millimetre, every plan, and every deadline. Quality, reliability, and expertise are not just our promises — they are the foundations on which we build every project.',
 
-    // ── Homepage / Kontakt — "Detaljnije o našim uslugama" CTA link text
-    'Detaljnije o našim uslugama':           'Learn more about our services',
-    'Detaljnije o projektima':               'View all projects',
+    // ── Short CTA / button texts
+    'Detaljnije o našim uslugama':     'Learn more about our services',
+    'Detaljnije o projektima':         'View all projects',
+    'Projekti':                        'Projects',
+    'Kontakt':                         'Contact',
   };
 
 
@@ -297,23 +363,42 @@
       translateEl(el, CONTACT_LABELS, lang);
     });
 
-    // 5 ── Contact description paragraph
+    // 5 ── Contact description paragraph + any body-text in contact widgets
     document.querySelectorAll('.ehp-contact__description, .ehp-contact__description p').forEach(function (el) {
+      // First: main contact description (hard-coded full translation)
       cacheOriginal(el);
-      if (lang === 'en' && el.textContent.trim().indexOf('Naše zadovoljstvo') >= 0) {
-        el.textContent = CONTACT_DESC_EN;
-      } else if (lang === 'cg') {
+      if (lang === 'en') {
+        if (el.textContent.trim().indexOf(CONTACT_DESC_CG) === 0) {
+          el.textContent = CONTACT_DESC_EN;
+          return;
+        }
+        // Fallback: check BODY_TEXT for partial matches (O NAMA bios etc.)
+        var text = el.textContent.trim();
+        for (var key in BODY_TEXT) {
+          if (text.indexOf(key) === 0) {
+            el.textContent = BODY_TEXT[key];
+            return;
+          }
+        }
+      } else {
         el.textContent = getOriginal(el);
       }
     });
 
-    // 6 ── Service image-box titles
-    document.querySelectorAll('.elementor-image-box-title').forEach(function (el) {
+    // 6 ── Service titles: image-box (homepage pillars) + zigzag (Usluge page)
+    document.querySelectorAll(
+      '.elementor-image-box-title, ' +
+      '.ehp-zigzag__title'
+    ).forEach(function (el) {
       translateEl(el, SERVICES, lang);
     });
 
-    // 7 ── Service image-box descriptions
-    document.querySelectorAll('.elementor-image-box-description, .elementor-image-box-description p').forEach(function (el) {
+    // 7 ── Service descriptions: image-box + zigzag
+    document.querySelectorAll(
+      '.elementor-image-box-description, ' +
+      '.elementor-image-box-description p, ' +
+      '.ehp-zigzag__description'
+    ).forEach(function (el) {
       translateElPartial(el, SERVICES, lang);
     });
 
@@ -345,8 +430,11 @@
       }
     });
 
-    // 11 ── Radno Vrijeme text nodes (Mon–Fri, hours)
-    document.querySelectorAll('.ehp-contact__contact-text').forEach(function (el) {
+    // 11 ── Contact text nodes (Mon–Fri, hours, phone/email labels)
+    document.querySelectorAll(
+      '.ehp-contact__contact-text, ' +
+      '.ehp-contact__contact-link-label'
+    ).forEach(function (el) {
       translateEl(el, CONTACT_LABELS, lang);
     });
 
@@ -382,12 +470,20 @@
       }
     });
 
-    // 16 ── CTA / link text inside widgets ("Detaljnije o …")
+    // 16 ── CTA / link text inside widgets ("Detaljnije o …", "Projekti", etc.)
     document.querySelectorAll(
       '.elementor-button-text, ' +
       '.elementor-widget-button .elementor-button, ' +
       'a.ehp-button'
     ).forEach(function (el) {
+      if (el.children.length === 0) {
+        translateElPartial(el, BODY_TEXT, lang);
+      }
+    });
+
+    // 17 ── Zigzag CTA button text ("Projekti") — also covered by step 16
+    //  via a.ehp-button, but add explicit selector as safety net.
+    document.querySelectorAll('.ehp-zigzag__button').forEach(function (el) {
       if (el.children.length === 0) {
         translateElPartial(el, BODY_TEXT, lang);
       }

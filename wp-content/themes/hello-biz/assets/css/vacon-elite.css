@@ -1,5 +1,5 @@
 /* ================================================================
-   VACON DESIGN — Deep Architectural Graphite v4.0.2
+   VACON DESIGN — Deep Architectural Graphite v4.0.7
    Philosophy: Mass. Darkness. Precision. No light themes.
    Palette: #0c0c0c (main) / #1a1a1a (depth) / #FFFFFF (text)
    Fonts: Oswald (display) · Inter (body) · Montserrat (UI)
@@ -304,6 +304,57 @@ body.single-post .elementor-widget-text-editor .elementor-widget-container {
   line-height: 30px !important;
   color: rgba(255,255,255,0.60) !important;
   letter-spacing: 0.02em !important;
+}
+
+/* ---------------------------------------------------------------
+   ZIGZAG WIDGET — USLUGE PAGE (ehp-zigzag from hello-plus)
+   Default plugin CSS uses #000 for title/description colors.
+   These overrides ensure readable light text on the dark theme.
+   Font family/size intentionally not forced here — Elementor's
+   own inline CSS (from DB settings) controls typography.
+   --------------------------------------------------------------- */
+.ehp-zigzag {
+  /* Override default --zigzag-title-color: #000 */
+  --zigzag-title-color: var(--vd-heading);
+  /* Override default --zigzag-description-color: #000 */
+  --zigzag-description-color: rgba(255, 255, 255, 0.72);
+}
+
+/* Safety: if Elementor inline CSS doesn't fire, these win */
+.ehp-zigzag__title {
+  color: var(--vd-heading) !important;
+}
+.ehp-zigzag__description {
+  color: rgba(255, 255, 255, 0.72) !important;
+  line-height: 1.85 !important;
+}
+
+/* Zigzag "Projekti" CTA button — ghost style matching the design system */
+a.ehp-zigzag__button,
+a.ehp-zigzag__button:not([href]):not([tabindex]) {
+  font-family: var(--vd-font-ui) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 10px 22px !important;
+  transition: background-color 0.3s var(--vd-ease),
+              border-color 0.3s var(--vd-ease),
+              color 0.3s var(--vd-ease) !important;
+}
+a.ehp-zigzag__button:hover {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  color: #ffffff !important;
+}
+
+/* Divider between zigzag items — subtle rule */
+.ehp-zigzag__item-wrapper + .ehp-zigzag__item-wrapper {
+  border-top: 1px solid var(--vd-rule);
 }
 
 
