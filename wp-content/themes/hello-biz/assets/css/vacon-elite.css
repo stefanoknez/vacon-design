@@ -1024,7 +1024,7 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   letter-spacing: 0.10em !important;
   line-height: 1.85 !important;
   color: rgba(255, 255, 255, 0.85) !important;
-  text-transform: none !important;
+  text-transform: uppercase !important;
   margin-top: 20px !important;
   margin-bottom: 0 !important;
   text-shadow: 0 1px 12px rgba(0,0,0,0.70) !important;
