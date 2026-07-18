@@ -258,6 +258,7 @@
     'IZRADA GLAVNOG PROJEKTA':         'MAIN PROJECT PREPARATION',
     'IZMJENA GLAVNOG PROJEKTA':        'MAIN PROJECT REVISION',
     'USAGLAŠAVANJE SA EVROKODOVIMA':   'EUROCODE COMPLIANCE',
+    'GLAVNI PROJEKAT (USAGLAŠAVANJE SA EVROKODOVIMA)': 'MAIN PROJECT (EUROCODE COMPLIANCE)',
 
     // Common investors / client names (government bodies)
     'VLADA CRNE GORE':                 'GOVERNMENT OF MONTENEGRO',
@@ -276,6 +277,35 @@
     'PODACI PROJEKTA:':                'PROJECT DATA:',
     'SLIKE PROJEKTA':                  'PROJECT IMAGES',
     'GALERIJA':                        'GALLERY',
+
+    // ── PODACI PROJEKTA — whole-line icon-list items (building type /
+    //  role blurb, no "LABEL: value" split) that are unique per project.
+    'OBJEKAT MJEŠOVITE NAMJENE NA LOKACIJI ZGRADE "STARE POŠTE"':
+      'Mixed-use building on the site of the former Post Office building',
+    'PROJEKTANT KONSTRUKCIJE U SARADNJU SA PROBUILDING DOO PODGORICA':
+      'Structural engineer in cooperation with PROBUILDING doo Podgorica',
+    'AUTOPUT SMOKOVAC-UVAČ-MATEŠEVO':  'SMOKOVAC-UVAČ-MATEŠEVO MOTORWAY',
+    'KOLEKTIVNI STAMBENI OBJEKAT SA DJELATNOSTIMA':
+      'Collective residential building with commercial units',
+    'PROJEKTANT KONSTRUKCIJE U OKVIRU BIROA ARHITEKTONSKI ATELJE':
+      'Structural engineer within the Arhitektonski Atelje practice',
+    'STAMBENO NASELJE UPPER VILLAGE':  'Upper Village Residential Complex',
+    'OBJEKAT 5 U OKVIRU REZIDENCIJALNOG NASELJA':
+      'BUILDING 5 within the residential complex',
+    'REGIONALNI PUT R13':              'R13 REGIONAL ROAD',
+    'STAMBENO NASELJE LJUBOVIĆ HILL HOMES': 'Ljubović Hill Homes Residential Complex',
+    'PROJEKTANT KONSTRUKCIJE U SARADNJU SA RZUP AD PODGORICA':
+      'Structural engineer in cooperation with RZUP AD Podgorica',
+    'STAMBENO NASELJE MASTER KVART':   'Master Kvart Residential Complex',
+    'TURISTIČKO-APARTMANSKI BLOK 2*':  'TOURIST-APARTMENT BLOCK 2*',
+    'STAMBENI OBJEKAT POSH RESIDENCE': 'RESIDENTIAL BUILDING – POSH RESIDENCE',
+    'POSLOVNI OBJEKAT CUNGU':          'COMMERCIAL BUILDING – CUNGU',
+    'MAGISTRALNI PUT M21':             'M21 MAIN ROAD',
+    'STAMBENI OBJEKAT MOKA PLACE':     'RESIDENTIAL BUILDING – MOKA PLACE',
+    'OBJEKAT OBRAZOVANJA - FILOLOŠKI FAKULTET':
+      'EDUCATIONAL BUILDING - FACULTY OF PHILOLOGY',
+    'OBJEKAT MJEŠOVITE NAMJENE (MN), HOTEL SA KONDO MODELOM POSLOVANJA':
+      'MIXED-USE BUILDING (MU), HOTEL WITH A CONDO-HOTEL BUSINESS MODEL',
   };
 
   // ----------------------------------------------------------------
@@ -771,7 +801,8 @@
     //  innerHTML caching inside translateProjectLabel so <b> tags are restored.
     document.querySelectorAll(
       '.ehp-icon-list__text, ' +       // Hello Biz icon list
-      '.elementor-icon-list__text'     // Elementor icon list
+      '.elementor-icon-list-text'      // Elementor icon list (real class is
+                                        // hyphenated, not BEM __text)
     ).forEach(function (el) {
       // el.children.length <= 1 covers both plain text and <b>label</b>: value format
       if (el.children.length <= 1) {
