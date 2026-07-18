@@ -680,7 +680,7 @@
 
     // 3c ── Contact page main heading ("KONTAKT:" — Hello Plus contact widget)
     document.querySelectorAll('.ehp-contact__heading').forEach(function (el) {
-      translateEl(el, CONTACT_LABELS, lang);
+      translateEl(el, HEADINGS, lang);
     });
 
     // 4 ── Contact subheadings (Radno Vrijeme, Lokacija, etc.)
@@ -1008,12 +1008,15 @@
   function init() {
     injectButton();
 
-    // Re-apply saved language immediately (no flash of CG on EN preference)
+    // Re-apply saved language immediately (no flash of CG on EN preference).
+    // setTimeout (not requestAnimationFrame) — rAF only fires on an actual
+    // paint tick, which some browsers defer indefinitely for background/
+    // inactive tabs, leaving the page stuck showing CG despite an EN
+    // preference. setTimeout always fires on the next event-loop turn.
     if (currentLang === 'en') {
-      // Small delay to let Elementor finish its own DOM manipulation
-      requestAnimationFrame(function () {
+      setTimeout(function () {
         applyLanguage('en');
-      });
+      }, 0);
     }
   }
 
