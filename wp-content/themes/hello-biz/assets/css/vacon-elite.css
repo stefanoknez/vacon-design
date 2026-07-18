@@ -938,8 +938,13 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
 }
 
 /* Post excerpt (label) in single-post template — vivid white with just a
-   drop shadow for legibility, no background chip over the photo. Centered. */
+   drop shadow for legibility, no background chip over the photo. Centered.
+   The hero is a flex column with no align-items:stretch, so this element
+   (and its container) must be forced to full width itself — otherwise it
+   shrink-wraps to its own text and text-align:center has no room to show. */
 [data-elementor-type="single-post"] .elementor-element-882b788 {
+  align-self: stretch !important;
+  width: 100% !important;
   color: #ffffff !important;
   text-shadow: 0 1px 4px rgba(0,0,0,0.85), 0 2px 16px rgba(0,0,0,0.65) !important;
   text-align: center !important;
