@@ -665,13 +665,16 @@
     // 12 ── Update <html lang> attribute for accessibility
     document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'sr-Latn-ME');
 
-    // 13 ── Hero CTA button ("NAŠI PROJEKTI →" / "OUR PROJECTS →")
-    var heroCta = document.getElementById('vd-hero-cta');
-    if (heroCta) {
-      heroCta.textContent = lang === 'en'
-        ? (heroCta.getAttribute('data-en') || 'OUR PROJECTS →')
-        : (heroCta.getAttribute('data-cg') || 'NAŠI PROJEKTI →');
-    }
+    // 13 ── Hello Plus button text spans (hero CTA "NAŠI PROJEKTI", header
+    //  KONTAKT button, zigzag buttons). The text lives in a leaf
+    //  <span class="ehp-button__text">, which the generic steps skip.
+    document.querySelectorAll('.ehp-button__text').forEach(function (el) {
+      if (el.children.length === 0) {
+        translateEl(el, HEADINGS, lang);
+        translateEl(el, NAV, lang);
+        translateElPartial(el, BODY_TEXT, lang);
+      }
+    });
 
     // 14 ── Body text paragraphs (O NAMA, USLUGE intro, pillar descriptions).
     //  Uses translateElPartialHtml so switching back to CG restores original
