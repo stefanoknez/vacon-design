@@ -288,6 +288,53 @@ body.single-post .elementor-widget-text-editor .elementor-widget-container {
   max-width: 680px;
 }
 
+/* O NAMA page — "Naša priča" leading paragraph: full width, smaller type
+   (overrides the generic 720px reading-measure cap above for this block only) */
+.elementor-element.elementor-element-d1b05aa .elementor-widget-container {
+  max-width: 100% !important;
+}
+.elementor-element.elementor-element-d1b05aa,
+.elementor-element.elementor-element-d1b05aa p {
+  font-size: clamp(0.92rem, 1.05vw, 1.02rem) !important;
+}
+
+/* O NAMA page — Vladimir's "Kontakt" button: add envelope icon to match
+   Marija's card (Elementor's own icon control for this button doesn't
+   render reliably in the full-page build, so the icon is drawn with CSS
+   mask instead — identical Font Awesome "regular envelope" glyph). */
+.elementor-element-86893a7 .ehp-cta__button--secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.elementor-element-86893a7 .ehp-cta__button--secondary::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+  background-color: currentColor !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z'/></svg>") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z'/></svg>") no-repeat center / contain !important;
+}
+
+/* USLUGE page — "NAŠE USLUGE" heading + intro paragraph centered */
+.elementor-element.elementor-element-148c126,
+.elementor-element.elementor-element-06bbf2f {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+.elementor-element.elementor-element-fdbc0f4 .elementor-heading-title {
+  text-align: center !important;
+}
+.elementor-element.elementor-element-41cd78e .elementor-widget-container,
+.elementor-element.elementor-element-41cd78e p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .elementor-image-box-title {
   font-family: var(--vd-font-display) !important;
   font-weight: 400 !important;
@@ -890,10 +937,17 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   line-height: 1.1 !important;
 }
 
-/* Post excerpt in single-post template — readable on photo */
+/* Post excerpt (label) in single-post template — vivid white on a small
+   dark chip, so it stays fully legible without darkening the photo itself. */
 [data-elementor-type="single-post"] .elementor-element-882b788 {
-  color: rgba(255,255,255,0.82) !important;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.70) !important;
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+[data-elementor-type="single-post"] .elementor-element-882b788 .elementor-widget-container {
+  display: inline-block !important;
+  background-color: rgba(12,12,12,0.55) !important;
+  padding: 8px 16px !important;
+  border-radius: 3px !important;
 }
 
 /* Chevron-down icon in single-post template — white, animated */
@@ -911,21 +965,30 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   fill: rgba(255,255,255,0.75) !important;
 }
 
-/* Share buttons in single-post template — white icons on transparent bg.
-   Drop-shadow keeps them legible over the full-brightness hero photo. */
+/* Share buttons (email / whatsapp) in single-post template — vivid white
+   icons, enlarged, each on its own small dark circular chip so they read
+   clearly over the full-brightness hero photo without a wash over it. */
 [data-elementor-type="single-post"] .elementor-share-btn {
-  color: rgba(255,255,255,0.60) !important;
-  background-color: transparent !important;
-  transition: color 0.3s var(--vd-ease) !important;
-  filter: drop-shadow(0 1px 6px rgba(0,0,0,0.65)) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  color: #ffffff !important;
+  background-color: rgba(12,12,12,0.55) !important;
+  border-radius: 50% !important;
+  transition: background-color 0.3s var(--vd-ease) !important;
 }
 [data-elementor-type="single-post"] .elementor-share-btn:hover {
+  background-color: rgba(12,12,12,0.75) !important;
   color: #ffffff !important;
 }
 [data-elementor-type="single-post"] .elementor-share-btn__icon i,
 [data-elementor-type="single-post"] .elementor-share-btn__icon svg {
-  color: rgba(255,255,255,0.60) !important;
-  fill: rgba(255,255,255,0.60) !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  width: 22px !important;
+  height: 22px !important;
 }
 [data-elementor-type="single-post"] .elementor-share-btn:hover .elementor-share-btn__icon i,
 [data-elementor-type="single-post"] .elementor-share-btn:hover .elementor-share-btn__icon svg {
@@ -2534,12 +2597,31 @@ body.single-post .elementor-gallery-item__overlay,
   background-color: rgba(12, 12, 12, 0.70) !important;
 }
 
-/* Gallery image — full natural colour, no desaturation */
+/* Gallery image — full natural colour, no desaturation, 100% brightness */
 body.single .elementor-gallery-item__image,
 body.single-post .elementor-gallery-item__image,
 [data-elementor-type="wp-post"] .elementor-gallery-item__image {
-  filter: none !important;
+  filter: brightness(1) saturate(1) !important;
   transition: transform 0.5s var(--vd-ease-out) !important;
+}
+
+/* Gallery column — give it more of the row than the text column, and
+   tighten the grid gap so individual photos render larger. */
+body.single [data-elementor-type="wp-post"] .e-con:has(> .elementor-widget-gallery),
+body.single-post [data-elementor-type="wp-post"] .e-con:has(> .elementor-widget-gallery),
+body.single [data-elementor-type="wp-post"] .e-con:has(> .elementor-widget-divider + .elementor-widget-gallery),
+body.single-post [data-elementor-type="wp-post"] .e-con:has(> .elementor-widget-divider + .elementor-widget-gallery) {
+  width: 62% !important;
+  flex: 1 1 62% !important;
+}
+body.single [data-elementor-type="wp-post"] .e-con:has(+ .e-con .elementor-widget-gallery),
+body.single-post [data-elementor-type="wp-post"] .e-con:has(+ .e-con .elementor-widget-gallery) {
+  width: 38% !important;
+  flex: 1 1 38% !important;
+}
+body.single [data-elementor-type="wp-post"] .elementor-gallery-container .elementor-grid,
+body.single-post [data-elementor-type="wp-post"] .elementor-gallery-container .elementor-grid {
+  gap: 8px !important;
 }
 body.single .elementor-gallery-item:hover .elementor-gallery-item__image,
 body.single-post .elementor-gallery-item:hover .elementor-gallery-item__image,
