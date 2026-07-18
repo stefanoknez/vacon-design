@@ -20,3 +20,6 @@ wp-content/wpvividbackups/
 # Ignoriši sistemske fajlove Mac-a
 .DS_Store
 wp-content/backuply/
+
+# Ignoriši Claude Code lokalne postavke
+.claude/
