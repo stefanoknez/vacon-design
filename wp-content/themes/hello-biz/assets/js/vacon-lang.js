@@ -117,53 +117,57 @@
   var SERVICES = {
 
     // ── Titles (matched via dict[origUpper]) ──────────────────────
-    '1. PROJEKTOVANJE OBJEKATA':              '1. STRUCTURAL DESIGN',
-    'PROJEKTOVANJE OBJEKATA':                 'STRUCTURAL DESIGN',
+    // USLUGE page zigzag — rewritten 2026-07-18. CG titles are the new
+    // source content (see zigzag widget on page 137); EN wording below
+    // is verbatim as supplied for the rewrite.
+    '1. PROJEKTOVANJE OBJEKATA':              '1. STRUCTURAL DESIGN FOR BUILDINGS',
+    'PROJEKTOVANJE OBJEKATA':                 'STRUCTURAL DESIGN FOR BUILDINGS',
 
-    '2. SAOBRAĆAJNA INFRASTRUKTURA':          '2. TRAFFIC INFRASTRUCTURE',
-    'SAOBRAĆAJNA INFRASTRUKTURA':             'TRAFFIC INFRASTRUCTURE',
+    '2. SEIZMIČKO PROJEKTOVANJE':             '2. SEISMIC ENGINEERING & STRUCTURAL ANALYSIS',
+    'SEIZMIČKO PROJEKTOVANJE':                'SEISMIC ENGINEERING & STRUCTURAL ANALYSIS',
 
-    '3. ZAŠTITA ISKOPA':                      '3. EXCAVATION PROTECTION',
-    'ZAŠTITA ISKOPA':                         'EXCAVATION PROTECTION',
+    '3. ZAŠTITA ISKOPA':                      '3. RETAINING STRUCTURES & GEOTECHNICAL SYSTEMS',
+    'ZAŠTITA ISKOPA':                         'RETAINING STRUCTURES & GEOTECHNICAL SYSTEMS',
 
-    '4. IZVOĐENJE RADOVA':                    '4. CONSTRUCTION SERVICES',
-    'IZVOĐENJE RADOVA':                       'CONSTRUCTION SERVICES',
+    '4. MOSTOVI I INFRASTRUKTURNI OBJEKTI':   '4. BRIDGE & INFRASTRUCTURE ENGINEERING',
+    'MOSTOVI I INFRASTRUKTURNI OBJEKTI':      'BRIDGE & INFRASTRUCTURE ENGINEERING',
 
-    '5. STRUČNI NADZOR':                      '5. PROFESSIONAL SUPERVISION',
-    'STRUČNI NADZOR':                         'PROFESSIONAL SUPERVISION',
+    '5. OPTIMIZACIJA KONSTRUKCIJA':           '5. STRUCTURAL OPTIMIZATION',
+    'OPTIMIZACIJA KONSTRUKCIJA':              'STRUCTURAL OPTIMIZATION',
 
-    '6. ELABORAT ENERGETSKE EFIKASNOSTI':     '6. ENERGY EFFICIENCY REPORT',
-    'ELABORAT ENERGETSKE EFIKASNOSTI':        'ENERGY EFFICIENCY REPORT',
+    '6. PODRŠKA U PROJEKTOVANJU KONSTRUKCIJA': '6. STRUCTURAL DESIGN SUPPORT',
+    'PODRŠKA U PROJEKTOVANJU KONSTRUKCIJA':   'STRUCTURAL DESIGN SUPPORT',
 
     // Homepage short-form titles (no number prefix, shorter names)
     'IZVOĐENJE':                              'CONSTRUCTION',
     'TENDERI':                                'TENDERS',
 
     // ── Descriptions (matched via opening phrase) ─────────────────
+    // USLUGE page — rewritten 2026-07-18, EN text supplied verbatim.
 
-    // 1. Projektovanje objekata (USLUGE page — concrete/steel focus)
-    'Specijalizovani smo za projektovanje betonskih':
-      'We specialise in the design of concrete and steel structures, applying modern software solutions for structural analysis, reinforcement detailing, and workshop drawings. Our projects comply with Eurocode standards, ensuring the safety, durability, and reliability of every structure. We pay special attention to aesthetic and functional aspects, ensuring each building is fully tailored to the investor\'s requirements.',
+    // 1. Projektovanje objekata
+    'Projektujemo armirano-betonske, čelične i spregnute konstruktivne sisteme':
+      'We design reinforced concrete, steel, and composite structural systems for residential developments, mixed-use projects, hotels, office buildings, and commercial facilities. Our approach focuses on creating structurally efficient solutions aligned with architectural intent, construction feasibility, and long-term structural performance. From concept development to detailed engineering documentation, each project is developed with emphasis on technical precision, coordination efficiency, and rational structural design.',
 
-    // 2. Saobraćajna infrastruktura
-    'Izrađujemo projekte konstrukcija za sve vrste':
-      'We design structural systems for all types of road infrastructure, including bridges, retaining walls, culverts, overpasses, underpasses, and other ancillary structures in line with guidelines for motorways and main roads. Our engineering team uses modern software tools and designs in accordance with domestic and international standards. Regardless of terrain complexity or object function, we deliver safe, durable, and optimised solutions adapted to every location.',
+    // 2. Seizmičko projektovanje
+    'Pružamo napredne konstruktivne analize i seizmički otporno projektovanje':
+      'We provide advanced structural analysis and seismic-resistant design for projects located in demanding seismic regions. Our expertise includes structural behavior assessment, performance-oriented engineering, and development of structurally reliable systems according to Eurocode 8 requirements. This allows us to support projects where structural safety, seismic resilience, and technical reliability are critical.',
 
     // 3. Zaštita iskopa
-    'Projektujemo sve vrste sistema zaštite':
-      'We design all types of foundation pit protection systems, including piles, diaphragm walls, anchored walls, steel shoring, and temporary structures. We approach each project individually, analysing soil conditions, excavation depth, and site-specific requirements. Our goal is to ensure maximum stability, safety, and cost optimisation — without compromising on quality.',
+    'Razvijamo potporne sisteme i sisteme zaštite za projekte':
+      'We develop retaining and support systems for projects requiring technically reliable solutions in challenging terrain and excavation conditions. Our work includes retaining walls, anchored systems, excavation support structures, and integration of structural solutions with geotechnical design requirements.',
 
-    // 4. Izvođenje radova
-    'Pored projektovanja, pružamo usluge izvođenja':
-      'In addition to design, we provide construction services in full compliance with all technical regulations and legal requirements. We focus on finishing works, but also have the capacity for a broader range of civil engineering activities. We guarantee quality, efficiency, and delivery within set deadlines, with full compliance with project documentation.',
+    // 4. Mostovi i infrastrukturni objekti
+    'Naše iskustvo obuhvata učešće u infrastrukturnim':
+      'Our experience includes participation in infrastructure and transportation-related projects involving bridges, retaining structures, and technically complex reinforced concrete systems. This background contributes to a deeper understanding of structural behavior, durability, large-scale coordination, and engineering performance under demanding loading and environmental conditions.',
 
-    // 5. Stručni nadzor
-    'Naš tim pruža stručni nadzor nad':
-      'Our team provides professional supervision of construction works, ensuring compliance with design, legislation, and industry standards. Our engineers monitor all phases of work, control quality, timelines, and budget, and respond promptly to any challenges on site. Your construction is under expert supervision, with full commitment to maintaining the highest level of quality.',
+    // 5. Optimizacija konstrukcija
+    'Efikasnom konstruktivnom projektovanju pristupamo kroz optimizaciju':
+      'Efficient structural design is approached through optimization of material usage, constructability, and structural performance. The objective is to develop rational structural systems that balance safety, architectural flexibility, construction efficiency, and long-term durability.',
 
-    // 6. Elaborat energetske efikasnosti
-    'Naš tim izrađuje elaborate energetske':
-      'Our team prepares energy efficiency reports in accordance with applicable regulations and standards. These documents form the basis for obtaining building and occupancy permits, and are also an important tool for assessing and optimising energy consumption in buildings.',
+    // 6. Podrška u projektovanju konstrukcija
+    'Sarađujemo sa arhitektonskim i inženjerskim':
+      'We collaborate with architectural and engineering practices requiring reliable structural engineering support for Eurocode-based projects. Our services include structural analysis, reinforced concrete and steel design, technical detailing, BIM-compatible workflows, and engineering documentation. We integrate into multidisciplinary international teams with focus on technical precision, efficient coordination, and dependable project delivery.',
 
     // ── Homepage image-box descriptions (different wording from USLUGE page) ──
 
@@ -305,9 +309,9 @@
     'Ako tražite partnera':
       'If you are looking for a partner to turn your ideas into solid, functional structures — we are here to build the future together.',
 
-    // ── USLUGE page — intro paragraph
-    'Naša firma pruža sveobuhvatne':
-      'Our firm provides comprehensive engineering services in the field of civil engineering, combining expertise, precision, and modern technologies. We offer clients a complete process — from concept and design, through construction, to expert supervision. Every task is approached responsibly, with the goal of achieving maximum safety, quality, and functionality.',
+    // ── USLUGE page — intro paragraph (rewritten 2026-07-18)
+    'Naša firma pruža sveobuhvatna rješenja':
+      'Our company delivers comprehensive civil engineering solutions, seamlessly combining technical expertise, precision, and modern technology. We support our clients through every stage of the project lifecycle—from initial conceptual design and detailed planning to flawless execution and expert site supervision. Every project is driven by our commitment to responsibility, ensuring the highest standards of safety, quality, and structural functionality.',
 
     // ── Homepage "Zašto odabrati nas" — PRECIZNOST / 4th pillar
     'Naši projekti nisu samo tehnički ispravni':
@@ -326,12 +330,12 @@
       'By choosing us, you choose a partner who understands the importance of every millimetre, every plan, and every deadline. Quality, reliability, and expertise are not just our promises — they are the foundations on which we build every project.',
 
     // ── O NAMA page — Vladimir Jovanović biography
-    'Rođen 17-og Jula 1989 godine u Baru':
-      'Born on 17 July 1989 in Bar, he completed his primary and secondary education in his hometown of Ulcinj, graduating with distinction. He earned a Specialist degree from the Faculty of Civil Engineering in Podgorica in 2012, specialising in structural engineering. At the same institution, he obtained a Master\'s degree in Civil Engineering in 2023, with a focus on concrete structures and seismic engineering. Since 2024, he has been a doctoral student at the Faculty of Civil Engineering in Podgorica. He began his professional career in 2013 at "Arhitektonski Atelje" in Podgorica as a structural design engineer, contributing to numerous building and construction projects. In 2018, his ambition to work on major infrastructure led him to "CRBC Montenegro branch," where he served as a bridge design engineer, contributing to the documentation of bridges and retaining structures on the Smokovac–Mateševo motorway section. Following the completion of the motorway project in 2022, he founded "VACON" d.o.o. Podgorica — bringing together expertise and experience to serve partners who demand reliability and professionalism in every aspect of structural design.',
+    'Rođen je 17. jula 1989. godine u Baru.':
+      'Born on 17 July 1989 in Bar, he completed his primary and secondary education in his hometown of Ulcinj, where he was awarded the "Luča" diploma. He earned a Specialist degree from the Faculty of Civil Engineering in Podgorica in 2012, in the Structural Engineering track. At the same institution, he earned a Master\'s degree in Civil Engineering in 2023 in the field of concrete structures and earthquake engineering, and since 2024 has been a doctoral student. He began his professional career in 2013 at "Arhitektonski Atelje" in Podgorica as a structural design engineer, where he contributed to numerous building construction projects. His ambition to work on infrastructure projects led him, in 2018, to "CRBC Montenegro Branch" as a bridge design engineer, where he made a significant contribution to the technical documentation for bridges and retaining structures on the Smokovac–Mateševo motorway section. After completing the motorway project, he founded "VACON" d.o.o. Podgorica in 2022, with the goal of putting his previously gained knowledge and extensive experience at the service of partners seeking maximum reliability and expertise in the preparation of project documentation.',
 
     // ── O NAMA page — Marija Knežević Jovanović biography
-    'Rođena 8-og marta 1990. godine u Bijelom Polju':
-      'Born on 8 March 1990 in Bijelo Polje, she completed her primary and secondary education there, graduating with distinction. She earned a Specialist degree from the Faculty of Civil Engineering in Podgorica on 06.02.2013, specialising in structural engineering with a focus on structural statics. She began her professional career in 2013 at "Bemax" in Podgorica in the technical preparation department, contributing to the realisation of some of Montenegro\'s largest construction projects. She also participated in the preparation and revision of project documentation, with particular emphasis on the design of retaining structures in infrastructure works. She joined our team in 2024, where she leads the construction execution department, working on retaining structure design and the preparation of tender documentation.',
+    'Rođena je 8. marta 1990. godine u Bijelom Polju':
+      'Born on 8 March 1990 in Bijelo Polje, where she completed her primary and secondary education as a recipient of the "Luča" diploma. She earned a Specialist degree from the Faculty of Civil Engineering in Podgorica on 6 February 2013, in the Structural Engineering track, specialising in structural statics. She began her professional career in 2013 at "Bemax" in Podgorica, in the technical preparation department, where she contributed to the realisation of some of Montenegro\'s largest construction projects. During this engagement, she made a significant contribution to the preparation and revision of project documentation, with particular emphasis on the design of retaining structures in infrastructure projects. She joined our team in 2024, since when she has successfully led the construction execution department, working on retaining structure design and the preparation of tender documentation.',
 
     // ── PROJECT PAGES — "OPIS PROJEKTA" description paragraphs.
     //  Keys are full source paragraphs (or exact opening ones for long
