@@ -192,11 +192,37 @@
   var HERO_SUBHEADING_EN = 'RELIABILITY IN EVERY CALCULATION. EXPERTISE IN EVERY DETAIL.';
 
   // Project page hero label (single-post template, element #882b788).
-  // Pulled per-post from the post excerpt, so it differs on every project —
-  // add each project's Montenegrin label here as it's noticed.
+  // Pulled per-post from the post excerpt, so it differs on every project.
+  // Covers every project post that has a manually-set excerpt; posts with
+  // no excerpt fall back to an auto-generated (untranslated) one and are
+  // a separate, pre-existing content issue — add new entries here as
+  // projects are added or their excerpts change.
   var PROJECT_SUBTITLES = {
     'Stambeni objekat pod Goricom':    'Residential Building – Pod Goricom',
     'Stambeni Objekat Pod Goricom':    'Residential Building – Pod Goricom',
+
+    // Hyatt Regency Kotor Bay Resort / STARA POŠTA
+    'Objekat mješovite namjene':       'Mixed-use building',
+
+    // EFEL BUDVA
+    'Turističko-apartmanski blok u Budvi': 'Tourist-apartment complex in Budva',
+
+    // POSH Residence / MOKA PLACE
+    'Stambeni objekat u naselju Tološi u Podgorici.': 'Residential building in the Tološi neighbourhood, Podgorica.',
+
+    // CUNGU Bar (double space before "nadstrešnicom" preserved — matches source excerpt exactly)
+    'Poslovni objekat u Baru izrađen od prefabrikovanih betonskih elemenata i čeličnom  nadstrešnicom. BGRP≈ 1500 m2':
+      'Commercial building in Bar, built from precast concrete elements with a steel canopy. GFA ≈ 1,500 m²',
+
+    // Stambeni objekat Tološi-ETG/INGCON
+    'Objekat višeporodičnog stanovanja u Podgorici': 'Multi-family residential building in Podgorica',
+
+    // FILOLOŠKI FAKULTET
+    'OBJEKAT OBRAZOVANJA - FILOLOŠKI FAKULTET U NIKŠIĆU': 'EDUCATIONAL BUILDING - FACULTY OF PHILOLOGY IN NIKŠIĆ',
+
+    // Emerald Mountain Residence
+    'Objekat mješovite namjene (MN), Hotel sa kondo modelom poslovanja na Žabljaku':
+      'Mixed-use building (MU), hotel operating under a condo-hotel model in Žabljak',
   };
 
   // Contact description paragraph
