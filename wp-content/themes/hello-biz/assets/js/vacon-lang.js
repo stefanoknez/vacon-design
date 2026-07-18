@@ -191,6 +191,14 @@
   // Hero subheading (homepage)
   var HERO_SUBHEADING_EN = 'RELIABILITY IN EVERY CALCULATION. EXPERTISE IN EVERY DETAIL.';
 
+  // Project page hero label (single-post template, element #882b788).
+  // Pulled per-post from the post excerpt, so it differs on every project —
+  // add each project's Montenegrin label here as it's noticed.
+  var PROJECT_SUBTITLES = {
+    'Stambeni objekat pod Goricom':    'Residential Building – Pod Goricom',
+    'Stambeni Objekat Pod Goricom':    'Residential Building – Pod Goricom',
+  };
+
   // Contact description paragraph
   var CONTACT_DESC_CG = 'Naše zadovoljstvo je da sarađujemo sa klijentima na svakom koraku realizacije projekta.';
   var CONTACT_DESC_EN = 'Our pleasure is to collaborate with clients at every stage of project realization. We are at your disposal for all types of services we provide. Contact us with confidence — our team will provide expert support, quality solutions, and security at every phase of construction.';
@@ -551,6 +559,11 @@
       } else {
         el.textContent = getOriginal(el);
       }
+    });
+
+    // 3b ── Project page hero label (per-post excerpt text)
+    document.querySelectorAll('[data-elementor-type="single-post"] .elementor-element-882b788').forEach(function (el) {
+      translateEl(el, PROJECT_SUBTITLES, lang);
     });
 
     // 4 ── Contact subheadings (Radno Vrijeme, Lokacija, etc.)
