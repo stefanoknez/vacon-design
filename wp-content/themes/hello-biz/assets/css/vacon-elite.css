@@ -478,6 +478,16 @@ a.ehp-zigzag__button:hover {
   outline: none !important;
 }
 
+/* On plain content pages (USLUGE, O NAMA, KONTAKT...) there's no photo
+   behind the header for the dark gradient to protect legibility against —
+   it just reads as a solid black bar against the page's own dark
+   background. Drop it to fully transparent there. Homepage and project
+   pages (single/single-post) keep the gradient since they have photo
+   heroes. */
+body:not(.elementor-page-123):not(.single):not(.single-post) .ehp-header {
+  background: transparent !important;
+}
+
 /* CSS tokens for the header widget */
 .elementor-111 .elementor-element.elementor-element-5194a873 .ehp-header {
   --header-menu-item-color:          rgba(255, 255, 255, 0.82);
@@ -2050,43 +2060,22 @@ img {
   flex-shrink: 0 !important;
 }
 
-/* Hide DESKTOP button on mobile — hamburger takes over */
+/* MOBILE: keep the same lang button visible in the top bar next to the
+   envelope icon (it already sits right before .ehp-header__contact-buttons
+   in the DOM), just sized down slightly. Replaces the old behaviour of
+   hiding it and showing a second copy inside the hamburger dropdown. */
 @media (max-width: 1024px) {
   #vd-lang-btn {
-    display: none !important;
+    display: inline-flex !important;
+    font-size: 9px !important;
+    padding: 6px 10px !important;
+    margin-right: 10px !important;
   }
 }
 
-/* MOBILE lang button — shown only on ≤1024px inside the hamburger dropdown */
+/* Dropdown copy — no longer shown; the top-bar button above covers mobile now. */
 #vd-lang-btn-mobile {
-  display: none !important;    /* hidden by default (desktop) */
-}
-@media (max-width: 1024px) {
-  #vd-lang-btn-mobile {
-    display: inline-flex !important;
-    align-items: center !important;
-    background: transparent !important;
-    border: 1px solid rgba(255,255,255,0.40) !important;
-    border-radius: 0 !important;
-    color: rgba(255,255,255,0.88) !important;
-    cursor: pointer !important;
-    font-family: var(--vd-font-ui) !important;
-    font-size: 10px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.22em !important;
-    line-height: 1 !important;
-    padding: 8px 14px !important;
-    text-transform: uppercase !important;
-    transition: background-color 0.3s var(--vd-ease),
-                color 0.3s var(--vd-ease),
-                border-color 0.3s var(--vd-ease) !important;
-    margin: 8px 0 !important;
-  }
-  #vd-lang-btn-mobile:hover {
-    background-color: rgba(255,255,255,0.10) !important;
-    border-color: rgba(255,255,255,0.65) !important;
-    color: #ffffff !important;
-  }
+  display: none !important;
 }
 
 /* ── RESPONSIVE: O NAMA team bio cards ───────────────────────── */
