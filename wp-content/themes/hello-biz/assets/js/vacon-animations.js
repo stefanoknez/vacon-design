@@ -90,9 +90,15 @@
     // Suppress the static Elementor hero image — slides take over completely.
     // CSS already sets .ehp-flex-hero__img { opacity: 0 }, but also hide the
     // container here so any Elementor inline styles cannot restore visibility.
+    // pointer-events:none stops it intercepting hover (it was showing its
+    // filename as a native browser tooltip via its title attribute).
     var staticContainer = imageWrapper.querySelector('.ehp-flex-hero__image-container');
     if (staticContainer) {
-      staticContainer.style.cssText += '; opacity: 0 !important; z-index: 0 !important;';
+      staticContainer.style.cssText += '; opacity: 0 !important; z-index: 0 !important; pointer-events: none !important;';
+      var staticImg = staticContainer.querySelector('img');
+      if (staticImg) {
+        staticImg.removeAttribute('title');
+      }
     }
 
     // Preload the next image before it becomes active
