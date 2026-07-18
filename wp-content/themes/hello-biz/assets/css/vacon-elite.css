@@ -937,17 +937,11 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   line-height: 1.1 !important;
 }
 
-/* Post excerpt (label) in single-post template — vivid white on a small
-   dark chip, so it stays fully legible without darkening the photo itself. */
+/* Post excerpt (label) in single-post template — vivid white with just a
+   drop shadow for legibility, no background chip over the photo. */
 [data-elementor-type="single-post"] .elementor-element-882b788 {
   color: #ffffff !important;
-  text-shadow: none !important;
-}
-[data-elementor-type="single-post"] .elementor-element-882b788 .elementor-widget-container {
-  display: inline-block !important;
-  background-color: rgba(12,12,12,0.55) !important;
-  padding: 8px 16px !important;
-  border-radius: 3px !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.85), 0 2px 16px rgba(0,0,0,0.65) !important;
 }
 
 /* Chevron-down icon in single-post template — white, animated */
@@ -966,8 +960,8 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
 }
 
 /* Share buttons (email / whatsapp) in single-post template — vivid white
-   icons, enlarged, each on its own small dark circular chip so they read
-   clearly over the full-brightness hero photo without a wash over it. */
+   icons, enlarged, with just a drop shadow for legibility (no background
+   chip over the photo). */
 [data-elementor-type="single-post"] .elementor-share-btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -975,13 +969,12 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   width: 48px !important;
   height: 48px !important;
   color: #ffffff !important;
-  background-color: rgba(12,12,12,0.55) !important;
-  border-radius: 50% !important;
-  transition: background-color 0.3s var(--vd-ease) !important;
+  background-color: transparent !important;
+  transition: transform 0.3s var(--vd-ease) !important;
 }
 [data-elementor-type="single-post"] .elementor-share-btn:hover {
-  background-color: rgba(12,12,12,0.75) !important;
   color: #ffffff !important;
+  transform: scale(1.1) !important;
 }
 [data-elementor-type="single-post"] .elementor-share-btn__icon i,
 [data-elementor-type="single-post"] .elementor-share-btn__icon svg {
@@ -989,6 +982,7 @@ body.single-post [data-elementor-type="wp-post"] .elementor-section:first-child 
   fill: #ffffff !important;
   width: 22px !important;
   height: 22px !important;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.85)) drop-shadow(0 2px 10px rgba(0,0,0,0.60)) !important;
 }
 [data-elementor-type="single-post"] .elementor-share-btn:hover .elementor-share-btn__icon i,
 [data-elementor-type="single-post"] .elementor-share-btn:hover .elementor-share-btn__icon svg {
@@ -2590,11 +2584,18 @@ body.single-post .elementor-gallery-item,
   background-color: transparent !important;
 }
 
-/* Gallery overlay on hover — consistent with portfolio treatment */
+/* Gallery overlay — hidden by default so photos preview at full brightness;
+   only appears on hover, consistent with portfolio treatment. */
 body.single .elementor-gallery-item__overlay,
 body.single-post .elementor-gallery-item__overlay,
 [data-elementor-type="wp-post"] .elementor-gallery-item__overlay {
-  background-color: rgba(12, 12, 12, 0.70) !important;
+  background-color: transparent !important;
+  transition: background-color 0.3s var(--vd-ease) !important;
+}
+body.single .elementor-gallery-item:hover .elementor-gallery-item__overlay,
+body.single-post .elementor-gallery-item:hover .elementor-gallery-item__overlay,
+[data-elementor-type="wp-post"] .elementor-gallery-item:hover .elementor-gallery-item__overlay {
+  background-color: rgba(12, 12, 12, 0.55) !important;
 }
 
 /* Gallery image — full natural colour, no desaturation, 100% brightness */
