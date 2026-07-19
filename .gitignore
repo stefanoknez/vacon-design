@@ -24,3 +24,8 @@ wp-content/backuply/
 # Ignoriši Claude Code lokalne postavke
 .claude/
 CLAUDE.md
+
+# Ignoriši SSH ključeve — nikad ne commitovati privatne ključeve
+id_rsa*
+*.pem
+*.key
