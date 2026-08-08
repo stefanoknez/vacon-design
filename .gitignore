@@ -16,6 +16,7 @@ wp-content/wpvividbackups/
 *.zip
 *.wpress
 *.log
+/error_log
 
 # Ignoriši sistemske fajlove Mac-a
 .DS_Store
